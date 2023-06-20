@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RateForProfessor.Models
 {
-    public class ContactNumber
+    public class ContactNumberEntity
     {
         [Key, ForeignKey("University")]
         public int UniversityId { get; set; }
