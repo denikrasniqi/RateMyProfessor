@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RateForProfessor.Entities
 {
-    public class Address
+    public class AddressEntity
     {
         [Key, ForeignKey("University")]
         public int UniversityId { get; set; }
