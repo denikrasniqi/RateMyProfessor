@@ -5,14 +5,19 @@ namespace RateForProfessor.Models
 {
     public class University
     {
-        [ Key ]
+        [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public int EstablishedYear { get; set; }
-        public string Description { get; set; }
-        public int NumriStafit { get; set; }
-        public int NumriStudenteve { get; set; }
-        public int NumriCourses { get; set; }
 
+        public string Name { get; set; }
+
+        public int EstablishedYear { get; set; }
+
+        public string Description { get; set; }
+
+        public int StaffNumber { get; set; }
+
+        public int StudentsNumber { get; set; }
+
+        public int CoursesNumber { get; set; }
     }
 }
