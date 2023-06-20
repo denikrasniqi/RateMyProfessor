@@ -25,8 +25,5 @@ namespace RateForProfessor.Models
         //public virtual University University { get; set; }
 
         //public virtual Student Student { get; set; }
-
-
-
     }
 }
