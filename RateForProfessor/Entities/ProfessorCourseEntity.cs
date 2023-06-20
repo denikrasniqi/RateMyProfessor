@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RateForProfessor.Entities
 {
-    public class ProfessorCourseEntities
+    public class ProfessorCourseEntity
     {
 
         [Key] // Annotation for primary key
