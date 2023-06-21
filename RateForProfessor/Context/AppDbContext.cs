@@ -26,6 +26,18 @@ namespace RateForProfessor.Context
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<AddressEntity>().ToTable("Addresses");
+            modelBuilder.Entity<ContactNumberEntity>().ToTable("ContactNumbers");
+            modelBuilder.Entity<CourseEntity>().ToTable("Courses");
+            modelBuilder.Entity<DepartmentEntity>().ToTable("Departments");
+            modelBuilder.Entity<DepartmentProfessorEntity>().ToTable("DepartmentProfessors");
+            modelBuilder.Entity<ProfessorCourseEntity>().ToTable("ProfessorCourses");
+            modelBuilder.Entity<ProfessorEntity>().ToTable("Profesors");
+            modelBuilder.Entity<RateProfessorEntity>().ToTable("RateProfessors");
+            modelBuilder.Entity<RateUniversityEntity>().ToTable("RateUniversities");
+            modelBuilder.Entity<StudentEntity>().ToTable("Students");
+            modelBuilder.Entity<UniversityEntity>().ToTable("Universities");
+
             modelBuilder.Entity<AddressEntity>()
                .HasKey(pk => new { pk.AddressId });
 
