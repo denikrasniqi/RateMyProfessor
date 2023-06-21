@@ -34,5 +34,9 @@ namespace RateForProfessor.Entities
         public Gender Gender { get; set; }
 
         public DepartmentEntity Department { get; set; }
+
+        public RateUniversityEntity RateUniversity { get; set; }
+
+        public ICollection<RateProfessorEntity> RateProfessors { get; set; }
     }
 }

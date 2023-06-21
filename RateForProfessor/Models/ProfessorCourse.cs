@@ -13,6 +13,11 @@ namespace RateForProfessor.Models
 
         [ForeignKey("Course")] 
         public int CourseId { get; set; }
+
+        public virtual Professor Professor { get; set; }
+
+        public virtual Course Courses { get; set; }
+        
     }
 }
 

@@ -42,7 +42,7 @@ namespace RateForProfessor.Context
                .HasKey(pk => new { pk.AddressId });
 
             modelBuilder.Entity<AddressEntity>()
-                .HasOne(ae => ae.Universities)
+                .HasOne(ae => ae.University)
                 .WithMany(ae => ae.Addresses)
                 .HasForeignKey(fk => fk.UniversityId);
 
@@ -50,7 +50,7 @@ namespace RateForProfessor.Context
                .HasKey(pk => new { pk.ContactNumberId });
 
             modelBuilder.Entity<ContactNumberEntity>()
-                .HasOne(ae => ae.Universities)
+                .HasOne(ae => ae.University)
                 .WithMany(ae => ae.ContactNumbers)
                 .HasForeignKey(fk => fk.UniversityId);
 
@@ -58,20 +58,20 @@ namespace RateForProfessor.Context
                .HasKey(pk => new { pk.ID });
 
             modelBuilder.Entity<CourseEntity>()
-                .HasOne(ae => ae.Departments)
-                .WithMany(ae => ae.Courses)
-                .HasForeignKey(fk => fk.UniversityId);
+                .HasOne(ae => ae.Department)
+                .WithMany(c => c.Courses)
+                .HasForeignKey(ae => ae.DepartmentID);
 
             modelBuilder.Entity<DepartmentProfessorEntity>()
                .HasKey(pk => new { pk.DepartmentId });
 
             modelBuilder.Entity<DepartmentProfessorEntity>()
-                .HasOne(ae => ae.Departments)
+                .HasOne(dp => dp.Department)
                 .WithMany(ae => ae.DepartmentProfessors)
-                .HasForeignKey(fk => fk.DepartmentId);
+                .HasForeignKey(dp => dp.DepartmentId);
 
             modelBuilder.Entity<DepartmentProfessorEntity>()
-                .HasOne(ae => ae.Profesors)
+                .HasOne(ae => ae.Professor)
                 .WithMany(ae => ae.DepartmentProfessors)
                 .HasForeignKey(fk => fk.ProfessorId);
 
@@ -79,7 +79,7 @@ namespace RateForProfessor.Context
               .HasKey(pk => new { pk.ProfessorCourseId });
 
             modelBuilder.Entity<ProfessorCourseEntity>()
-                .HasOne(ae => ae.Profesors)
+                .HasOne(ae => ae.Professor)
                 .WithMany(ae => ae.ProfessorCourses)
                 .HasForeignKey(fk => fk.ProfessorId);
 
@@ -92,15 +92,15 @@ namespace RateForProfessor.Context
                .HasKey(pk => new { pk.ID });
 
             modelBuilder.Entity<StudentEntity>()
-                .HasOne(ae => ae.DepartmentEntity)
+                .HasOne(ae => ae.Department)
                 .WithMany(ae => ae.Students)
                 .HasForeignKey(fk => fk.DepartmentID);
 
             modelBuilder.Entity<DepartmentEntity>()
-              .HasKey(pk => new { pk.DepartmentID });
+              .HasKey(pk => new { pk.DepartmentId });
 
             modelBuilder.Entity<DepartmentEntity>()
-                .HasOne(ae => ae.Universities)
+                .HasOne(ae => ae.University)
                 .WithMany(ae => ae.Departments)
                 .HasForeignKey(fk => fk.UniversityId);
 
@@ -111,27 +111,26 @@ namespace RateForProfessor.Context
              .HasKey(pk => new { pk.Id });
 
             modelBuilder.Entity<RateProfessorEntity>()
-                .HasOne(ae => ae.Profesors)
+                .HasOne(ae => ae.Professor)
                 .WithMany(ae => ae.RateProfessors)
                 .HasForeignKey(fk => fk.ProfessorId);
 
             modelBuilder.Entity<RateProfessorEntity>()
-                .HasOne(ae => ae.Students)
+                .HasOne(ae => ae.Student)
                 .WithMany(ae => ae.RateProfessors)
-                .HasForeignKey(fk => fk.ID);
+                .HasForeignKey(fk => fk.StudentId);
 
             modelBuilder.Entity<RateUniversityEntity>()
              .HasKey(pk => new { pk.Id });
 
             modelBuilder.Entity<RateUniversityEntity>()
-                .HasOne(ae => ae.Universities)
+                .HasOne(ae => ae.University)
                 .WithMany(ae => ae.RateUniversities)
                 .HasForeignKey(fk => fk.UniversityId);
 
             modelBuilder.Entity<RateUniversityEntity>()
-                .HasOne(ae => ae.Students)
-                .WithOne(ae => ae.RateUniversities)
-                .HasForeignKey(fk => fk.StudentId);
+                .HasOne(ae => ae.Student)
+                .WithOne(ae => ae.RateUniversity);
 
             modelBuilder.Entity<UniversityEntity>()
              .HasKey(pk => new { pk.Id });

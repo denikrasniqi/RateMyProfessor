@@ -24,5 +24,9 @@ namespace RateForProfessor.Entities
 
         [Required]
         public string Role { get; set; }
+
+        public ICollection<RateProfessorEntity> RateProfessors { get; set; }
+
+        public ICollection<ProfessorCourseEntity> ProfessorCourses { get; set; }
     }
 }

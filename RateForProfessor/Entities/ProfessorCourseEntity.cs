@@ -14,6 +14,10 @@ namespace RateForProfessor.Entities
 
         [ForeignKey("Course")]
         public int CourseId { get; set; }
+
+        public virtual ProfessorEntity Professor { get; set; }
+
+        public virtual CourseEntity Courses { get; set; }
     }
 }
 
