@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace RateForProfessor.Models
+namespace RateForProfessor.Entities
 {
     public class DepartmentEntity
     {
