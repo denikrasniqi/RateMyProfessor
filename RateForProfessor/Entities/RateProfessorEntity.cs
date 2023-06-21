@@ -5,14 +5,14 @@ namespace RateForProfessor.Entities
 {
     public class RateProfessorEntity
     {
-        [Key] // Annotation for primary key
-        public int Id { get; set; } // PK Id
+        [Key]
+        public int Id { get; set; }
 
-        [ForeignKey("Professor")] // Annotation for foreign key
-        public int ProfessorId { get; set; } // ProfessorID FK
+        [ForeignKey("Professor")]
+        public int ProfessorId { get; set; }
 
-        [ForeignKey("Student")] // Annotation for foreign key
-        public int StudentId { get; set; } // StudentID FK
+        [ForeignKey("Student")]
+        public int StudentId { get; set; }
 
         public int Overall { get; set; }
 
@@ -24,8 +24,8 @@ namespace RateForProfessor.Entities
 
         public string Feedback { get; set; }
 
-        //public virtual ProfessorModel Professor { get; set; } // Navigation property for Professor
+        public virtual ProfessorEntity Professor { get; set; }
 
-        //public virtual StudentModel Student { get; set; } // Navigation property for Student
+        public virtual StudentEntity Student { get; set; }
     }
 }

@@ -24,6 +24,5 @@ namespace RateForProfessor.Entities
 
         [Required]
         public string Role { get; set; }
-
     }
 }

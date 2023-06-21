@@ -6,14 +6,14 @@ namespace RateForProfessor.Entities
     public class ProfessorCourseEntity
     {
 
-        [Key] // Annotation for primary key
-        public int ProfessorCourseId { get; set; } // PK Id
+        [Key]
+        public int ProfessorCourseId { get; set; }
 
-        [ForeignKey("Professor")] // Annotation for foreign key
-        public int ProfessorId { get; set; } // ProfessorID FK
+        [ForeignKey("Professor")]
+        public int ProfessorId { get; set; }
 
-        [ForeignKey("Course")] // Annotation for foreign key
-        public int CourseId { get; set; } // CourseID FK
+        [ForeignKey("Course")]
+        public int CourseId { get; set; }
     }
 }
 

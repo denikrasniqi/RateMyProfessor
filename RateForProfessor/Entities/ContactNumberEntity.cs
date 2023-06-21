@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using RateForProfessor.Entities;
 
 namespace RateForProfessor.Models
 {
@@ -13,6 +14,6 @@ namespace RateForProfessor.Models
 
         public string ContactNumber { get; set; }
 
-        // public virtual University University { get; set; } // Navigation property for University
+        public virtual UniversityEntity University { get; set; }
     }
 }

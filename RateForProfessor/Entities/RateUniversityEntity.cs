@@ -22,8 +22,8 @@ namespace RateForProfessor.Entities
 
         public string Feedback { get; set; }
 
-        //public virtual University University { get; set; }
+        public virtual UniversityEntity University { get; set; }
 
-        //public virtual Student Student { get; set; }
+        public virtual StudentEntity Student { get; set; }
     }
 }

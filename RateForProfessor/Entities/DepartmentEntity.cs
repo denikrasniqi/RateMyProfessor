@@ -24,7 +24,7 @@ namespace RateForProfessor.Entities
         
         public int CourseNumber { get; set; }
         
-        // public virtual University University { get; set; } 
+        public virtual UniversityEntity University { get; set; } 
     }
 }
 

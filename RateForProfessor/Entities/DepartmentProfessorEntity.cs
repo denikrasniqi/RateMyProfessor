@@ -13,8 +13,8 @@ namespace RateForProfessor.Entities
         [ForeignKey("Professor")]
         public int ProfessorId { get; set; }
 
-        //public virtual Department Department {get; set;} // Represents the associated Department
+        public virtual DepartmentEntity Department {get; set;}
 
-        //public virtual Professor Professor {get; set;} // Represents the associated Professor
+        public virtual DepartmentEntity Professor {get; set;}
     }
 }
