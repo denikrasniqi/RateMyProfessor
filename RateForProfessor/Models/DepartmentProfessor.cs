@@ -13,8 +13,8 @@ namespace RateForProfessor.Models
         [ForeignKey("Professor")]
         public int ProfessorId { get; set; }
 
-        //public virtual Department Department {get; set;} // Represents the associated Department
+        public virtual Department Department {get; set;} 
 
-        //public virtual Professor Professor {get; set;} // Represents the associated Professor
+        public virtual Professor Professor {get; set;}
     }
 }

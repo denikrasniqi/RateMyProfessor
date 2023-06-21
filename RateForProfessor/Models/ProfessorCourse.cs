@@ -5,15 +5,14 @@ namespace RateForProfessor.Models
 {
     public class ProfessorCourse
     {
+        [Key] 
+        public int ProfessorCourseId { get; set; } 
 
-        [Key] // Annotation for primary key
-        public int ProfessorCourseId { get; set; } // PK Id
+        [ForeignKey("Professor")] 
+        public int ProfessorId { get; set; } 
 
-        [ForeignKey("Professor")] // Annotation for foreign key
-        public int ProfessorId { get; set; } // ProfessorID FK
-
-        [ForeignKey("Course")] // Annotation for foreign key
-        public int CourseId { get; set; } // CourseID FK
+        [ForeignKey("Course")] 
+        public int CourseId { get; set; }
     }
 }
 

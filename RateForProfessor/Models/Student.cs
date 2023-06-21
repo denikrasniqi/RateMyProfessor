@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using RateForProfessor.Enums;
 
 namespace RateForProfessor.Models
 {
@@ -30,8 +31,8 @@ namespace RateForProfessor.Models
 
         public int Grade { get; set; }
 
-        //public Gender Gender { get; set; }
+        public Gender Gender { get; set; }
 
-        //public Department Department { get; set; }
+        public Department Department { get; set; }
     }
 }

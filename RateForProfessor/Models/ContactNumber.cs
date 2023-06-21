@@ -11,8 +11,8 @@ namespace RateForProfessor.Models
         [Key, ForeignKey("ContactNumber")]
         public int ContactNumberId { get; set; }
 
-        public string ContactNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
-        // public virtual University University { get; set; } // Navigation property for University
+        public virtual University University { get; set; } 
     }
 }

@@ -5,7 +5,6 @@ namespace RateForProfessor.Models
     public class Professor
     {
         [Key]
-
         public int ProfessorId { get; set; }
 
         [Required]
@@ -25,6 +24,5 @@ namespace RateForProfessor.Models
 
         [Required]
         public string Role { get; set; }
-
     }
 }
