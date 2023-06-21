@@ -26,6 +26,5 @@ namespace RateForProfessor.Models
         [Required]
         public string Role { get; set; }
 
-
     }
 }
