@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace RateForProfessor.Models
+namespace RateForProfessor.Entities
 {
-    public class University
+    public class UniversityEntity
     {
         [Key]
         public int Id { get; set; }
