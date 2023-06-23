@@ -6,7 +6,7 @@ namespace RateForProfessor.Models
     public class University
     {
         [Key]
-        public int Id { get; set; }
+        public int UniversityId { get; set; }
 
         public string Name { get; set; }
 

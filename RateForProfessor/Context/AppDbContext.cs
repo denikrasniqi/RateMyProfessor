@@ -18,7 +18,7 @@ namespace RateForProfessor.Context
         public DbSet<ProfessorCourseEntity> ProfessorCourses { get; set; }
         public DbSet<ProfessorEntity> Profesors { get; set; }
         public DbSet<RateProfessorEntity> RateProfessors { get; set; }
-        public DbSet<RateUniversityEntity> RateUniversities { get; set; }
+        //public DbSet<RateUniversityEntity> RateUniversities { get; set; }
         public DbSet<StudentEntity> Students { get; set; }
         public DbSet<UniversityEntity> Universities { get; set; }
  
@@ -89,7 +89,7 @@ namespace RateForProfessor.Context
                 .HasForeignKey(fk => fk.CourseId);
 
             modelBuilder.Entity<StudentEntity>()
-               .HasKey(pk => new { pk.ID });
+               .HasKey(pk => new { pk.StudentId });
 
             modelBuilder.Entity<StudentEntity>()
                 .HasOne(ae => ae.Department)
@@ -120,20 +120,23 @@ namespace RateForProfessor.Context
                 .WithMany(ae => ae.RateProfessors)
                 .HasForeignKey(fk => fk.StudentId);
 
+
             modelBuilder.Entity<RateUniversityEntity>()
              .HasKey(pk => new { pk.Id });
 
             modelBuilder.Entity<RateUniversityEntity>()
                 .HasOne(ae => ae.University)
                 .WithMany(ae => ae.RateUniversities)
-                .HasForeignKey(fk => fk.UniversityId);
+                .HasForeignKey(fk => fk.UniversityId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<RateUniversityEntity>()
                 .HasOne(ae => ae.Student)
-                .WithOne(ae => ae.RateUniversity);
+                .WithOne(ae => ae.RateUniversity)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<UniversityEntity>()
-             .HasKey(pk => new { pk.Id });
+             .HasKey(pk => new { pk.UniversityId });
         }
     }
 }
