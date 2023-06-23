@@ -31,5 +31,6 @@ namespace RateForProfessor.Entities
 
         public ICollection<DepartmentProfessorEntity> DepartmentProfessors { get; set; }
 
+
     }
 }
