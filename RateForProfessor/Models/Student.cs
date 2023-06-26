@@ -11,7 +11,7 @@ namespace RateForProfessor.Models
     public class Student
     {
         [Key]
-        public int ID { get; set; }
+        public int StudentId { get; set; }
 
         [ForeignKey("Department")]
         public int DepartmentID { get; set; }
@@ -34,5 +34,9 @@ namespace RateForProfessor.Models
         public Gender Gender { get; set; }
 
         public Department Department { get; set; }
+
+        public RateUniversity RateUniversity { get; set; }
+
+        public ICollection<RateProfessor> RateProfessors { get; set; }
     }
 }

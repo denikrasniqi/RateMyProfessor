@@ -15,6 +15,10 @@ namespace RateForProfessor.Entities
 
         public virtual DepartmentEntity Department {get; set;}
 
-        public virtual DepartmentEntity Professor {get; set;}
+        public virtual ProfessorEntity Professor {get; set;}
+
+        public ICollection<DepartmentEntity> Departments { get; set; }
+
+        public ICollection<ProfessorEntity> Professors { get; set; }
     }
 }

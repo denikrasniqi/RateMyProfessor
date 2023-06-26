@@ -25,6 +25,12 @@ namespace RateForProfessor.Models
         public int CourseNumber { get;  set; }  
         
         public virtual University University { get; set; }
+
+        public ICollection<Course> Courses { get; set; }
+
+        public ICollection<Student> Students { get; set; }
+
+        public ICollection<DepartmentProfessor> DepartmentProfessors { get; set; }
     }
 }
 

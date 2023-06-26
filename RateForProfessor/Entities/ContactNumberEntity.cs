@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using RateForProfessor.Entities;
 
-namespace RateForProfessor.Models
+
+namespace RateForProfessor.Entities
 {
     public class ContactNumberEntity
     {

@@ -11,7 +11,7 @@ namespace RateForProfessor.Entities
     public class StudentEntity
     {
         [Key]
-        public int ID { get; set; }
+        public int StudentId { get; set; }
 
         [ForeignKey("Department")]
         public int DepartmentID { get; set; }
@@ -34,5 +34,9 @@ namespace RateForProfessor.Entities
         public Gender Gender { get; set; }
 
         public DepartmentEntity Department { get; set; }
+
+        public RateUniversityEntity RateUniversity { get; set; }
+
+        public ICollection<RateProfessorEntity> RateProfessors { get; set; }
     }
 }

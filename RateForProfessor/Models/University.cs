@@ -6,7 +6,7 @@ namespace RateForProfessor.Models
     public class University
     {
         [Key]
-        public int Id { get; set; }
+        public int UniversityId { get; set; }
 
         public string Name { get; set; }
 
@@ -19,5 +19,13 @@ namespace RateForProfessor.Models
         public int StudentsNumber { get; set; }
 
         public int CoursesNumber { get; set; }
+
+        public ICollection<Address> Addresses { get; set; }
+
+        public ICollection<ContactNumber> ContactNumbers { get; set; }
+
+        public ICollection<Department> Departments { get; set; }
+
+        public ICollection<RateUniversity> RateUniversities { get; set; }
     }
 }

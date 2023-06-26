@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace RateForProfessor.Entities
 {
     public class UniversityEntity
     {
         [Key]
-        public int Id { get; set; }
+        public int UniversityId { get; set; }
 
         public string Name { get; set; }
 
@@ -19,5 +18,13 @@ namespace RateForProfessor.Entities
         public int StudentsNumber { get; set; }
 
         public int CoursesNumber { get; set; }
+
+        public ICollection<AddressEntity> Addresses { get; set; }
+
+        public ICollection<ContactNumberEntity> ContactNumbers { get; set; }
+
+        public ICollection<DepartmentEntity> Departments { get; set; }
+
+        public ICollection<RateUniversityEntity> RateUniversities { get; set; }
     }
 }

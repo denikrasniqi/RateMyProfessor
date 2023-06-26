@@ -26,5 +26,7 @@ namespace RateForProfessor.Entities
         public string Description { get; set; }
 
         public DepartmentEntity Department { get; set; }
+
+        public ICollection<ProfessorCourseEntity> ProfessorCourses { get; set; }
     }
 }

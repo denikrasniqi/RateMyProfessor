@@ -16,5 +16,9 @@ namespace RateForProfessor.Models
         public virtual Department Department {get; set;} 
 
         public virtual Professor Professor {get; set;}
+
+        public ICollection<Department> Departments { get; set; }
+
+        public ICollection<Professor> Professors { get; set; }
     }
 }
