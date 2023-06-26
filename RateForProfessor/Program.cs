@@ -1,5 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using RateForProfessor.Context;
+using RateForProfessor.Repositories;
+using RateForProfessor.Repositories.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using RateForProfessor.Services.Interfaces;
+using RateForProfessor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +16,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IUserRegistrationRepository, UserRegistrationRepository>();
+builder.Services.AddScoped<IUserRegistrationService, UserRegistrationService>();
 
 var app = builder.Build();
 

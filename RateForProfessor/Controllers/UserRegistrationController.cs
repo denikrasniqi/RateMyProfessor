@@ -1,15 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RateForProfessor.Entities;
+using RateForProfessor.Models;
+using RateForProfessor.Services.Interfaces;
 
 namespace RateForProfessor.Controllers
 {
     [ApiController]
     public class UserRegistrationController : ControllerBase
     {
+        private readonly IUserRegistrationService _registrationService;
+        public UserRegistrationController(IUserRegistrationService service)
+        {
+            _registrationService = service;
+        }
 
         [HttpGet]
-        public ActionResult GetStudents()
+        public List<StudentEntity> GetAllStudents()
         {
-            return null;
+            var result = _registrationService.GetAllStudents();
+            return result;
         }
 
         [HttpGet("{id}")]
@@ -19,9 +28,10 @@ namespace RateForProfessor.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateStudent()
+        public ActionResult CreateStudent(Student student)
         {
-            return null;
+            var result = _registrationService.CreateStudent(student);
+            return result;
         }
 
         [HttpPut("{id}")]
