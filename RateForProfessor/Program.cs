@@ -5,8 +5,13 @@ using RateForProfessor.Repositories.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using RateForProfessor.Services.Interfaces;
 using RateForProfessor.Services;
+using FluentValidation.AspNetCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers().AddFluentValidation(c => c.RegisterValidatorsFromAssembly
+                        (Assembly.GetExecutingAssembly()));
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>

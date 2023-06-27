@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using RateForProfessor.Entities;
 using RateForProfessor.Models;
 using RateForProfessor.Services.Interfaces;
@@ -8,6 +9,7 @@ namespace RateForProfessor.Controllers
     [ApiController]
     public class UserRegistrationController : ControllerBase
     {
+     
         private readonly IUserRegistrationService _registrationService;
         public UserRegistrationController(IUserRegistrationService service)
         {
@@ -37,6 +39,23 @@ namespace RateForProfessor.Controllers
         public Student CreateStudent(Student student)
         {
             return _registrationService.CreateStudent(student);
+
+            //
+            //StudentValidator validator = new StudentValidator();
+            //var validationResult = validator.Validate(student);
+
+            //if (!validationResult.IsValid)
+            //{
+            //    foreach (var error in validationResult.Errors)
+            //    {
+            //        ModelState.AddModelError("", error.ErrorMessage);
+            //    }
+
+            //    return BadRequest(ModelState);
+            //}
+
+            //var createdStudent = _registrationService.CreateStudent(student);
+            //return CreatedAtAction(nameof(GetStudentById), new { id = createdStudent.Id }, createdStudent);
         }
 
         [HttpPut("{id}")]
