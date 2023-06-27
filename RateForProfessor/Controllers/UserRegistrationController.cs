@@ -15,35 +15,40 @@ namespace RateForProfessor.Controllers
         }
 
         [HttpGet]
-        public List<StudentEntity> GetAllStudents()
+        public List<Student> GetAllStudents()
         {
             var result = _registrationService.GetAllStudents();
             return result;
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetStudent()
+        public Student GetStudentById(int id)
         {
-            return null;
+            return _registrationService.GetStudentById(id);
+        }
+
+        [HttpGet("{email}")]
+        public Student GetStudentByEmail(string email)
+        {
+            return _registrationService.GetStudentByEmail(email);
         }
 
         [HttpPost]
-        public ActionResult CreateStudent(Student student)
+        public Student CreateStudent(Student student)
         {
-            var result = _registrationService.CreateStudent(student);
-            return result;
+            return _registrationService.CreateStudent(student);
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateStudent()
+        public void UpdateStudent(Student student)
         {
-            return null;
+            _registrationService.UpdateStudent(student);
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteStudent()
+        public void DeleteStudent(int id)
         {
-            return null;
+            _registrationService.DeleteStudent(id);
         }
     }
 }

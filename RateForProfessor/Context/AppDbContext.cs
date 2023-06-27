@@ -18,7 +18,7 @@ namespace RateForProfessor.Context
         public DbSet<ProfessorCourseEntity> ProfessorCourses { get; set; }
         public DbSet<ProfessorEntity> Profesors { get; set; }
         public DbSet<RateProfessorEntity> RateProfessors { get; set; }
-        //public DbSet<RateUniversityEntity> RateUniversities { get; set; }
+        public DbSet<RateUniversityEntity> RateUniversities { get; set; }
         public DbSet<StudentEntity> Students { get; set; }
         public DbSet<UniversityEntity> Universities { get; set; }
  
