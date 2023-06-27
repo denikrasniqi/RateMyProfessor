@@ -3,9 +3,9 @@ using RateForProfessor.Models;
 
 namespace RateForProfessor.Validators
 {
-    public class UserValidator : AbstractValidator<Student>
+    public class StudentValidator : AbstractValidator<Student>
     {
-        public UserValidator() 
+        public StudentValidator() 
         {
             RuleFor(s => s.Name)
            .NotEmpty()
