@@ -16,7 +16,7 @@ namespace RateForProfessor.Repositories
         public StudentEntity CreateStudent(StudentEntity student)
         {
             _dbContext.Students.Add(student);
-            _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
             return student;
 
         }
@@ -35,8 +35,8 @@ namespace RateForProfessor.Repositories
 
         public StudentEntity GetStudentByEmail(string email)
         {
-            return _dbContext.Students.Find(email);
-            
+            var student = _dbContext.Students.FirstOrDefault(s => s.Email == email);
+            return student;
         }
 
         public StudentEntity GetStudentById(int id)

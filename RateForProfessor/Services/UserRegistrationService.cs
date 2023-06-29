@@ -32,7 +32,7 @@ namespace RateForProfessor.Services
 
                 throw new Exception(ex.Message);
             }
-        
+
         }
 
         public void DeleteStudent(int id)
@@ -71,7 +71,7 @@ namespace RateForProfessor.Services
             {
                 throw new Exception("Student not found");
             }
-            var updatedStudent =  _mapper.Map<StudentEntity>(student);
+            var updatedStudent = _mapper.Map<StudentEntity>(student);
 
             _userRegistrationRepository.UpdateStudent(updatedStudent);
         }

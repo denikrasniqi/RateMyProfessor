@@ -27,15 +27,15 @@ namespace RateForProfessor.Validators
            .Matches("[a-z]").WithMessage("Password must contain at least one lowercase letter.")
            .Matches("[0-9]").WithMessage("Password must contain at least one digit.");
 
-
             RuleFor(s => s.Grade)
-            .GreaterThanOrEqualTo(0)
-            .LessThanOrEqualTo(2)
-            .WithMessage("Grade must be between or equal to 0-2");
+            .GreaterThanOrEqualTo(5)
+            .LessThanOrEqualTo(10)
+            .WithMessage("Grade must be between or equal to 5-10");
 
-           // = RuleFor(s => s.Gender)
-           //.NotEmpty()
-           //.WithMessage("Gender is required");
+            RuleFor(s => s.Gender)
+           .NotEmpty()
+           .WithMessage("Gender is required");
+           
         }
     }
 }
