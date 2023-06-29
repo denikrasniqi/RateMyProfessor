@@ -78,12 +78,12 @@ namespace RateForProfessor.Controllers
             }
             try
             {
-                var updatedStudent = _registrationService.GetStudentById(id);
-                if (updatedStudent == null)
+                var oldStudent = _registrationService.GetStudentById(id);
+                if (oldStudent == null)
                 {
                     return NotFound();
                 }
-                _registrationService.UpdateStudent(updatedStudent);
+                _registrationService.UpdateStudent(student);
                 return NoContent();
             }
             catch (Exception ex)
