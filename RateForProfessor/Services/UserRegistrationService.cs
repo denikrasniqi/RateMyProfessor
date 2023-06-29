@@ -19,11 +19,20 @@ namespace RateForProfessor.Services
         }
         public Student CreateStudent(Student student)
         {
-            var studentEntity = _mapper.Map<StudentEntity>(student);
-            var result = _userRegistrationRepository.CreateStudent(studentEntity);
-            
-            var studentCreated = _mapper.Map<Student>(result);
-            return studentCreated;
+            try
+            {
+                var studentEntity = _mapper.Map<StudentEntity>(student);
+                var result = _userRegistrationRepository.CreateStudent(studentEntity);
+
+                var studentCreated = _mapper.Map<Student>(result);
+                return studentCreated;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        
         }
 
         public void DeleteStudent(int id)

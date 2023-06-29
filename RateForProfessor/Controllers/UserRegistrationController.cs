@@ -7,6 +7,7 @@ using RateForProfessor.Validators;
 
 namespace RateForProfessor.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
     public class UserRegistrationController : ControllerBase
     {
@@ -24,19 +25,19 @@ namespace RateForProfessor.Controllers
             return result;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetStudentById/{id}")]
         public Student GetStudentById(int id)
         {
             return _registrationService.GetStudentById(id);
         }
 
-        [HttpGet("{email}")]
+        [HttpGet("GetStudentByEmail/{email}")]
         public Student GetStudentByEmail(string email)
         {
             return _registrationService.GetStudentByEmail(email);
         }
 
-        [HttpPost]
+        [HttpPost("CreateStudent")]
         public IActionResult CreateStudent(Student student)
         {
             StudentValidator validator = new StudentValidator();
@@ -61,7 +62,7 @@ namespace RateForProfessor.Controllers
         //{
         //    _registrationService.UpdateStudent(student);
         //}
-        [HttpPut("{id}")]
+        [HttpPut("UpdateStudent/{id}")]
         public IActionResult UpdateStudent(int id, Student student)
         {
             StudentValidator validator = new StudentValidator();
@@ -90,7 +91,7 @@ namespace RateForProfessor.Controllers
                 return StatusCode(500, "An error occurred while updating the student.");
             }
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("DeleteStudent/{id}")]
         public IActionResult DeleteStudent(int id)
         {
             try

@@ -29,8 +29,9 @@ namespace RateForProfessor.Validators
 
 
             RuleFor(s => s.Grade)
-           .NotEmpty()
-           .WithMessage("Grade is required");
+            .GreaterThanOrEqualTo(0)
+            .LessThanOrEqualTo(2)
+            .WithMessage("Grade must be between or equal to 0-2");
 
            // = RuleFor(s => s.Gender)
            //.NotEmpty()
