@@ -1,6 +1,6 @@
 ﻿using RateForProfessor.Entities;
 
-namespace RateForProfessor.Utilities
+namespace RateForProfessor.Utilities.Interfaces
 {
     public interface ITokenGenerator
     {

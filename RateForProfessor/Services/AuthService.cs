@@ -2,7 +2,7 @@
 using RateForProfessor.Repositories;
 using RateForProfessor.Repositories.Interfaces;
 using RateForProfessor.Services.Interfaces;
-using RateForProfessor.Utilities;
+using RateForProfessor.Utilities.Interfaces;
 
 namespace RateForProfessor.Services
 {

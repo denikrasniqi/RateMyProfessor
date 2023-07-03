@@ -20,10 +20,14 @@ namespace RateForProfessor.Controllers
         {
             // Perform authentication
             var token = _authService.AuthenticateUser(email, password);
-
+            var message = "User " + email + " Has Logged in!";
             if (token == null)
             {
                 return Unauthorized(); // Return 401 Unauthorized if authentication fails
+            }
+            else
+            {
+                return Ok(message);
             }
 
             // Return the token in the response

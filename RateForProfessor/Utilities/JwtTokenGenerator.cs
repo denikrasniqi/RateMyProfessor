@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using RateForProfessor.Entities;
+using RateForProfessor.Utilities.Interfaces;
 
 namespace RateForProfessor.Utilities
 {
@@ -14,20 +15,27 @@ namespace RateForProfessor.Utilities
 
         public JwtTokenGenerator(IConfiguration configuration)
         {
-            _configuration = configuration;
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         public string GenerateToken(StudentEntity student)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"]);
+            var secretKey = _configuration["Jwt:Key"];
+
+            if (string.IsNullOrEmpty(secretKey))
+            {
+                throw new InvalidOperationException("Jwt:Secret configuration value is missing or null.");
+            }
+
+            var key = Encoding.ASCII.GetBytes(secretKey);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Name, student.Email),
-                }),
+                new Claim(ClaimTypes.Name, student.Email),
+            }),
                 Expires = DateTime.UtcNow.AddHours(1), // Set token expiration time
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
@@ -38,4 +46,5 @@ namespace RateForProfessor.Utilities
             return encodedToken;
         }
     }
+
 }
