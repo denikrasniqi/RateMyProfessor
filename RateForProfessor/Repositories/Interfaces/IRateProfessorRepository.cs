@@ -1,7 +1,16 @@
-﻿namespace RateForProfessor.Repositories.Interfaces
+﻿using RateForProfessor.Entities;
+using RateForProfessor.Models;
+
+namespace RateForProfessor.Repositories.Interfaces
 {
     public interface IRateProfessorRepository
     {
-        public void RateProfessor(int professorId, int studentId, int overallRating, int communicationSkillsRating, int responsivenessRating, int gradingFairnessRating, string feedback);
+        public List<RateProfessorEntity> GetAllRateProfessors();
+        public RateProfessorEntity GetRateProfessorById(int id);
+        public RateProfessorEntity CreateRateProfessor(RateProfessorEntity rateProfessor);
+        public void UpdateRateProfessor(RateProfessorEntity rateProfessor);
+        public void DeleteRateProfessor(int id);
+        public List<RateProfessorEntity> GetRateProfessorsByProfessorId(int professorId);
+        public List<RateProfessorEntity> GetRateProfessorsByStudentId(int studentId);
     }
 }

@@ -34,6 +34,8 @@ builder.Services.AddScoped<IUserRegistrationRepository, UserRegistrationReposito
 builder.Services.AddScoped<IUserRegistrationService, UserRegistrationService>();
 builder.Services.AddScoped<IProfessorRepository, ProfessorRepository>();
 builder.Services.AddScoped<IProfessorService, ProfessorService>();
+builder.Services.AddScoped<IRateProfessorRepository, RateProfessorRepository>();
+builder.Services.AddScoped<IRateProfessorService, RateProfessorService>();
 
 var app = builder.Build();
 
