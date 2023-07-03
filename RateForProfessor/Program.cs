@@ -32,6 +32,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(UserProfileMapping));
 builder.Services.AddScoped<IUserRegistrationRepository, UserRegistrationRepository>();
 builder.Services.AddScoped<IUserRegistrationService, UserRegistrationService>();
+builder.Services.AddScoped<IProfessorRepository, ProfessorRepository>();
+builder.Services.AddScoped<IProfessorService, ProfessorService>();
 
 var app = builder.Build();
 
