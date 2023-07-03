@@ -33,10 +33,10 @@ namespace RateForProfessor.Models
 
         public Gender Gender { get; set; }
 
-        public Department Department { get; set; }
+        //public Department Department { get; set; }
 
-        public RateUniversity RateUniversity { get; set; }
+        //public RateUniversity RateUniversity { get; set; }
 
-        public ICollection<RateProfessor> RateProfessors { get; set; }
+        //public ICollection<RateProfessor> RateProfessors { get; set; }
     }
 }
