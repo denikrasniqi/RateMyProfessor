@@ -7,7 +7,7 @@ using RateForProfessor.Validators;
 
 namespace RateForProfessor.Controllers
 {
-    //[Authorize]
+
     [Route("api/[controller]")]
     [ApiController]
     public class RateProfessorController : ControllerBase
@@ -50,29 +50,9 @@ namespace RateForProfessor.Controllers
         [HttpPost("CreateRateProfessor")]
         public IActionResult CreateRateProfessor(RateProfessor rateProfessor)
         {
-            //StudentValidator validator = new StudentValidator();
-            //var validationResult = validator.Validate(rateProfessor);
+            RateProfessorValidator validator = new RateProfessorValidator();
+            var validationResult = validator.Validate(rateProfessor);
 
-            /*if (!validationResult.IsValid)
-            {
-                foreach (var error in validationResult.Errors)
-                {
-                    ModelState.AddModelError("", error.ErrorMessage);
-                }
-                return BadRequest(ModelState);
-            }*/
-            var createdRateProfessor = _rateProfessorService.CreateRateProfessor(rateProfessor);
-            return Ok(createdRateProfessor);
-            //var createdStudent = _registrationService.CreateStudent(student);
-            //return CreatedAtAction(nameof(GetStudentById), new { id = createdStudent.StudentId }, createdStudent);
-        }
-
-        [HttpPut("UpdateRateProfessor/{id}")]
-        public IActionResult UpdateRateProfessor(int id, RateProfessor rateProfessor)
-        {
-            /*StudentValidator validator = new StudentValidator();
-            var validationResult = validator.Validate(student);*/
-/*
             if (!validationResult.IsValid)
             {
                 foreach (var error in validationResult.Errors)
@@ -80,7 +60,25 @@ namespace RateForProfessor.Controllers
                     ModelState.AddModelError("", error.ErrorMessage);
                 }
                 return BadRequest(ModelState);
-            }*/
+            }
+            var createdRateProfessor = _rateProfessorService.CreateRateProfessor(rateProfessor);
+            return Ok(createdRateProfessor);
+        }
+
+        [HttpPut("UpdateRateProfessor/{id}")]
+        public IActionResult UpdateRateProfessor(int id, RateProfessor rateProfessor)
+        {
+            RateProfessorValidator validator = new RateProfessorValidator();
+            var validationResult = validator.Validate(rateProfessor);
+
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    ModelState.AddModelError("", error.ErrorMessage);
+                }
+                return BadRequest(ModelState);
+            }
             try
             {
                 var oldRateProfessor = _rateProfessorService.GetRateProfessorById(id);

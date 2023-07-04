@@ -32,17 +32,17 @@ namespace RateForProfessor.Controllers
         [HttpPost("CreateProfessor")]
         public IActionResult CreateProfessor(Professor professor)
         {
-            //StudentValidator validator = new StudentValidator();
-            //var validationResult = validator.Validate(student);
+            ProfessorValidator validator = new ProfessorValidator();
+            var validationResult = validator.Validate(professor);
 
-            //if (!validationResult.IsValid)
-            //{
-            //    foreach (var error in validationResult.Errors)
-            //    {
-            //        ModelState.AddModelError("", error.ErrorMessage);
-            //    }
-            //    return BadRequest(ModelState);
-            //}
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    ModelState.AddModelError("", error.ErrorMessage);
+                }
+                return BadRequest(ModelState);
+            }
             var createdProfessor = _professorService.CreateProfessor(professor);
             return Ok(createdProfessor);
         }
@@ -51,32 +51,32 @@ namespace RateForProfessor.Controllers
         [HttpPut("UpdateProfessor/{id}")]
         public IActionResult UpdateProfessor(int id, Professor professor)
         {
-            //StudentValidator validator = new StudentValidator();
-            //var validationResult = validator.Validate(student);
+            ProfessorValidator validator = new ProfessorValidator();
+            var validationResult = validator.Validate(professor);
 
-            //if (!validationResult.IsValid)
-            //{
-            //    foreach (var error in validationResult.Errors)
-            //    {
-            //        ModelState.AddModelError("", error.ErrorMessage);
-            //    }
-            //    return BadRequest(ModelState);
-            //}
-            //try
-            //{
-            var oldProfessor = _professorService.GetProfessorById(id);
-            if (oldProfessor == null)
+            if (!validationResult.IsValid)
             {
-                return NotFound();
+                foreach (var error in validationResult.Errors)
+                {
+                    ModelState.AddModelError("", error.ErrorMessage);
+                }
+                return BadRequest(ModelState);
             }
-            _professorService.UpdateProfessor(professor);
-            return NoContent();
+            try
+            {
+                var oldProfessor = _professorService.GetProfessorById(id);
+                if (oldProfessor == null)
+                {
+                    return NotFound();
+                }
+                _professorService.UpdateProfessor(professor);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while updating the student.");
+            }
         }
-        //catch (Exception ex)
-        //{
-        //    return StatusCode(500, "An error occurred while updating the student.");
-        //}
-
         [HttpDelete("DeleteProfessor/{id}")]
         public IActionResult DeleteProfessor(int id)
         {
