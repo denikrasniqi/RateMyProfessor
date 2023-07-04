@@ -11,38 +11,30 @@ namespace RateForProfessor.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
+        private readonly IValidator<(string email, string password)> _loginValidator;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, IValidator<(string email, string password)> loginValidator)
         {
             _authService = authService;
+            _loginValidator = loginValidator;
         }
 
         [HttpPost("login")]
-        public IActionResult Login(Student student)
+        public IActionResult Login(string email, string password)
         {
-            LoginValidator validator = new LoginValidator();
-            var validationResult = validator.Validate(student);
+            var loginData = (email, password);
+            var validationResults = _loginValidator.Validate(loginData);
 
-            if (!validationResult.IsValid)
+            if (!validationResults.IsValid)
             {
-                foreach (var error in validationResult.Errors)
-                {
-                    ModelState.AddModelError("", error.ErrorMessage);
-                }
-                return BadRequest(ModelState);
+                return BadRequest(validationResults.Errors);
             }
             // Perform authentication
-            var token = _authService.AuthenticateUser(student.Email, student.Password);
-            var message = "User " + student.Email + " Has Logged in!";
+            var token = _authService.AuthenticateUser(email, password);
             if (token == null)
             {
                 return Unauthorized(); // Return 401 Unauthorized if authentication fails
             }
-            //else
-            //{
-            //    return Ok(message);
-            //}
-
             // Return the token in the response
             return Ok(new { Token = token });
         }

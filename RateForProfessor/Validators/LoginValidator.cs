@@ -1,21 +1,17 @@
 ﻿using FluentValidation;
-using RateForProfessor.Models;
 
 namespace RateForProfessor.Validators
 {
-    public class LoginValidator : AbstractValidator<Student>
+    public class LoginValidator : AbstractValidator<(string email, string password)>
     {
         public LoginValidator()
         {
-            RuleFor(student => student.Email)
+            RuleFor(login => login.email)
                 .NotEmpty().WithMessage("Email is required.")
-                .EmailAddress().WithMessage("Invalid email address.");
-            
-            RuleFor(student => student.Password)
-           .NotEmpty()
-           .WithMessage("Password is required.")
-           .MinimumLength(8).WithMessage("Password must be at least 8 characters long.");
-        }
+                .EmailAddress().WithMessage("Invalid email format.");
 
+            RuleFor(login => login.password)
+                .NotEmpty().WithMessage("Password is required.");
+        }
     }
 }
