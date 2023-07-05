@@ -1,6 +1,5 @@
 ﻿using RateForProfessor.Context;
 using RateForProfessor.Entities;
-using RateForProfessor.Models;
 using RateForProfessor.Repositories.Interfaces;
 
 namespace RateForProfessor.Repositories

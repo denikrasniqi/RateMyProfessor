@@ -1,14 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using RateForProfessor.Context;
+using RateForProfessor.Mappings;
 using RateForProfessor.Repositories;
 using RateForProfessor.Repositories.Interfaces;
-using RateForProfessor.Services.Interfaces;
 using RateForProfessor.Services;
-using FluentValidation.AspNetCore;
-using System.Reflection;
-using AutoMapper;
-using System.Xml.Linq;
-using RateForProfessor.Mappings;
+using RateForProfessor.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

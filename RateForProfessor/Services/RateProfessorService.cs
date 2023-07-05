@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using RateForProfessor.Entities;
 using RateForProfessor.Models;
-using RateForProfessor.Repositories;
 using RateForProfessor.Repositories.Interfaces;
 using RateForProfessor.Services.Interfaces;
 
@@ -20,20 +19,20 @@ namespace RateForProfessor.Services
 
         public RateProfessor CreateRateProfessor(RateProfessor rateProfessor)
         {
-            //try
-            //{
+            try
+            {
                 var rateEntity = _mapper.Map<RateProfessorEntity>(rateProfessor);
                 var result = _rateProfessorRepository.CreateRateProfessor(rateEntity);
 
                 var rateCreated = _mapper.Map<RateProfessor>(result);
                 return rateCreated;
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw new Exception(ex.Message);
-        //    }
         }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+    }
+}
 
         public void DeleteRateProfessor(int id)
         {

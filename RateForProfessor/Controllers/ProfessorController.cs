@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RateForProfessor.Models;
 using RateForProfessor.Services.Interfaces;
 using RateForProfessor.Validators;
