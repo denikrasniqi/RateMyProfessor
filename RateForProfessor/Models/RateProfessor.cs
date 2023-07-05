@@ -24,8 +24,8 @@ namespace RateForProfessor.Models
 
         public string Feedback { get; set; }
 
-        /*public virtual Professor Professor { get; set; }
+        public virtual Professor Professor { get; set; }
 
-        public virtual Student Student { get; set; }*/
+        public virtual Student Student { get; set; }
     }
 }
