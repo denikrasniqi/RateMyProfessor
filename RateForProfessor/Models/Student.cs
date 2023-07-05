@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using RateForProfessor.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using RateForProfessor.Enums;
 
 namespace RateForProfessor.Models
 {
@@ -33,10 +29,10 @@ namespace RateForProfessor.Models
 
         public Gender Gender { get; set; }
 
-        //public Department Department { get; set; }
+        public Department Department { get; set; }
 
-        //public RateUniversity RateUniversity { get; set; }
+        public RateUniversity RateUniversity { get; set; }
 
-        //public ICollection<RateProfessor> RateProfessors { get; set; }
+        public ICollection<RateProfessor> RateProfessors { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RateForProfessor.Context;
+using RateForProfessor.Mappings;
 using RateForProfessor.Repositories;
 using RateForProfessor.Repositories.Interfaces;
 using RateForProfessor.Services;
