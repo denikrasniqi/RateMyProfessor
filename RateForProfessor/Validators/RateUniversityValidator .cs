@@ -16,9 +16,17 @@ namespace RateForProfessor.Validators
             .LessThanOrEqualTo(5)
             .WithMessage("Overall must be between or equal to 1-5");
 
-            RuleFor(s => s.Feedback)
+            RuleFor(u => u.Feedback)
             .NotEmpty()
             .WithMessage("Feedback is required");
+
+            RuleFor(u => u.StudentId)
+            .NotEmpty()
+            .WithMessage("Student is required");
+
+            RuleFor(u => u.UniversityId)
+            .NotEmpty()
+            .WithMessage("University is required");
         }
     }
 }

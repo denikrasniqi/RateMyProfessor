@@ -56,7 +56,7 @@ namespace RateForProfessor.Controllers
                 {
                     ModelState.AddModelError("", error.ErrorMessage);
                 }
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             var createdRateUniversity = _rateUniversityService.CreateRateUniversity(rateUniversity);
             return Ok(createdRateUniversity);
