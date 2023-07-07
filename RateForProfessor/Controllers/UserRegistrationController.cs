@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RateForProfessor.Entities;
 using RateForProfessor.Models;
@@ -18,6 +19,7 @@ namespace RateForProfessor.Controllers
             _registrationService = service;
         }
 
+        [Authorize]
         [HttpGet]
         public List<Student> GetAllStudents()
         {
