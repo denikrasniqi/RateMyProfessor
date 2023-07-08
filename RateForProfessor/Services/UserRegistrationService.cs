@@ -75,5 +75,18 @@ namespace RateForProfessor.Services
 
             _userRegistrationRepository.UpdateStudent(updatedStudent);
         }
+
+        public void UploadProfilePhoto(int studentId, string photoPath)
+        {
+            var existingStudentEntity = _userRegistrationRepository.GetStudentById(studentId);
+
+            if (existingStudentEntity == null)
+            {
+                throw new Exception("Student not found");
+            }
+
+            existingStudentEntity.ProfilePhoto = photoPath;
+            _userRegistrationRepository.UpdateStudent(existingStudentEntity);
+        }
     }
 }

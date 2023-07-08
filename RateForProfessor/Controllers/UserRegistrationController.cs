@@ -114,6 +114,61 @@ namespace RateForProfessor.Controllers
         //public void DeleteStudent(int id)
         //{
         //    _registrationService.DeleteStudent(id);
-        //}
+
+
+        [HttpPost("UploadProfilePhoto/{studentId}")]
+        public IActionResult UploadProfilePhoto(int studentId, IFormFile file)
+        {
+            try
+            {
+                var student = _registrationService.GetStudentById(studentId);
+                if (student == null)
+                {
+                    return NotFound();
+                }
+
+                if (file != null)
+                {
+                    string photoPath = SaveProfilePhoto(file);
+                    _registrationService.UploadProfilePhoto(studentId, photoPath);
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("No file was uploaded.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while uploading the profile photo.");
+            }
+        }
+
+        private string SaveProfilePhoto(IFormFile file)
+        {
+            try
+            {
+                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+
+                return "/uploads/" + uniqueFileName;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while saving the profile photo.", ex);
+            }
+        }
     }
 }

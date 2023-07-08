@@ -15,5 +15,7 @@ namespace RateForProfessor.Services.Interfaces
         public void UpdateStudent(Student student);
 
         public void DeleteStudent(int id);
+
+        public void UploadProfilePhoto(int studentId, string photoPath);
     }
 }
