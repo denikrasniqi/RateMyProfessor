@@ -51,5 +51,15 @@ namespace RateForProfessor.Repositories
             _dbContext.SaveChanges();
         
         }
+
+        public void UploadProfilePhoto(int studentId, string photoPath)
+        {
+            var student = _dbContext.Students.Find(studentId);
+            if (student != null)
+            {
+                student.ProfilePhoto = photoPath;
+                _dbContext.SaveChanges();
+            }
+        }
     }
 }
