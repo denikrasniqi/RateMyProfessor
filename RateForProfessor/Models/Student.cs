@@ -35,6 +35,9 @@ namespace RateForProfessor.Models
 
         //public ICollection<RateProfessor> RateProfessors { get; set; }
 
-        public string ProfilePhoto { get; set; }
+        //public string ProfilePhoto { get; set; }
+        public string ProfilePhotoPath { get; set; }
+
+        public IFormFile ProfilePhoto { get; set; }
     }
 }

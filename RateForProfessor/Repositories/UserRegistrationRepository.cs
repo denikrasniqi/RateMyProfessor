@@ -1,6 +1,5 @@
 ﻿using RateForProfessor.Context;
 using RateForProfessor.Entities;
-using RateForProfessor.Models;
 using RateForProfessor.Repositories.Interfaces;
 
 namespace RateForProfessor.Repositories
@@ -13,13 +12,34 @@ namespace RateForProfessor.Repositories
         {
             _dbContext = dbContext;
         }
-        public StudentEntity CreateStudent(StudentEntity student)
+
+        /*public StudentEntity CreateStudent(StudentEntity student)
         {
             _dbContext.Students.Add(student);
             _dbContext.SaveChanges();
             return student;
+        }*/
 
-        }
+
+
+        /*public StudentEntity CreateStudent(StudentEntity student, string photoPath)
+        {
+            _dbContext.Students.Add(student);
+            _dbContext.SaveChanges();
+
+            // Ngarkoni fotografinë e profilit
+            string fileName = Path.GetFileName(photoPath);
+            string profilePhotoPath = Path.Combine("profile_photos", fileName);
+            File.Copy(photoPath, profilePhotoPath);
+
+            // Përditëso objektin StudentEntity me rrugën e fotografi
+            student.ProfilePhoto = profilePhotoPath;
+
+            _dbContext.SaveChanges();
+
+            return student;
+        }*/
+
 
         public void DeleteStudent(int id)
         {
@@ -52,12 +72,23 @@ namespace RateForProfessor.Repositories
         
         }
 
+        public StudentEntity CreateStudent(StudentEntity student, string photoPath)
+        {
+            _dbContext.Students.Add(student);
+            _dbContext.SaveChanges();
+
+            student.ProfilePhotoPath = photoPath;
+            _dbContext.SaveChanges();
+
+            return student;
+        }
+
         public void UploadProfilePhoto(int studentId, string photoPath)
         {
             var student = _dbContext.Students.Find(studentId);
             if (student != null)
             {
-                student.ProfilePhoto = photoPath;
+                student.ProfilePhotoPath = photoPath;
                 _dbContext.SaveChanges();
             }
         }

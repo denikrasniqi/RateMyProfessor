@@ -16,6 +16,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer("DefaultConnection");
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
+
+builder.Services.AddControllers().AddNewtonsoftJson();
+//builder.Services.AddControllers(options =>
+//{
+//    options.InputFormatters.Insert(0, MyJPIF.GetJsonPatchInputFormatter());
+//});
+
+
 
 builder.Services.AddAuthentication(options =>
 {
