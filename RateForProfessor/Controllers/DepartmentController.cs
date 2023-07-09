@@ -31,17 +31,17 @@ namespace RateForProfessor.Controllers
         [HttpPost("CreateDepartment")]
         public IActionResult CreateDepartment(Department department)
         {
-            //ProfessorValidator validator = new ProfessorValidator();
-            //var validationResult = validator.Validate(professor);
+            DepartmentValidator validator = new DepartmentValidator();
+            var validationResult = validator.Validate(department);
 
-            //if (!validationResult.IsValid)
-            //{
-            //    foreach (var error in validationResult.Errors)
-            //    {
-            //        ModelState.AddModelError("", error.ErrorMessage);
-            //    }
-            //    return BadRequest(ModelState);
-            //}
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    ModelState.AddModelError("", error.ErrorMessage);
+                }
+                return BadRequest(ModelState);
+            }
             var createdDepartment = _departmentService.CreateDepartment(department);
             return Ok(createdDepartment);
         }
@@ -50,17 +50,17 @@ namespace RateForProfessor.Controllers
         [HttpPut("UpdateDepartment/{id}")]
         public IActionResult UpdateDepartment(int id, Department department)
         {
-            //ProfessorValidator validator = new ProfessorValidator();
-            //var validationResult = validator.Validate(professor);
+            DepartmentValidator validator = new DepartmentValidator();
+            var validationResult = validator.Validate(department);
 
-            //if (!validationResult.IsValid)
-            //{
-            //    foreach (var error in validationResult.Errors)
-            //    {
-            //        ModelState.AddModelError("", error.ErrorMessage);
-            //    }
-            //    return BadRequest(ModelState);
-            //}
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    ModelState.AddModelError("", error.ErrorMessage);
+                }
+                return BadRequest(ModelState);
+            }
             try
             {
                 var oldDepartment = _departmentService.GetDepartmentById(id);
