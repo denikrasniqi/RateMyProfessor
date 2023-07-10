@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RateForProfessor.Models;
 using RateForProfessor.Services.Interfaces;
 using RateForProfessor.Validators;
@@ -29,7 +30,6 @@ namespace RateForProfessor.Controllers
             return _rateProfessorService.GetRateProfessorById(id);
         }
 
-
         [HttpGet("RateProfessors/Professor/{professorId}")]
         public ActionResult<List<RateProfessor>> GetRateProfessorsByProfessorId(int professorId)
         {
@@ -44,7 +44,7 @@ namespace RateForProfessor.Controllers
             return Ok(rateProfessors);
         }
 
-
+        [Authorize]
         [HttpPost("CreateRateProfessor")]
         public IActionResult CreateRateProfessor(RateProfessor rateProfessor)
         {
@@ -63,6 +63,7 @@ namespace RateForProfessor.Controllers
             return Ok(createdRateProfessor);
         }
 
+        [Authorize]
         [HttpPut("UpdateRateProfessor/{id}")]
         public IActionResult UpdateRateProfessor(int id, RateProfessor rateProfessor)
         {
@@ -93,6 +94,7 @@ namespace RateForProfessor.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("DeleteRateProfessor/{id}")]
         public IActionResult DeleteRateProfessor(int id)
         {

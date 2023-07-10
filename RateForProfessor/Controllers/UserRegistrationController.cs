@@ -27,6 +27,7 @@ namespace RateForProfessor.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpGet("GetStudentById/{id}")]
         public Student GetStudentById(int id)
         {
@@ -93,6 +94,8 @@ namespace RateForProfessor.Controllers
                 return StatusCode(500, "An error occurred while updating the student.");
             }
         }
+
+        [Authorize]
         [HttpDelete("DeleteStudent/{id}")]
         public IActionResult DeleteStudent(int id)
         {
