@@ -65,6 +65,7 @@ namespace RateForProfessor.Controllers
         //{
         //    _registrationService.UpdateStudent(student);
         //}
+        [Authorize]
         [HttpPut("UpdateStudent/{id}")]
         public IActionResult UpdateStudent(int id, Student student)
         {
