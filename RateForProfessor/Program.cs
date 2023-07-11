@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +34,16 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
 
-builder.Services.AddControllers().AddNewtonsoftJson();
+
+//builder.Services.AddControllers()
+//        .AddNewtonsoftJson()
+//        .AddMvcOptions(options =>
+//        {
+//            options.ModelBinderProviders.Insert(0, new FormFileModelBinderProvider());
+//        });
+
+
+//builder.Services.AddControllers().AddNewtonsoftJson();
 //builder.Services.AddControllers(options =>
 //{
 //    options.InputFormatters.Insert(0, MyJPIF.GetJsonPatchInputFormatter());

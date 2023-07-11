@@ -35,10 +35,6 @@ namespace RateForProfessor.Entities
 
         public ICollection<RateProfessorEntity> RateProfessors { get; set; }
 
-        //public IFormFile ProfilePhoto { get; set; }
         public string ProfilePhotoPath { get; set; }
-
-        [NotMapped]
-        public IFormFile ProfilePhoto { get; set; }
     }
 }
