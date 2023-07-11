@@ -9,7 +9,6 @@ namespace RateForProfessor.Controllers
     [ApiController]
     public class UserRegistrationController : ControllerBase
     {
-     
         private readonly IUserRegistrationService _registrationService;
         public UserRegistrationController(IUserRegistrationService service)
         {
@@ -35,7 +34,6 @@ namespace RateForProfessor.Controllers
             return _registrationService.GetStudentByEmail(email);
         }
 
-
         [HttpPut("UpdateStudent/{id}")]
         public IActionResult UpdateStudent(int id, Student student)
         {
@@ -50,8 +48,8 @@ namespace RateForProfessor.Controllers
                 }
                 return BadRequest(ModelState);
             }
-            //try
-            //{
+            try
+            {
                 var oldStudent = _registrationService.GetStudentById(id);
                 if (oldStudent == null)
                 {
@@ -59,19 +57,18 @@ namespace RateForProfessor.Controllers
                 }
                 _registrationService.UpdateStudent(student);
                 return NoContent();
-            //}
-            //catch (Exception ex)
-            //{
-            //    return StatusCode(500, "An error occurred while updating the student.");
-            //}
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while updating the student.");
+            }
         }
-
 
         [HttpDelete("DeleteStudent/{id}")]
         public IActionResult DeleteStudent(int id)
         {
-            //try
-            //{
+            try
+            {
                 var deletedStudent = _registrationService.GetStudentById(id);
                 if (deletedStudent == null)
                 {
@@ -79,62 +76,27 @@ namespace RateForProfessor.Controllers
                 }
                 _registrationService.DeleteStudent(id);
                 return NoContent();
-            //}
-            //catch (Exception ex)
-            //{
-            //    return StatusCode(500, "An error occurred while deleting the student.");
-            //}
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while deleting the student.");
+            }
         }
 
-
-
-        /*[HttpPost("CreateStudent")]
-        public IActionResult CreateStudent(Student student)
-        {
-            var createdStudent = _registrationService.CreateStudent(student);
-            return Ok(createdStudent);
-        }*/
-
-
-
         [HttpPost("CreateStudent")]
-        public IActionResult CreateStudent(Student student, IFormFile file)
+        public IActionResult CreateStudent([FromForm] Student student, IFormFile file)
         {
             try
             {
-                /*StudentValidator validator = new StudentValidator();
-                var validationResult = validator.Validate(student);
-
-                if (!validationResult.IsValid)
-                {
-                    foreach (var error in validationResult.Errors)
-                    {
-                        ModelState.AddModelError("", error.ErrorMessage);
-                    }
-                    return BadRequest(ModelState);
-                }*/
-
-                //if (file != null)
-                //{
-                    string photoPath = SaveProfilePhoto(file);
-                    var createdStudent = _registrationService.CreateStudent(student, photoPath);
-                    return Ok(createdStudent);
-                //}
-                //else
-                //{
-                //    var createdStudent = _registrationService.CreateStudent(student);
-                //    return Ok(createdStudent);
-                //}
+                string photoPath = SaveProfilePhoto(file);
+                var createdStudent = _registrationService.CreateStudent(student, photoPath);
+                return Ok(createdStudent);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "An error occurred while creating the student.");
             }
         }
-
-
-
-
 
         [HttpPost("UploadProfilePhoto/{studentId}")]
         public IActionResult UploadProfilePhoto(int studentId, IFormFile file)

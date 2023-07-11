@@ -13,34 +13,6 @@ namespace RateForProfessor.Repositories
             _dbContext = dbContext;
         }
 
-        /*public StudentEntity CreateStudent(StudentEntity student)
-        {
-            _dbContext.Students.Add(student);
-            _dbContext.SaveChanges();
-            return student;
-        }*/
-
-
-
-        /*public StudentEntity CreateStudent(StudentEntity student, string photoPath)
-        {
-            _dbContext.Students.Add(student);
-            _dbContext.SaveChanges();
-
-            // Ngarkoni fotografinë e profilit
-            string fileName = Path.GetFileName(photoPath);
-            string profilePhotoPath = Path.Combine("profile_photos", fileName);
-            File.Copy(photoPath, profilePhotoPath);
-
-            // Përditëso objektin StudentEntity me rrugën e fotografi
-            student.ProfilePhoto = profilePhotoPath;
-
-            _dbContext.SaveChanges();
-
-            return student;
-        }*/
-
-
         public void DeleteStudent(int id)
         {
             var student = _dbContext.Students.Find(id);
@@ -69,15 +41,12 @@ namespace RateForProfessor.Repositories
             var oldstudent = _dbContext.Students.Find(student.StudentId);
             _dbContext.Entry(oldstudent).CurrentValues.SetValues(student);
             _dbContext.SaveChanges();
-        
         }
 
         public StudentEntity CreateStudent(StudentEntity student, string photoPath)
         {
-            _dbContext.Students.Add(student);
-            _dbContext.SaveChanges();
-
             student.ProfilePhotoPath = photoPath;
+            _dbContext.Students.Add(student);
             _dbContext.SaveChanges();
 
             return student;
