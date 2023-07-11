@@ -7,12 +7,12 @@ namespace RateForProfessor.Validators
     {
         public RateProfessorValidator()
         {
-            RuleFor(s => s.Overall)
-           .NotEmpty()
-           .WithMessage("Overall is required")
-           .GreaterThanOrEqualTo(1)
-           .LessThanOrEqualTo(5)
-           .WithMessage("Overall must be between or equal to 1-5");
+           // RuleFor(s => s.Overall)
+           //.NotEmpty()
+           //.WithMessage("Overall is required")
+           //.GreaterThanOrEqualTo(1)
+           //.LessThanOrEqualTo(5)
+           //.WithMessage("Overall must be between or equal to 1-5");
 
             RuleFor(s => s.GradingFairness)
            .NotEmpty()

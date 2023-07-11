@@ -16,5 +16,7 @@ namespace RateForProfessor.Repositories.Interfaces
         public void UpdateStudent(StudentEntity student);
 
         public void DeleteStudent(int id);
+        public StudentEntity GetStudentByName(string name);
+        
     }
 }

@@ -13,5 +13,7 @@ namespace RateForProfessor.Repositories.Interfaces
         public void UpdateDepartment(DepartmentEntity department);
 
         public void DeleteDepartment(int id);
+        public DepartmentEntity GetDepartmentByName(string name);
+        
     }
 }

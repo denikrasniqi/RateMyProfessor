@@ -41,5 +41,11 @@ namespace RateForProfessor.Repositories
             _dbContext.Departments.Remove(department);
             _dbContext.SaveChanges();
         }
+
+        public DepartmentEntity GetDepartmentByName(string name)
+        {
+            var department = _dbContext.Departments.FirstOrDefault(d => d.Name == name);
+            return department;
+        }
     }
 }

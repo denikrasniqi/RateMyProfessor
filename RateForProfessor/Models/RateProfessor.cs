@@ -14,7 +14,7 @@ namespace RateForProfessor.Models
         [ForeignKey("Student")]
         public int StudentId { get; set; }
 
-        public int Overall { get; set; }
+        public int Overall { get; set; } = 0;
 
         public int CommunicationSkills { get; set; }
 
@@ -24,8 +24,8 @@ namespace RateForProfessor.Models
 
         public string Feedback { get; set; }
 
-        public virtual Professor Professor { get; set; }
+        //public virtual Professor Professor { get; set; }
 
-        public virtual Student Student { get; set; }
+        //public virtual Student Student { get; set; }
     }
 }
