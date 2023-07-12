@@ -43,6 +43,17 @@ namespace RateForProfessor.Services.Interfaces
         public University CreateUniversitiy(University university);
         public void UpdateUniversity(University university);
         public void DeleteUniversity(int id);
+
+        //Course
+        public List<Course> GetAllCourses();
+
+        public Course GetCourseById(int id);
+        //Krijimi i logjikes
+        public Course CreateCourse(Course course);
+
+        public void UpdateCourse(Course course);
+
+        public void DeleteCourse(int id);
         //Statistikat
         public int GetUniversityCount();
         public int GetStudentCount();

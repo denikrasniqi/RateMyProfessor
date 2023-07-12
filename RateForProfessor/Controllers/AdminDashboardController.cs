@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RateForProfessor.Models;
 using RateForProfessor.Services.Interfaces;
@@ -213,6 +214,87 @@ namespace RateForProfessor.Controllers
         {
             var student = _adminDashboardService.GetStudentByName(name);
             return student;
+        }
+
+        //Courses
+        [HttpGet("GetAllCourses")]
+        public List<Course> GetAllCourses()
+        {
+            var result = _adminDashboardService.GetAllCourses();
+            return result;
+        }
+
+        [HttpGet("GetCourseById/{id}")]
+        public Course GetCourseById(int id)
+        {
+            return _adminDashboardService.GetCourseById(id);
+        }
+
+        [HttpPost("CreateCourse")]
+        public IActionResult CreateDepartment(Course course)
+        {
+            CourseValidator validator = new CourseValidator();
+            var validationResult = validator.Validate(course);
+
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    ModelState.AddModelError("", error.ErrorMessage);
+                }
+                return BadRequest(ModelState);
+            }
+            var createdDepartment = _adminDashboardService.CreateCourse(course);
+            return Ok(createdDepartment);
+        }
+
+
+        [HttpPut("UpdateCourse/{id}")]
+        public IActionResult UpdateCourse(int id, Course course)
+        {
+            CourseValidator validator = new CourseValidator();
+            var validationResult = validator.Validate(course);
+
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    ModelState.AddModelError("", error.ErrorMessage);
+                }
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var oldCourse = _adminDashboardService.GetCourseById(id);
+                if (oldCourse == null)
+                {
+                    return NotFound();
+                }
+                _adminDashboardService.UpdateCourse(course);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while updating the student.");
+            }
+        }
+        [HttpDelete("DeleteCourse/{id}")]
+        public IActionResult DeleteCourse(int id)
+        {
+            try
+            {
+                var course = _adminDashboardService.GetCourseById(id);
+                if (course == null)
+                {
+                    return NotFound();
+                }
+                _adminDashboardService.DeleteCourse(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while deleting the course.");
+            }
         }
 
 

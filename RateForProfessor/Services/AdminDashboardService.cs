@@ -14,11 +14,12 @@ namespace RateForProfessor.Services
         private readonly IRateProfessorRepository _rateProfessorRepository;
         //private readonly IRateUniversityRepository _rateUniversityRepository;
         //private readonly IUniversityRepository _universityRepository;
+        private readonly ICourseRepository _courseRepository;
         private readonly IMapper _mapper;
 
         public AdminDashboardService(IProfessorRepository professorRepository, IDepartmentRepository departmentRepository, 
             IUserRegistrationRepository userRegistrationRepository, IRateProfessorRepository rateProfessorRepository,
-            /*IRateUniversityRepository rateUniversityRepository*//*, IUniversityRepository universityRepository,*/ IMapper mapper)
+            /*IRateUniversityRepository rateUniversityRepository*//*, IUniversityRepository universityRepository,*/ ICourseRepository courseRepository, IMapper mapper)
         {
             _professorRepository = professorRepository;
             _departmentRepository = departmentRepository;
@@ -26,6 +27,7 @@ namespace RateForProfessor.Services
             _rateProfessorRepository = rateProfessorRepository;
             //_rateUniversityRepository = rateUniversityRepository;
             //_universityRepository = universityRepository;
+            _courseRepository = courseRepository;
             _mapper = mapper;
         }
 
@@ -276,6 +278,55 @@ namespace RateForProfessor.Services
             //var updateUniversity = _mapper.Map<UniversityEntity>(university);
             //_universityRepository.UpdateUniversity(updateUniversity);
             throw new NotImplementedException();
+        }
+        //Course Section
+        public Course CreateCourse(Course course)
+        {
+            try
+            {
+                var courseEntity = _mapper.Map<CourseEntity>(course);
+                var result = _courseRepository.CreateCourse(courseEntity);
+
+                var courseCreated = _mapper.Map<Course>(result);
+                return courseCreated;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void DeleteCourse(int id)
+        {
+            _courseRepository.DeleteCourse(id);
+        }
+
+        public List<Course> GetAllCourses()
+        {
+            var courseEntities = _courseRepository.GetAllCourses();
+            var courses = _mapper.Map<List<Course>>(courseEntities);
+            return courses;
+        }
+
+        public Course GetCourseById(int id)
+        {
+            var courseEntities = _courseRepository.GetCourseById(id);
+            var courses = _mapper.Map<Course>(courseEntities);
+            return courses;
+        }
+
+        public void UpdateCourse(Course course)
+        {
+            var existingCourseEntity = _courseRepository.GetCourseById(course.ID);
+
+            if (existingCourseEntity == null)
+            {
+                throw new Exception("Course not found");
+            }
+            var updatedCourse = _mapper.Map<CourseEntity>(course);
+
+            _courseRepository.UpdateCourse(updatedCourse);
         }
     }
 }
