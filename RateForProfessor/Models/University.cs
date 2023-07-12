@@ -20,12 +20,12 @@ namespace RateForProfessor.Models
 
         public int CoursesNumber { get; set; }
 
-        public ICollection<Address> Addresses { get; set; }
+        //public ICollection<Address> Addresses { get; set; }
 
-        public ICollection<ContactNumber> ContactNumbers { get; set; }
+        //public ICollection<ContactNumber> ContactNumbers { get; set; }
 
-        public ICollection<Department> Departments { get; set; }
+        //public ICollection<Department> Departments { get; set; }
 
-        public ICollection<RateUniversity> RateUniversities { get; set; }
+        //public ICollection<RateUniversity> RateUniversities { get; set; }
     }
 }
