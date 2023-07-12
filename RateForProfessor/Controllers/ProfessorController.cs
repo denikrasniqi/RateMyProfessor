@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RateForProfessor.Models;
 using RateForProfessor.Services.Interfaces;
 using RateForProfessor.Validators;
@@ -28,6 +29,7 @@ namespace RateForProfessor.Controllers
             return _professorService.GetProfessorById(id);
         }
 
+        [Authorize]
         [HttpPost("CreateProfessor")]
         public IActionResult CreateProfessor(Professor professor)
         {
@@ -46,7 +48,7 @@ namespace RateForProfessor.Controllers
             return Ok(createdProfessor);
         }
 
-
+        [Authorize]
         [HttpPut("UpdateProfessor/{id}")]
         public IActionResult UpdateProfessor(int id, Professor professor)
         {
@@ -76,6 +78,7 @@ namespace RateForProfessor.Controllers
                 return StatusCode(500, "An error occurred while updating the student.");
             }
         }
+        [Authorize]
         [HttpDelete("DeleteProfessor/{id}")]
         public IActionResult DeleteProfessor(int id)
         {

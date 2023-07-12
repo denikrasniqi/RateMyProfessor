@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using RateForProfessor.Entities;
 using RateForProfessor.Models;
 using RateForProfessor.Services.Interfaces;
 using RateForProfessor.Validators;
@@ -15,6 +18,7 @@ namespace RateForProfessor.Controllers
             _registrationService = service;
         }
 
+        [Authorize]
         [HttpGet]
         public List<Student> GetAllStudents()
         {
@@ -22,6 +26,7 @@ namespace RateForProfessor.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpGet("GetStudentById/{id}")]
         public Student GetStudentById(int id)
         {
@@ -34,6 +39,33 @@ namespace RateForProfessor.Controllers
             return _registrationService.GetStudentByEmail(email);
         }
 
+       [HttpPost("CreateStudent")]
+        public IActionResult CreateStudent([FromForm] Student student, IFormFile file)
+        {
+            StudentValidator validator = new StudentValidator();
+            var validationResult = validator.Validate(student);
+
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    ModelState.AddModelError("", error.ErrorMessage);
+                }
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                string photoPath = SaveProfilePhoto(file);
+                var createdStudent = _registrationService.CreateStudent(student, photoPath);
+                return Ok(createdStudent);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while creating the student.");
+            }
+        }
+        
+        [Authorize]
         [HttpPut("UpdateStudent/{id}")]
         public IActionResult UpdateStudent(int id, Student student)
         {
@@ -64,6 +96,7 @@ namespace RateForProfessor.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("DeleteStudent/{id}")]
         public IActionResult DeleteStudent(int id)
         {
@@ -80,21 +113,6 @@ namespace RateForProfessor.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, "An error occurred while deleting the student.");
-            }
-        }
-
-        [HttpPost("CreateStudent")]
-        public IActionResult CreateStudent([FromForm] Student student, IFormFile file)
-        {
-            try
-            {
-                string photoPath = SaveProfilePhoto(file);
-                var createdStudent = _registrationService.CreateStudent(student, photoPath);
-                return Ok(createdStudent);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "An error occurred while creating the student.");
             }
         }
 
