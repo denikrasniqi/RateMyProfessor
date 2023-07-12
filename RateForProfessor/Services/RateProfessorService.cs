@@ -78,6 +78,12 @@ namespace RateForProfessor.Services
             var updatedRateProfessor = _mapper.Map<RateProfessorEntity>(rateProfessor);
 
             _rateProfessorRepository.UpdateRateProfessor(updatedRateProfessor);
-        }      
+        }   
+        public int CalculateOverall(int communicationskills, int responsiveness,
+            int gradingfairness)
+        {
+            int overall = (communicationskills + responsiveness + gradingfairness) / 3;
+            return overall;
+        }
     }
 }
