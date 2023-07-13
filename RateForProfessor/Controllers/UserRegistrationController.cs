@@ -39,6 +39,11 @@ namespace RateForProfessor.Controllers
         {
             return _registrationService.GetStudentByEmail(email);
         }
+        [HttpGet("GetStudentByName/{name}")]
+        public Student GetStudentByName(string name)
+        {
+            return _registrationService.GetStudentByName(name);
+        }
 
         [HttpPost("CreateStudent")]
         public IActionResult CreateStudent(Student student)
