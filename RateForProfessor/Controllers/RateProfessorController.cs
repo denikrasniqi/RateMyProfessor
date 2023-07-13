@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RateForProfessor.Models;
 using RateForProfessor.Services;
 using RateForProfessor.Services.Interfaces;
@@ -30,7 +31,6 @@ namespace RateForProfessor.Controllers
             return _rateProfessorService.GetRateProfessorById(id);
         }
 
-
         [HttpGet("RateProfessors/Professor/{professorId}")]
         public ActionResult<List<RateProfessor>> GetRateProfessorsByProfessorId(int professorId)
         {
@@ -45,24 +45,6 @@ namespace RateForProfessor.Controllers
             return Ok(rateProfessors);
         }
 
-
-        //[HttpPost("CreateRateProfessor")]
-        //public IActionResult CreateRateProfessor(RateProfessor rateProfessor)
-        //{
-        //    RateProfessorValidator validator = new RateProfessorValidator();
-        //    var validationResult = validator.Validate(rateProfessor);
-
-        //    if (!validationResult.IsValid)
-        //    {
-        //        foreach (var error in validationResult.Errors)
-        //        {
-        //            ModelState.AddModelError("", error.ErrorMessage);
-        //        }
-        //        return BadRequest(ModelState);
-        //    }
-        //    var createdRateProfessor = _rateProfessorService.CreateRateProfessor(rateProfessor);
-        //    return Ok(createdRateProfessor);
-        //}
 
         [HttpPost("CreateRateProfessor")]
         public IActionResult CreateRateProfessor(int professorid, int studentid, int communicationskills, int responsiveness,
@@ -94,6 +76,7 @@ namespace RateForProfessor.Controllers
             return Ok(createdRateProfessor);
         }
 
+        [Authorize]
         [HttpPut("UpdateRateProfessor/{id}")]
         public IActionResult UpdateRateProfessor(int id, RateProfessor rateProfessor)
         {
@@ -124,6 +107,7 @@ namespace RateForProfessor.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("DeleteRateProfessor/{id}")]
         public IActionResult DeleteRateProfessor(int id)
         {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RateForProfessor.Entities;
 using RateForProfessor.Models;
@@ -18,6 +19,7 @@ namespace RateForProfessor.Controllers
             _registrationService = service;
         }
 
+        [Authorize]
         [HttpGet]
         public List<Student> GetAllStudents()
         {
@@ -25,6 +27,7 @@ namespace RateForProfessor.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpGet("GetStudentById/{id}")]
         public Student GetStudentById(int id)
         {
@@ -62,6 +65,7 @@ namespace RateForProfessor.Controllers
         //{
         //    _registrationService.UpdateStudent(student);
         //}
+        [Authorize]
         [HttpPut("UpdateStudent/{id}")]
         public IActionResult UpdateStudent(int id, Student student)
         {
@@ -91,6 +95,8 @@ namespace RateForProfessor.Controllers
                 return StatusCode(500, "An error occurred while updating the student.");
             }
         }
+
+        [Authorize]
         [HttpDelete("DeleteStudent/{id}")]
         public IActionResult DeleteStudent(int id)
         {
