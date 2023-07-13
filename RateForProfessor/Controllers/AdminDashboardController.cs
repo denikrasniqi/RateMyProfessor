@@ -410,7 +410,7 @@ namespace RateForProfessor.Controllers
             return _adminDashboardService.GetProfessorCount();
         }
         [HttpGet("SortFromHighestRatedProfessor")]
-        public List<RateProfessor> SortFromHighestRatedProfessor()
+        public RateProfessor SortFromHighestRatedProfessor()
         {
             return _adminDashboardService.SortFromHighestRatedProfessor();
         }

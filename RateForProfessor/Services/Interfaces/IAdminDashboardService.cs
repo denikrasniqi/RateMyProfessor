@@ -59,7 +59,7 @@ namespace RateForProfessor.Services.Interfaces
         public int GetStudentCount();
         public int GetDepartmentCount();
         public int GetProfessorCount();
-        public List<RateProfessor> SortFromHighestRatedProfessor();
+        public RateProfessor SortFromHighestRatedProfessor();
         public RateUniversity GetHighestRatedUniversity();
         public University GetOldestUniversity();
 

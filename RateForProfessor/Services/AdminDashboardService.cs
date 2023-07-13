@@ -148,11 +148,12 @@ namespace RateForProfessor.Services
             return countDepartment;
         }
 
-        public List<RateProfessor> SortFromHighestRatedProfessor()
-        { 
+        public RateProfessor SortFromHighestRatedProfessor()
+        {
             var sortedEntity = _rateProfessorRepository.GetAllRateProfessors().OrderByDescending(rp => rp.Overall);
-            var sorted = _mapper.Map<List<RateProfessor>>(sortedEntity);
-            return sorted;
+            var highestRatedProfessor = sortedEntity.FirstOrDefault();
+            var highestRatedProfessorDto = _mapper.Map<RateProfessor>(highestRatedProfessor);
+            return highestRatedProfessorDto;
         }
 
         public RateUniversity GetHighestRatedUniversity()
