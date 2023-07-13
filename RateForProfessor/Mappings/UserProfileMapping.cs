@@ -18,7 +18,7 @@ namespace RateForProfessor.Mappings
 
             CreateMap<Course, CourseEntity>().ReverseMap();
 
-            CreateMap<University, UniversityEntity>().ReverseMap();
+            //CreateMap<University, UniversityEntity>().ReverseMap();
         }
     }
 }

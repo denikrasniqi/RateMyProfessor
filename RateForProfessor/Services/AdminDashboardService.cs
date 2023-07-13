@@ -52,7 +52,7 @@ namespace RateForProfessor.Services
         }
         public University GetOldestUniversity()
         {
-            var oldestUniversityEntity = _universityRepository.GetAllUniversites().Min(u => u.EstablishedYear);
+            var oldestUniversityEntity = _universityRepository.GetAllUniversites().OrderBy(u => u.EstablishedYear).FirstOrDefault();
             var oldestUniversity = _mapper.Map<University>(oldestUniversityEntity);
             return oldestUniversity;
         }
@@ -68,9 +68,29 @@ namespace RateForProfessor.Services
         }
         public int GetUniversityCount()
         {
-            //var count = _universityRepository.GetAllUniversity().Count();
-            //return count;
-            throw new NotImplementedException();
+            var count = _universityRepository.GetAllUniversites().Count();
+            return count;
+        }
+        public Student GetStudentWithMostRatings()
+        {
+            var studentWithMostRatings = _rateProfessorRepository.GetAllRateProfessors()
+                .GroupBy(rp => rp.StudentId)
+                .Select(group => new
+                {
+                    StudentId = group.Key,
+                    RatingCount = group.Count()
+                })
+                .OrderByDescending(x => x.RatingCount)
+                .FirstOrDefault();
+
+            if (studentWithMostRatings != null)
+            {
+                var studentEntity = _userRegistrationRepository.GetAllStudents().FirstOrDefault(s => s.StudentId == studentWithMostRatings.StudentId);
+                var student = _mapper.Map<Student>(studentEntity);
+                return student;
+            }
+
+            return null;
         }
     }
 }

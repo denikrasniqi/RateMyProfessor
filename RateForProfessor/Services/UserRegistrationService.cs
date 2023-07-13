@@ -32,17 +32,13 @@ namespace RateForProfessor.Services
 
                 throw new Exception(ex.Message);
             }
-
         }
-
         public void DeleteStudent(int id)
         {
             _userRegistrationRepository.DeleteStudent(id);
         }
-
         public List<Student> GetAllStudents()
         {
-            //return _userRegistrationRepository.GetAllStudents();
             var studentEntities = _userRegistrationRepository.GetAllStudents();
             var students = _mapper.Map<List<Student>>(studentEntities);
             return students;
@@ -57,19 +53,16 @@ namespace RateForProfessor.Services
         }
         public Student GetStudentByName(string name)
         {
-
             var studentEntity = _userRegistrationRepository.GetStudentByName(name);
             var student = _mapper.Map<Student>(studentEntity);
             return student;
         }
-
         public Student GetStudentById(int id)
         {
             var studentEntity = _userRegistrationRepository.GetStudentById(id);
             var student = _mapper.Map<Student>(studentEntity);
             return student;
         }
-
         public void UpdateStudent(Student student)
         {
             var existingStudentEntity = _userRegistrationRepository.GetStudentById(student.StudentId);

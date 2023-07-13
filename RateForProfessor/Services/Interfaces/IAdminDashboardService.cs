@@ -11,5 +11,6 @@ namespace RateForProfessor.Services.Interfaces
         public RateProfessor SortFromHighestRatedProfessor();
         public RateUniversity GetHighestRatedUniversity();
         public University GetOldestUniversity();
+        public Student GetStudentWithMostRatings();
     }
 }

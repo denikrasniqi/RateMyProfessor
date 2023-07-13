@@ -12,7 +12,7 @@ namespace RateForProfessor.Controllers
     public class AdminDashboardController : ControllerBase
     {
         private readonly IAdminDashboardService _adminDashboardService;
-        public AdminDashboardController(IAdminDashboardService adminDashboardService/*, IUniversityService universityService, IRateUniversityService rateuniversityService*/)
+        public AdminDashboardController(IAdminDashboardService adminDashboardService)
         {
             _adminDashboardService = adminDashboardService;           
         }
@@ -50,6 +50,11 @@ namespace RateForProfessor.Controllers
         public University GetOldestUniversity()
         {
             return _adminDashboardService.GetOldestUniversity();
+        }
+        [HttpGet("GetStudentWithMostRatings")]
+        public Student GetStudentWithMostRatings()
+        {
+            return _adminDashboardService.GetStudentWithMostRatings();
         }
     }
 }
