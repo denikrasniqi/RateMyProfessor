@@ -64,5 +64,11 @@ namespace RateForProfessor.Services
 
             _departmentRepository.UpdateDepartment(updatedDepartment);
         }
+        public Department GetDepartmentByName(string name)
+        {
+            var departmentEntity = _departmentRepository.GetDepartmentByName(name);
+            var department = _mapper.Map<Department>(departmentEntity);
+            return department;
+        }
     }
 }

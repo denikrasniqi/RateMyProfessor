@@ -13,5 +13,7 @@ namespace RateForProfessor.Services.Interfaces
         public void UpdateProfessor(Professor professor);
 
         public void DeleteProfessor(int id);
+
+        public Professor GetProfessorByName(string name);
     }
 }

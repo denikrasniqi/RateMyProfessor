@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RateForProfessor.Models;
+using RateForProfessor.Services;
 using RateForProfessor.Services.Interfaces;
 using RateForProfessor.Validators;
 
@@ -93,6 +94,11 @@ namespace RateForProfessor.Controllers
             {
                 return StatusCode(500, "An error occurred while deleting the student.");
             }
+        }
+        [HttpGet("GetDepartmentByName/{name}")]
+        public Department GetDepartmentByName(string name)
+        {
+            return _departmentService.GetDepartmentByName(name);
         }
     }
 }

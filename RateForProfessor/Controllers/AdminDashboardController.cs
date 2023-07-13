@@ -12,297 +12,301 @@ namespace RateForProfessor.Controllers
     public class AdminDashboardController : ControllerBase
     {
         private readonly IAdminDashboardService _adminDashboardService;
-        public AdminDashboardController(IAdminDashboardService adminDashboardService)
+        //private readonly IUniversityService _universityService;
+        //private readonly IRateUniversityService _rateuniversityService;
+        public AdminDashboardController(IAdminDashboardService adminDashboardService/*, IUniversityService universityService, IRateUniversityService rateuniversityService*/)
         {
             _adminDashboardService = adminDashboardService;
+            //_universityService = universityService;
+            //_rateuniversityService = rateuniversityService;
         }
 
         //Proffessor
-        [HttpGet("GetAllProfessors")]
-        public List<Professor> GetAllProfessors()
-        {
-            return _adminDashboardService.GetAllProfessors();
-        }
-        [HttpGet("GetProfessorById/{id}")]
-        public Professor GetProfessorById(int id)
-        {
-            return _adminDashboardService.GetProfessorById(id);
-        }
-        [HttpGet("GetProfessorByName/{name}")]
-        public Professor GetProfessorByName(string name)
-        {
-            return _adminDashboardService.GetProfessorByName(name);
-        }
-        [HttpPost("CreateProfessor")]
-        public IActionResult CreateProfessor(Professor professor)
-        {
-            ProfessorValidator validator = new ProfessorValidator();
-            var validationResult = validator.Validate(professor);
+        //[HttpGet("GetAllProfessors")]
+        //public List<Professor> GetAllProfessors()
+        //{
+        //    return _adminDashboardService.GetAllProfessors();
+        //}
+        //[HttpGet("GetProfessorById/{id}")]
+        //public Professor GetProfessorById(int id)
+        //{
+        //    return _adminDashboardService.GetProfessorById(id);
+        //}
+        //[HttpGet("GetProfessorByName/{name}")]
+        //public Professor GetProfessorByName(string name)
+        //{
+        //    return _adminDashboardService.GetProfessorByName(name);
+        //}
+        //[HttpPost("CreateProfessor")]
+        //public IActionResult CreateProfessor(Professor professor)
+        //{
+        //    ProfessorValidator validator = new ProfessorValidator();
+        //    var validationResult = validator.Validate(professor);
 
-            if (!validationResult.IsValid)
-            {
-                foreach (var error in validationResult.Errors)
-                {
-                    ModelState.AddModelError("", error.ErrorMessage);
-                }
-                return BadRequest(ModelState);
-            }
-            var createdProfessor = _adminDashboardService.CreateProfessor(professor);
-            return Ok(createdProfessor);
-        }
+        //    if (!validationResult.IsValid)
+        //    {
+        //        foreach (var error in validationResult.Errors)
+        //        {
+        //            ModelState.AddModelError("", error.ErrorMessage);
+        //        }
+        //        return BadRequest(ModelState);
+        //    }
+        //    var createdProfessor = _adminDashboardService.CreateProfessor(professor);
+        //    return Ok(createdProfessor);
+        //}
 
 
-        [HttpPut("UpdateProfessor/{id}")]
-        public IActionResult UpdateProfessor(int id, Professor professor)
-        {
-            ProfessorValidator validator = new ProfessorValidator();
-            var validationResult = validator.Validate(professor);
+        //[HttpPut("UpdateProfessor/{id}")]
+        //public IActionResult UpdateProfessor(int id, Professor professor)
+        //{
+        //    ProfessorValidator validator = new ProfessorValidator();
+        //    var validationResult = validator.Validate(professor);
 
-            if (!validationResult.IsValid)
-            {
-                foreach (var error in validationResult.Errors)
-                {
-                    ModelState.AddModelError("", error.ErrorMessage);
-                }
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                var oldProfessor = _adminDashboardService.GetProfessorById(id);
-                if (oldProfessor == null)
-                {
-                    return NotFound();
-                }
-                _adminDashboardService.UpdateProfessor(professor);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "An error occurred while updating the student.");
-            }
-        }
-        [HttpDelete("DeleteProfessor/{id}")]
-        public IActionResult DeleteProfessor(int id)
-        {
-            try
-            {
-                var professor = _adminDashboardService.GetProfessorById(id);
-                if (professor == null)
-                {
-                    return NotFound();
-                }
-                _adminDashboardService.DeleteProfessor(id);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "An error occurred while deleting the student.");
-            }
-        }
+        //    if (!validationResult.IsValid)
+        //    {
+        //        foreach (var error in validationResult.Errors)
+        //        {
+        //            ModelState.AddModelError("", error.ErrorMessage);
+        //        }
+        //        return BadRequest(ModelState);
+        //    }
+        //    try
+        //    {
+        //        var oldProfessor = _adminDashboardService.GetProfessorById(id);
+        //        if (oldProfessor == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        _adminDashboardService.UpdateProfessor(professor);
+        //        return NoContent();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, "An error occurred while updating the student.");
+        //    }
+        //}
+        //[HttpDelete("DeleteProfessor/{id}")]
+        //public IActionResult DeleteProfessor(int id)
+        //{
+        //    try
+        //    {
+        //        var professor = _adminDashboardService.GetProfessorById(id);
+        //        if (professor == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        _adminDashboardService.DeleteProfessor(id);
+        //        return NoContent();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, "An error occurred while deleting the student.");
+        //    }
+        //}
         //Department
 
-        [HttpGet("GetAllDepartments")]
-        public List<Department> GetAllDepartments()
-        {
-            var result = _adminDashboardService.GetAllDepartments();
-            return result;
-        }
+        //[HttpGet("GetAllDepartments")]
+        //public List<Department> GetAllDepartments()
+        //{
+        //    var result = _adminDashboardService.GetAllDepartments();
+        //    return result;
+        //}
 
-        [HttpGet("GetDepartmentById/{id}")]
-        public Department GetDepartmentById(int id)
-        {
-            return _adminDashboardService.GetDepartmentById(id);
-        }
+        //[HttpGet("GetDepartmentById/{id}")]
+        //public Department GetDepartmentById(int id)
+        //{
+        //    return _adminDashboardService.GetDepartmentById(id);
+        //}
 
-        [HttpPost("CreateDepartment")]
-        public IActionResult CreateDepartment(Department department)
-        {
-            DepartmentValidator validator = new DepartmentValidator();
-            var validationResult = validator.Validate(department);
+        //[HttpPost("CreateDepartment")]
+        //public IActionResult CreateDepartment(Department department)
+        //{
+        //    DepartmentValidator validator = new DepartmentValidator();
+        //    var validationResult = validator.Validate(department);
 
-            if (!validationResult.IsValid)
-            {
-                foreach (var error in validationResult.Errors)
-                {
-                    ModelState.AddModelError("", error.ErrorMessage);
-                }
-                return BadRequest(ModelState);
-            }
-            var createdDepartment = _adminDashboardService.CreateDepartment(department);
-            return Ok(createdDepartment);
-        }
+        //    if (!validationResult.IsValid)
+        //    {
+        //        foreach (var error in validationResult.Errors)
+        //        {
+        //            ModelState.AddModelError("", error.ErrorMessage);
+        //        }
+        //        return BadRequest(ModelState);
+        //    }
+        //    var createdDepartment = _adminDashboardService.CreateDepartment(department);
+        //    return Ok(createdDepartment);
+        //}
 
 
-        [HttpPut("UpdateDepartment/{id}")]
-        public IActionResult UpdateDepartment(int id, Department department)
-        {
-            DepartmentValidator validator = new DepartmentValidator();
-            var validationResult = validator.Validate(department);
+        //[HttpPut("UpdateDepartment/{id}")]
+        //public IActionResult UpdateDepartment(int id, Department department)
+        //{
+        //    DepartmentValidator validator = new DepartmentValidator();
+        //    var validationResult = validator.Validate(department);
 
-            if (!validationResult.IsValid)
-            {
-                foreach (var error in validationResult.Errors)
-                {
-                    ModelState.AddModelError("", error.ErrorMessage);
-                }
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                var oldDepartment = _adminDashboardService.GetDepartmentById(id);
-                if (oldDepartment == null)
-                {
-                    return NotFound();
-                }
-                _adminDashboardService.UpdateDepartment(department);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "An error occurred while updating the student.");
-            }
-        }
-        [HttpDelete("DeleteDepartment/{id}")]
-        public IActionResult DeleteDepartment(int id)
-        {
-            try
-            {
-                var department = _adminDashboardService.GetDepartmentById(id);
-                if (department == null)
-                {
-                    return NotFound();
-                }
-                _adminDashboardService.DeleteDepartment(id);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "An error occurred while deleting the student.");
-            }
-        }
-        [HttpGet("GetDepartmentByName/{name}")]
-        public Department GetDepartmentByName(string name)
-        {
-            return _adminDashboardService.GetDepartmentByName(name);
-        }
+        //    if (!validationResult.IsValid)
+        //    {
+        //        foreach (var error in validationResult.Errors)
+        //        {
+        //            ModelState.AddModelError("", error.ErrorMessage);
+        //        }
+        //        return BadRequest(ModelState);
+        //    }
+        //    try
+        //    {
+        //        var oldDepartment = _adminDashboardService.GetDepartmentById(id);
+        //        if (oldDepartment == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        _adminDashboardService.UpdateDepartment(department);
+        //        return NoContent();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, "An error occurred while updating the student.");
+        //    }
+        //}
+        //[HttpDelete("DeleteDepartment/{id}")]
+        //public IActionResult DeleteDepartment(int id)
+        //{
+        //    try
+        //    {
+        //        var department = _adminDashboardService.GetDepartmentById(id);
+        //        if (department == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        _adminDashboardService.DeleteDepartment(id);
+        //        return NoContent();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, "An error occurred while deleting the student.");
+        //    }
+        //}
+        //[HttpGet("GetDepartmentByName/{name}")]
+        //public Department GetDepartmentByName(string name)
+        //{
+        //    return _adminDashboardService.GetDepartmentByName(name);
+        //}
         //Student
-        [HttpGet("GetAllStudents")]
-        public List<Student> GetAllStudents()
-        {
-            var result = _adminDashboardService.GetAllStudents();
-            return result;
-        }
+        //[HttpGet("GetAllStudents")]
+        //public List<Student> GetAllStudents()
+        //{
+        //    var result = _adminDashboardService.GetAllStudents();
+        //    return result;
+        //}
 
-        [HttpGet("GetStudentById/{id}")]
-        public Student GetStudentById(int id)
-        {
-            return _adminDashboardService.GetStudentById(id);
-        }
+        //[HttpGet("GetStudentById/{id}")]
+        //public Student GetStudentById(int id)
+        //{
+        //    return _adminDashboardService.GetStudentById(id);
+        //}
 
-        [HttpGet("GetStudentByEmail/{email}")]
-        public Student GetStudentByEmail(string email)
-        {
-            return _adminDashboardService.GetStudentByEmail(email);
-        }
-        [HttpDelete("DeleteStudent/{id}")]
-        public void DeleteStudent(int id)
-        {
-            _adminDashboardService.DeleteStudent(id);
-        }
-        [HttpGet("GetStudentByName/{name}")]
-        public Student GetStudentByName(string name)
-        {
-            var student = _adminDashboardService.GetStudentByName(name);
-            return student;
-        }
+        //[HttpGet("GetStudentByEmail/{email}")]
+        //public Student GetStudentByEmail(string email)
+        //{
+        //    return _adminDashboardService.GetStudentByEmail(email);
+        //}
+        //[HttpDelete("DeleteStudent/{id}")]
+        //public void DeleteStudent(int id)
+        //{
+        //    _adminDashboardService.DeleteStudent(id);
+        //}
+        //[HttpGet("GetStudentByName/{name}")]
+        //public Student GetStudentByName(string name)
+        //{
+        //    var student = _adminDashboardService.GetStudentByName(name);
+        //    return student;
+        //}
 
         //Courses
-        [HttpGet("GetAllCourses")]
-        public List<Course> GetAllCourses()
-        {
-            var result = _adminDashboardService.GetAllCourses();
-            return result;
-        }
+        //[HttpGet("GetAllCourses")]
+        //public List<Course> GetAllCourses()
+        //{
+        //    var result = _adminDashboardService.GetAllCourses();
+        //    return result;
+        //}
 
-        [HttpGet("GetCourseById/{id}")]
-        public Course GetCourseById(int id)
-        {
-            return _adminDashboardService.GetCourseById(id);
-        }
+        //[HttpGet("GetCourseById/{id}")]
+        //public Course GetCourseById(int id)
+        //{
+        //    return _adminDashboardService.GetCourseById(id);
+        //}
 
-        [HttpPost("CreateCourse")]
-        public IActionResult CreateDepartment(Course course)
-        {
-            CourseValidator validator = new CourseValidator();
-            var validationResult = validator.Validate(course);
+        //[HttpPost("CreateCourse")]
+        //public IActionResult CreateDepartment(Course course)
+        //{
+        //    CourseValidator validator = new CourseValidator();
+        //    var validationResult = validator.Validate(course);
 
-            if (!validationResult.IsValid)
-            {
-                foreach (var error in validationResult.Errors)
-                {
-                    ModelState.AddModelError("", error.ErrorMessage);
-                }
-                return BadRequest(ModelState);
-            }
-            var createdDepartment = _adminDashboardService.CreateCourse(course);
-            return Ok(createdDepartment);
-        }
+        //    if (!validationResult.IsValid)
+        //    {
+        //        foreach (var error in validationResult.Errors)
+        //        {
+        //            ModelState.AddModelError("", error.ErrorMessage);
+        //        }
+        //        return BadRequest(ModelState);
+        //    }
+        //    var createdDepartment = _adminDashboardService.CreateCourse(course);
+        //    return Ok(createdDepartment);
+        //}
 
 
-        [HttpPut("UpdateCourse/{id}")]
-        public IActionResult UpdateCourse(int id, Course course)
-        {
-            CourseValidator validator = new CourseValidator();
-            var validationResult = validator.Validate(course);
+        //[HttpPut("UpdateCourse/{id}")]
+        //public IActionResult UpdateCourse(int id, Course course)
+        //{
+        //    CourseValidator validator = new CourseValidator();
+        //    var validationResult = validator.Validate(course);
 
-            if (!validationResult.IsValid)
-            {
-                foreach (var error in validationResult.Errors)
-                {
-                    ModelState.AddModelError("", error.ErrorMessage);
-                }
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                var oldCourse = _adminDashboardService.GetCourseById(id);
-                if (oldCourse == null)
-                {
-                    return NotFound();
-                }
-                _adminDashboardService.UpdateCourse(course);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "An error occurred while updating the student.");
-            }
-        }
-        [HttpDelete("DeleteCourse/{id}")]
-        public IActionResult DeleteCourse(int id)
-        {
-            try
-            {
-                var course = _adminDashboardService.GetCourseById(id);
-                if (course == null)
-                {
-                    return NotFound();
-                }
-                _adminDashboardService.DeleteCourse(id);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "An error occurred while deleting the course.");
-            }
-        }
+        //    if (!validationResult.IsValid)
+        //    {
+        //        foreach (var error in validationResult.Errors)
+        //        {
+        //            ModelState.AddModelError("", error.ErrorMessage);
+        //        }
+        //        return BadRequest(ModelState);
+        //    }
+        //    try
+        //    {
+        //        var oldCourse = _adminDashboardService.GetCourseById(id);
+        //        if (oldCourse == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        _adminDashboardService.UpdateCourse(course);
+        //        return NoContent();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, "An error occurred while updating the student.");
+        //    }
+        //}
+        //[HttpDelete("DeleteCourse/{id}")]
+        //public IActionResult DeleteCourse(int id)
+        //{
+        //    try
+        //    {
+        //        var course = _adminDashboardService.GetCourseById(id);
+        //        if (course == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        _adminDashboardService.DeleteCourse(id);
+        //        return NoContent();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, "An error occurred while deleting the course.");
+        //    }
+        //}
 
 
         //University
         //[HttpGet("GetAllUniversities")]
         //public List<University> GetAllUniversities()
         //{
-        //    var universities = _adminDashboardService.GetAllUniversites();
+        //    var universities = _universityService.GetAllUniversites();
         //    return universities;
         //}
 

@@ -64,5 +64,11 @@ namespace RateForProfessor.Services
 
             _professorRepository.UpdateProfessor(updatedProfessor);
         }
+        public Professor GetProfessorByName(string name)
+        {
+            var professorEntity = _professorRepository.GetProfessorByName(name);
+            var professor = _mapper.Map<Professor>(professorEntity);
+            return professor;
+        }
     }
 }
