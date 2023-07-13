@@ -1,4 +1,5 @@
-﻿using RateForProfessor.Enums;
+﻿using RateForProfessor.Entities;
+using RateForProfessor.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -32,6 +33,8 @@ namespace RateForProfessor.Models
         public Department Department { get; set; }
 
         public RateUniversity RateUniversity { get; set; }
+
+        public User User { get; set; }
 
         public ICollection<RateProfessor> RateProfessors { get; set; }
     }

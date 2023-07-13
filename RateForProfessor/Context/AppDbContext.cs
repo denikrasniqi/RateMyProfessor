@@ -21,6 +21,7 @@ namespace RateForProfessor.Context
         public DbSet<RateUniversityEntity> RateUniversities { get; set; }
         public DbSet<StudentEntity> Students { get; set; }
         public DbSet<UniversityEntity> Universities { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
  
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,6 +38,7 @@ namespace RateForProfessor.Context
             modelBuilder.Entity<RateUniversityEntity>().ToTable("RateUniversities");
             modelBuilder.Entity<StudentEntity>().ToTable("Students");
             modelBuilder.Entity<UniversityEntity>().ToTable("Universities");
+            modelBuilder.Entity<UserEntity>().ToTable("Users");
 
             modelBuilder.Entity<AddressEntity>()
                .HasKey(pk => new { pk.AddressId });
@@ -137,6 +139,11 @@ namespace RateForProfessor.Context
 
             modelBuilder.Entity<UniversityEntity>()
              .HasKey(pk => new { pk.UniversityId });
+
+            modelBuilder.Entity<UserEntity>()
+                .HasKey(u => new { u.UserId });
+    
+
         }
     }
 }

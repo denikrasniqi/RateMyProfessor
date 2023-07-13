@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using RateForProfessor.Enums;
 using RateForProfessor.Models;
 
 namespace RateForProfessor.Validators
@@ -33,9 +34,7 @@ namespace RateForProfessor.Validators
             .WithMessage("Grade must be between or equal to 5-10");
 
             RuleFor(s => s.Gender)
-           .NotEmpty()
-           .WithMessage("Gender is required");
-           
+            .IsInEnum();
         }
     }
 }

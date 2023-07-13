@@ -37,6 +37,8 @@ namespace RateForProfessor.Entities
 
         public RateUniversityEntity RateUniversity { get; set; }
 
+        public UserEntity  User { get; set; }
+
         public ICollection<RateProfessorEntity> RateProfessors { get; set; }
     }
 }
