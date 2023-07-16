@@ -17,6 +17,7 @@ namespace RateForProfessor.Services
             _userRegistrationRepository = userRegistrationRepository;
             _mapper = mapper;
         }
+
         public Student CreateStudent(Student student)
         {
             try
@@ -33,6 +34,7 @@ namespace RateForProfessor.Services
                 throw new Exception(ex.Message);
             }
         }
+        
         public void DeleteStudent(int id)
         {
             _userRegistrationRepository.DeleteStudent(id);
@@ -74,6 +76,35 @@ namespace RateForProfessor.Services
             var updatedStudent = _mapper.Map<StudentEntity>(student);
 
             _userRegistrationRepository.UpdateStudent(updatedStudent);
+        }
+
+        public Student CreateStudent(Student student, string photoPath)
+        {
+            try
+            {
+                var studentEntity = _mapper.Map<StudentEntity>(student);
+                var result = _userRegistrationRepository.CreateStudent(studentEntity, photoPath);
+
+                var studentCreated = _mapper.Map<Student>(result);
+                return studentCreated;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void UploadProfilePhoto(int studentId, string photoPath)
+        {
+            var existingStudentEntity = _userRegistrationRepository.GetStudentById(studentId);
+
+            if (existingStudentEntity == null)
+            {
+                throw new Exception("Student not found");
+            }
+
+            existingStudentEntity.ProfilePhotoPath = photoPath;
+            _userRegistrationRepository.UpdateStudent(existingStudentEntity);
         }
     }
 }

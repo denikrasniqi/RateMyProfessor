@@ -34,5 +34,7 @@ namespace RateForProfessor.Models
         //public RateUniversity RateUniversity { get; set; }
 
         //public ICollection<RateProfessor> RateProfessors { get; set; }
+
+        public string? ProfilePhotoPath { get; set; }
     }
 }

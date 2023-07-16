@@ -11,10 +11,12 @@ namespace RateForProfessor.Services.Interfaces
         public Student GetStudentByEmail(string email);
         public Student GetStudentByName(string name);
 
-        public Student CreateStudent(Student student);
+        public Student CreateStudent(Student student, string photoPath);
 
         public void UpdateStudent(Student student);
 
         public void DeleteStudent(int id);
+
+        public void UploadProfilePhoto(int studentId, string photoPath);
     }
 }
