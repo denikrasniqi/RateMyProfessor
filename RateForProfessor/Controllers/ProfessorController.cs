@@ -29,7 +29,7 @@ namespace RateForProfessor.Controllers
             return _professorService.GetProfessorById(id);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost("CreateProfessor")]
         public IActionResult CreateProfessor(Professor professor)
         {
@@ -48,7 +48,7 @@ namespace RateForProfessor.Controllers
             return Ok(createdProfessor);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPut("UpdateProfessor/{id}")]
         public IActionResult UpdateProfessor(int id, Professor professor)
         {
@@ -75,10 +75,10 @@ namespace RateForProfessor.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while updating the student.");
+                return StatusCode(500, "An error occurred while updating the professor.");
             }
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("DeleteProfessor/{id}")]
         public IActionResult DeleteProfessor(int id)
         {
@@ -94,7 +94,7 @@ namespace RateForProfessor.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while deleting the student.");
+                return StatusCode(500, "An error occurred while deleting the professor.");
             }
         }
     }

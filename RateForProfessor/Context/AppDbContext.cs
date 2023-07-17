@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RateForProfessor.Entities;
+using RateForProfessor.Models;
 
 namespace RateForProfessor.Context
 {
@@ -98,6 +99,19 @@ namespace RateForProfessor.Context
                 .WithMany(ae => ae.Students)
                 .HasForeignKey(fk => fk.DepartmentID);
 
+            //modelBuilder.Entity<StudentEntity>()
+            //    .HasOne(s => s.User)
+            //    .WithOne(s => s.Student)
+            //    .HasForeignKey(fk => fk.UserId);
+
+            modelBuilder.Entity<StudentEntity>()
+            .HasOne(s => s.User)
+            .WithOne()
+            .HasForeignKey<StudentEntity>(s => s.UserId);
+
+            modelBuilder.Entity<UserEntity>()
+                .HasKey(u => new { u.UserId });
+
             modelBuilder.Entity<DepartmentEntity>()
               .HasKey(pk => new { pk.DepartmentId });
 
@@ -139,11 +153,6 @@ namespace RateForProfessor.Context
 
             modelBuilder.Entity<UniversityEntity>()
              .HasKey(pk => new { pk.UniversityId });
-
-            modelBuilder.Entity<UserEntity>()
-                .HasKey(u => new { u.UserId });
-    
-
         }
     }
 }

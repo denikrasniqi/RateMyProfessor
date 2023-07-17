@@ -12,8 +12,8 @@ using RateForProfessor.Context;
 namespace RateForProfessor.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230623075144_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230716141750_RMP")]
+    partial class RMP
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -318,31 +318,18 @@ namespace RateForProfessor.Migrations
                     b.Property<int>("DepartmentID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
                     b.Property<int>("Grade")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("StudentId");
 
                     b.HasIndex("DepartmentID");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Students", (string)null);
                 });
@@ -378,6 +365,45 @@ namespace RateForProfessor.Migrations
                     b.HasKey("UniversityId");
 
                     b.ToTable("Universities", (string)null);
+                });
+
+            modelBuilder.Entity("RateForProfessor.Entities.UserEntity", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("RateForProfessor.Entities.AddressEntity", b =>
@@ -519,7 +545,15 @@ namespace RateForProfessor.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("RateForProfessor.Entities.UserEntity", "User")
+                        .WithOne()
+                        .HasForeignKey("RateForProfessor.Entities.StudentEntity", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Department");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RateForProfessor.Entities.CourseEntity", b =>

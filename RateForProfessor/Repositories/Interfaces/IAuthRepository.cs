@@ -5,6 +5,6 @@ namespace RateForProfessor.Repositories.Interfaces
 {
     public interface IAuthRepository
     {
-        Task<StudentEntity> AuthenticateUser(string email, string password);
+        Task<UserEntity> AuthenticateUser(string email, string password);
     }
 }

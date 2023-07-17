@@ -19,7 +19,7 @@ namespace RateForProfessor.Controllers
             _registrationService = service;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public List<Student> GetAllStudents()
         {
@@ -27,13 +27,14 @@ namespace RateForProfessor.Controllers
             return result;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetStudentById/{id}")]
         public Student GetStudentById(int id)
         {
             return _registrationService.GetStudentById(id);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetStudentByEmail/{email}")]
         public Student GetStudentByEmail(string email)
         {
@@ -65,7 +66,7 @@ namespace RateForProfessor.Controllers
         //{
         //    _registrationService.UpdateStudent(student);
         //}
-        [Authorize]
+        [Authorize(Roles = "Student")]
         [HttpPut("UpdateStudent/{id}")]
         public IActionResult UpdateStudent(int id, Student student)
         {
@@ -96,7 +97,7 @@ namespace RateForProfessor.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles ="Admin")]
         [HttpDelete("DeleteStudent/{id}")]
         public IActionResult DeleteStudent(int id)
         {
