@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using RateForProfessor.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using RateForProfessor.Enums;
 
 namespace RateForProfessor.Entities
 {
@@ -28,5 +24,7 @@ namespace RateForProfessor.Entities
         public  UserEntity User { get; set; }
 
         public ICollection<RateProfessorEntity> RateProfessors { get; set; }
+
+        public string ProfilePhotoPath { get; set; }
     }
 }

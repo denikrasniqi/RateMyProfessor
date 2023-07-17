@@ -20,6 +20,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using RateForProfessor.Enums;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 //builder.Services.AddControllers().AddFluentValidation(c => c.RegisterValidatorsFromAssembly
@@ -34,6 +35,23 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer("DefaultConnection");
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
+
+
+//builder.Services.AddControllers()
+//        .AddNewtonsoftJson()
+//        .AddMvcOptions(options =>
+//        {
+//            options.ModelBinderProviders.Insert(0, new FormFileModelBinderProvider());
+//        });
+
+
+//builder.Services.AddControllers().AddNewtonsoftJson();
+//builder.Services.AddControllers(options =>
+//{
+//    options.InputFormatters.Insert(0, MyJPIF.GetJsonPatchInputFormatter());
+//});
+
+
 
 builder.Services.AddAuthentication(options =>
 {
