@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using RateForProfessor.Entities;
+using RateForProfessor.Enums;
+using RateForProfessor.Models;
 using RateForProfessor.Utilities.Interfaces;
 
 namespace RateForProfessor.Utilities
@@ -18,7 +20,7 @@ namespace RateForProfessor.Utilities
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
-        public string GenerateToken(StudentEntity student)
+        public string GenerateToken(UserEntity user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var secretKey = _configuration["Jwt:Key"];
@@ -34,7 +36,8 @@ namespace RateForProfessor.Utilities
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                new Claim(ClaimTypes.Name, student.Email),
+                new Claim(ClaimTypes.Name, user.Email),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
             }),
                 Expires = DateTime.UtcNow.AddHours(1), // Set token expiration time
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

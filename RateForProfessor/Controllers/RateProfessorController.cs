@@ -44,7 +44,7 @@ namespace RateForProfessor.Controllers
             return Ok(rateProfessors);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Student")]
         [HttpPost("CreateRateProfessor")]
         public IActionResult CreateRateProfessor(RateProfessor rateProfessor)
         {
@@ -63,7 +63,7 @@ namespace RateForProfessor.Controllers
             return Ok(createdRateProfessor);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Student")]
         [HttpPut("UpdateRateProfessor/{id}")]
         public IActionResult UpdateRateProfessor(int id, RateProfessor rateProfessor)
         {
@@ -94,7 +94,7 @@ namespace RateForProfessor.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Student")]
         [HttpDelete("DeleteRateProfessor/{id}")]
         public IActionResult DeleteRateProfessor(int id)
         {

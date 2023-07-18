@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using RateForProfessor.Enums;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -80,6 +81,24 @@ builder.Services.AddAuthentication(options =>
     options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
     options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
     options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
+})
+.AddCookie("Cookies", options =>
+{
+    // Configure cookie authentication options
+    options.AccessDeniedPath = null; // Set the access denied path to null
+    options.Cookie.Name = "YourCookieName"; // Set the cookie name here
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+
+    options.Events = new CookieAuthenticationEvents
+    {
+        OnRedirectToAccessDenied = context =>
+        {
+            context.Response.StatusCode = 401;
+            context.Response.ContentType = "text/plain";
+            return context.Response.WriteAsync("Ski akses");
+        }
+    };
 });
 builder.Services.AddCors(options =>
 {
@@ -92,7 +111,12 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole(Role.Admin.ToString()));
+    options.AddPolicy("StudentOnly", policy => policy.RequireRole(Role.Student.ToString()));
+    
+ });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -131,6 +155,8 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddAutoMapper(typeof(UserProfileMapping));
 builder.Services.AddScoped<IUserRegistrationRepository, UserRegistrationRepository>();
 builder.Services.AddScoped<IUserRegistrationService, UserRegistrationService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProfessorRepository, ProfessorRepository>();
 builder.Services.AddScoped<IProfessorService, ProfessorService>();
 builder.Services.AddScoped<IRateProfessorRepository, RateProfessorRepository>();

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RateForProfessor.Models;
 using RateForProfessor.Services.Interfaces;
@@ -37,6 +38,7 @@ namespace RateForProfessor.Controllers
             return university;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("CreateUniversity")]
         public IActionResult CreateUniversity(University university)
         {
@@ -55,6 +57,7 @@ namespace RateForProfessor.Controllers
             return Ok(createdUniversity);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("UpdateUniversity/{id}")]
         public IActionResult UpdateUniversity(int id, University university)
         {
@@ -86,6 +89,7 @@ namespace RateForProfessor.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("DeleteUniversity/{id}")]
         public IActionResult DeleteUniversity(int id)
         {
