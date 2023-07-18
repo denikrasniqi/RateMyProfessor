@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using RateForProfessor.Models;
 using RateForProfessor.Services.Interfaces;
@@ -44,6 +45,7 @@ namespace RateForProfessor.Controllers
             return Ok(rateUniversity);
         }
 
+        [Authorize(Roles = "Student")]
         [HttpPost("CreateRateUniversity")]
         public IActionResult CreateRateUniversity(RateUniversity rateUniversity)
         {
@@ -62,6 +64,7 @@ namespace RateForProfessor.Controllers
             return Ok(createdRateUniversity);
         }
 
+        [Authorize(Roles = "Student")]
         [HttpPut("UpdateRateUniversity/{id}")]
         public IActionResult UpdateRateUniversity(int id, RateUniversity rateUniversity)
         {
@@ -92,6 +95,7 @@ namespace RateForProfessor.Controllers
             }
         }
 
+        [Authorize(Roles = "Student")]
         [HttpDelete("DeleteRateUniversity/{id}")]
         public IActionResult DeleteRateUniversity(int id)
         {

@@ -1,4 +1,5 @@
-﻿using RateForProfessor.Models;
+﻿using RateForProfessor.Extensions;
+using RateForProfessor.Models;
 
 namespace RateForProfessor.Services.Interfaces
 {
@@ -14,6 +15,8 @@ namespace RateForProfessor.Services.Interfaces
 
         public void DeleteProfessor(int id);
 
-        public Professor GetProfessorByName(string name);
+
+        public List<Professor> SearchProfessors(Search search);
+
     }
 }

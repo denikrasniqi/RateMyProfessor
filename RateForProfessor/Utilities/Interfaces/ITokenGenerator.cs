@@ -4,6 +4,6 @@ namespace RateForProfessor.Utilities.Interfaces
 {
     public interface ITokenGenerator
     {
-        string GenerateToken(StudentEntity student);
+        string GenerateToken(UserEntity user);
     }
 }

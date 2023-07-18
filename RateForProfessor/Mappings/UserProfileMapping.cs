@@ -10,6 +10,10 @@ namespace RateForProfessor.Mappings
         {
             CreateMap<Student, StudentEntity>().ReverseMap();
 
+            CreateMap<User, UserEntity>().ReverseMap();
+            
+            CreateMap<Student, UserEntity>().ReverseMap();
+
             CreateMap<Professor, ProfessorEntity>().ReverseMap();
 
             CreateMap<RateProfessor, RateProfessorEntity>().ReverseMap();

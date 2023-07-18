@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RateForProfessor.Extensions;
 using RateForProfessor.Models;
 using RateForProfessor.Services;
 using RateForProfessor.Services.Interfaces;
@@ -30,7 +31,7 @@ namespace RateForProfessor.Controllers
             return _professorService.GetProfessorById(id);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost("CreateProfessor")]
         public IActionResult CreateProfessor(Professor professor)
         {
@@ -49,7 +50,7 @@ namespace RateForProfessor.Controllers
             return Ok(createdProfessor);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPut("UpdateProfessor/{id}")]
         public IActionResult UpdateProfessor(int id, Professor professor)
         {
@@ -76,10 +77,10 @@ namespace RateForProfessor.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while updating the student.");
+                return StatusCode(500, "An error occurred while updating the professor.");
             }
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("DeleteProfessor/{id}")]
         public IActionResult DeleteProfessor(int id)
         {
@@ -95,13 +96,17 @@ namespace RateForProfessor.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while deleting the student.");
+                return StatusCode(500, "An error occurred while deleting the professor.");
             }
         }
-        [HttpGet("GetProfessorByName/{name}")]
-        public Professor GetProfessorByName(string name)
+
+
+        [HttpGet("SearchProfessor")]
+        public List<Professor> SearchProfessors([FromQuery] Search search)
         {
-            return _professorService.GetProfessorByName(name);
+            var result = _professorService.SearchProfessors(search);
+            return result;
+
         }
     }
 }

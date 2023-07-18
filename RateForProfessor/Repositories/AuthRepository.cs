@@ -16,10 +16,10 @@ namespace RateForProfessor.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<StudentEntity> AuthenticateUser(string email, string password)
+        public async Task<UserEntity> AuthenticateUser(string email, string password)
         {
-            var student = await _dbContext.Students.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
-            return student;
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+            return user;
         }
     }
 }

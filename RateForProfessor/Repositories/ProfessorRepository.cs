@@ -1,5 +1,7 @@
-﻿using RateForProfessor.Context;
+﻿using Microsoft.AspNetCore.Mvc;
+using RateForProfessor.Context;
 using RateForProfessor.Entities;
+using RateForProfessor.Extensions;
 using RateForProfessor.Repositories.Interfaces;
 
 namespace RateForProfessor.Repositories
@@ -47,6 +49,13 @@ namespace RateForProfessor.Repositories
             var oldprofessor = _dbContext.Profesors.Find(professor.ProfessorId);
             _dbContext.Entry(oldprofessor).CurrentValues.SetValues(professor);
             _dbContext.SaveChanges();
+        }
+
+        public List<ProfessorEntity> SearchProfessors(Search search)
+        {
+            var query = _dbContext.Profesors.Search(search.SearchTerm).AsQueryable();
+            var professors = query.ToList();
+            return professors;
         }
     }
 }
