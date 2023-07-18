@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RateForProfessor.Extensions;
 using RateForProfessor.Models;
 using RateForProfessor.Services.Interfaces;
 using RateForProfessor.Validators;
@@ -96,6 +97,13 @@ namespace RateForProfessor.Controllers
             {
                 return StatusCode(500, "An error occurred while deleting the professor.");
             }
+        }
+
+        [HttpGet("SearchProfessor")]
+        public List<Professor> SearchProfessors([FromQuery] Search search)
+        {
+            var result = _professorService.SearchProfessors(search);
+            return result;
         }
     }
 }

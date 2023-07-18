@@ -1,4 +1,6 @@
-﻿using RateForProfessor.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using RateForProfessor.Entities;
+using RateForProfessor.Extensions;
 
 namespace RateForProfessor.Repositories.Interfaces
 {
@@ -13,5 +15,7 @@ namespace RateForProfessor.Repositories.Interfaces
         public void UpdateProfessor(ProfessorEntity professor);
 
         public void DeleteProfessor(int id);
+
+        public List<ProfessorEntity> SearchProfessors(Search search);
     }
 }

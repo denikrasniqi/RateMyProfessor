@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RateForProfessor.Entities;
+using RateForProfessor.Extensions;
 using RateForProfessor.Models;
 using RateForProfessor.Repositories.Interfaces;
 using RateForProfessor.Services.Interfaces;
@@ -63,6 +64,13 @@ namespace RateForProfessor.Services
             var updatedProfessor = _mapper.Map<ProfessorEntity>(professor);
 
             _professorRepository.UpdateProfessor(updatedProfessor);
+        }
+
+        public List<Professor> SearchProfessors(Search search)
+        {
+            var professorEntities = _professorRepository.SearchProfessors(search);
+            var professors = _mapper.Map<List<Professor>>(professorEntities);
+            return professors;
         }
     }
 }
