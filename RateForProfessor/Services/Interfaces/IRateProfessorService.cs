@@ -17,5 +17,8 @@ namespace RateForProfessor.Services.Interfaces
         List<RateProfessor> GetRateProfessorsByProfessorId(int professorId);
 
         List<RateProfessor> GetRateProfessorsByStudentId(int studentId);
+
+        public int CalculateOverall(int communicationskills, int responsiveness,
+            int gradingfairness);
     }
 }

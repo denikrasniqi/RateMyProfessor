@@ -16,6 +16,9 @@ namespace RateForProfessor.Repositories.Interfaces
 
         public void DeleteStudent(int id);
 
+        public StudentEntity GetStudentByName(string name);
+        
         public void UploadProfilePhoto(int studentId, string photoPath);
+
     }
 }

@@ -38,6 +38,12 @@ namespace RateForProfessor.Repositories
             return _dbContext.Profesors.Find(id);
         }
 
+        public ProfessorEntity GetProfessorByName(string name)
+        {
+            var professor = _dbContext.Profesors.FirstOrDefault(p => p.FirstName == name);
+            return professor;
+        }
+
         public void UpdateProfessor(ProfessorEntity professor)
         {
             var oldprofessor = _dbContext.Profesors.Find(professor.ProfessorId);

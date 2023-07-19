@@ -20,19 +20,20 @@ namespace RateForProfessor.Services
         public RateProfessor CreateRateProfessor(RateProfessor rateProfessor)
         {
             try
-            {
+            {               
                 var rateEntity = _mapper.Map<RateProfessorEntity>(rateProfessor);
+                var profesorId = rateEntity.ProfessorId;                
                 var result = _rateProfessorRepository.CreateRateProfessor(rateEntity);
 
                 var rateCreated = _mapper.Map<RateProfessor>(result);
                 return rateCreated;
-        }
+            }
             catch (Exception ex)
             {
 
                 throw new Exception(ex.Message);
-    }
-}
+            }
+        }
 
         public void DeleteRateProfessor(int id)
         {
@@ -77,6 +78,12 @@ namespace RateForProfessor.Services
             var updatedRateProfessor = _mapper.Map<RateProfessorEntity>(rateProfessor);
 
             _rateProfessorRepository.UpdateRateProfessor(updatedRateProfessor);
+        }   
+        public int CalculateOverall(int communicationskills, int responsiveness,
+            int gradingfairness)
+        {
+            int overall = (communicationskills + responsiveness + gradingfairness) / 3;
+            return overall;
         }
     }
 }

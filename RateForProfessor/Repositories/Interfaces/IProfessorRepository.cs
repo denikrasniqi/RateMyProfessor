@@ -16,6 +16,8 @@ namespace RateForProfessor.Repositories.Interfaces
 
         public void DeleteProfessor(int id);
 
+
         public List<ProfessorEntity> SearchProfessors(Search search);
+
     }
 }

@@ -15,6 +15,8 @@ namespace RateForProfessor.Services.Interfaces
 
         public void DeleteProfessor(int id);
 
+
         public List<Professor> SearchProfessors(Search search);
+
     }
 }
