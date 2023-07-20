@@ -47,8 +47,11 @@ namespace RateForProfessor.Repositories
 
         public StudentEntity GetStudentByName(string name)
         {
-            var student = _dbContext.Students.FirstOrDefault(s => s.Name == name);
-            return student;
+            //var student = _dbContext.Students.FirstOrDefault(s => s.Name == name);
+            //return student;
+
+            return _dbContext.Students.Include(s => s.User).FirstOrDefault(s => s.User.Name == name);
+
         }
 
         public void UpdateStudent(StudentEntity student)
