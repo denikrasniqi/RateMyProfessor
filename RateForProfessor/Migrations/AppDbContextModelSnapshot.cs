@@ -319,13 +319,13 @@ namespace RateForProfessor.Migrations
                     b.Property<int>("Grade")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ProfilePhotoPath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-                        
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("StudentId");
 
                     b.HasIndex("DepartmentID");
