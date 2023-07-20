@@ -34,8 +34,8 @@ namespace RateForProfessor.Validators
             RuleFor(u => u.Role)
                 .IsInEnum();
 
+            RuleFor(u => u.Gender)
+                .IsInEnum();
         }
-
-       
     }
 }

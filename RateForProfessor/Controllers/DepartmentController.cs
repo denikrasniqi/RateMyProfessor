@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RateForProfessor.Models;
 using RateForProfessor.Services;
 using RateForProfessor.Services.Interfaces;
@@ -29,6 +30,7 @@ namespace RateForProfessor.Controllers
             return _departmentService.GetDepartmentById(id);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("CreateDepartment")]
         public IActionResult CreateDepartment(Department department)
         {
@@ -47,7 +49,7 @@ namespace RateForProfessor.Controllers
             return Ok(createdDepartment);
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("UpdateDepartment/{id}")]
         public IActionResult UpdateDepartment(int id, Department department)
         {
@@ -77,6 +79,8 @@ namespace RateForProfessor.Controllers
                 return StatusCode(500, "An error occurred while updating the student.");
             }
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpDelete("DeleteDepartment/{id}")]
         public IActionResult DeleteDepartment(int id)
         {
@@ -95,6 +99,7 @@ namespace RateForProfessor.Controllers
                 return StatusCode(500, "An error occurred while deleting the student.");
             }
         }
+
         [HttpGet("GetDepartmentByName/{name}")]
         public Department GetDepartmentByName(string name)
         {

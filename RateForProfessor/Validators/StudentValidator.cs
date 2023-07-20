@@ -33,7 +33,15 @@ namespace RateForProfessor.Validators
             .LessThanOrEqualTo(10)
             .WithMessage("Grade must be between or equal to 5-10");
 
-            //RuleFor(s => s.Gender)
+            //RuleFor(x => x.User.Gender)
+            //    .Must(x => Enum.IsDefined(typeof(Gender), x))
+            //     .WithMessage("Invalid gender value.");
+
+            //RuleFor(x => x.User.Role)
+            //    .Must(x => Enum.IsDefined(typeof(Role), x))
+            //    .WithMessage("Invalid gender value.");
+
+            //RuleFor(s => s.User.Gender)
             //.IsInEnum();
         }
     }
