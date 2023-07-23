@@ -19,8 +19,28 @@ namespace RateForProfessor.Controllers
             _loginValidator = loginValidator;
         }
 
+
+        //public IActionResult Login([FromQuery] string email, [FromQuery] string password)
+        //{
+        //    var loginData = (email, password);
+        //    var validationResults = _loginValidator.Validate(loginData);
+
+        //    if (!validationResults.IsValid)
+        //    {
+        //        return BadRequest(validationResults.Errors);
+        //    }
+        //    // Perform authentication
+        //    var token = _authService.AuthenticateUser(email, password);
+        //    if (token == null)
+        //    {
+        //        return Unauthorized(); // Return 401 Unauthorized if authentication fails
+        //    }
+        //    // Return the token in the response
+        //    return Ok(new { Token = token });
+        //}
+
         [HttpPost("login")]
-        public IActionResult Login(string email, string password)
+        public IActionResult Login([FromQuery] string email, [FromQuery] string password)
         {
             var loginData = (email, password);
             var validationResults = _loginValidator.Validate(loginData);
@@ -29,13 +49,13 @@ namespace RateForProfessor.Controllers
             {
                 return BadRequest(validationResults.Errors);
             }
-            // Perform authentication
-            var token = _authService.AuthenticateUser(email, password);
+
+            var token = _authService.AuthenticateUser(email, password).Result;
+
             if (token == null)
             {
-                return Unauthorized(); // Return 401 Unauthorized if authentication fails
+                return Unauthorized(new { Message = "Invalid email or password." });
             }
-            // Return the token in the response
             return Ok(new { Token = token });
         }
     }
