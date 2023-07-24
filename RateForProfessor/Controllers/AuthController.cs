@@ -1,6 +1,7 @@
-﻿using FluentValidation;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using RateForProfessor.Models;
+using RateForProfessor.Services;
 using RateForProfessor.Services.Interfaces;
 using RateForProfessor.Validators;
 
@@ -12,11 +13,15 @@ namespace RateForProfessor.Controllers
     {
         private readonly IAuthService _authService;
         private readonly IValidator<(string email, string password)> _loginValidator;
+        private readonly IUserService _userService;
+        private readonly IUserRegistrationService _userRegistrationService;
 
-        public AuthController(IAuthService authService, IValidator<(string email, string password)> loginValidator)
+        public AuthController(IAuthService authService, IValidator<(string email, string password)> loginValidator, IUserService userService, IUserRegistrationService userRegistrationService)
         {
             _authService = authService;
             _loginValidator = loginValidator;
+            _userService = userService;
+            _userRegistrationService = userRegistrationService;
         }
 
 
@@ -50,13 +55,38 @@ namespace RateForProfessor.Controllers
                 return BadRequest(validationResults.Errors);
             }
 
+            // Perform authentication
             var token = _authService.AuthenticateUser(email, password).Result;
 
             if (token == null)
             {
-                return Unauthorized(new { Message = "Invalid email or password." });
+                return Unauthorized(new { Message = "Invalid email or password." }); // Return 401 Unauthorized with a meaningful message
             }
-            return Ok(new { Token = token });
+            
+            // te dhenat e userit
+            var userData = _userService.GetUserByEmail(email);
+
+            if (userData == null)
+            {
+                return NotFound(new { Message = "User data not found." });
+            }
+            
+            // te dhenat e studentit
+            int? studentId = null;// per id 
+            //Student student = null;// per data te Studentit
+
+            if (userData.Role == Enums.Role.Student)
+            {
+                 var student = _userRegistrationService.GetStudentByEmail(userData.Email);
+
+                if (student is not null)
+                    studentId = student.StudentId;
+            }
+            // Return the token and user data in the response
+            return Ok(new { Token = token, UserData = userData, StudentId = studentId });
+            // Return the token in the response
+            //return Ok(new { Token = token });
         }
+
     }
 }
