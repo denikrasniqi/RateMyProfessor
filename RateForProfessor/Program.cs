@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using RateForProfessor.Enums;
+using Microsoft.Extensions.Configuration;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -100,14 +101,26 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
+//builder.Services.AddCors(options =>
+//{
+//    options.AddDefaultPolicy(builder =>
+//    {
+//        builder.WithOrigins("https://localhost:7095", "http://localhost:7095/")
+//              .AllowAnyMethod()
+//              .AllowAnyHeader();
+//    });
+//});
+
+var provider = builder.Services.BuildServiceProvider();
+var configuration = provider.GetRequiredService<IConfiguration>();
+
 builder.Services.AddCors(options =>
 {
+    var frontendURL = configuration.GetValue<string>("frontend_url");
     options.AddDefaultPolicy(builder =>
     {
-        builder.WithOrigins("https://localhost:7095", "http://localhost:7095/")
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
+        builder.WithOrigins(frontendURL).AllowAnyOrigin().AllowAnyHeader();
+    }); 
 });
 
 builder.Services.AddControllers();
