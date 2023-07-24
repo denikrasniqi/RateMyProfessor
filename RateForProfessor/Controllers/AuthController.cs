@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using RateForProfessor.Models;
 using RateForProfessor.Services;
@@ -24,6 +24,26 @@ namespace RateForProfessor.Controllers
             _userRegistrationService = userRegistrationService;
         }
 
+
+        //public IActionResult Login([FromQuery] string email, [FromQuery] string password)
+        //{
+        //    var loginData = (email, password);
+        //    var validationResults = _loginValidator.Validate(loginData);
+
+        //    if (!validationResults.IsValid)
+        //    {
+        //        return BadRequest(validationResults.Errors);
+        //    }
+        //    // Perform authentication
+        //    var token = _authService.AuthenticateUser(email, password);
+        //    if (token == null)
+        //    {
+        //        return Unauthorized(); // Return 401 Unauthorized if authentication fails
+        //    }
+        //    // Return the token in the response
+        //    return Ok(new { Token = token });
+        //}
+
         [HttpPost("login")]
         public IActionResult Login([FromQuery] string email, [FromQuery] string password)
         {
@@ -42,14 +62,16 @@ namespace RateForProfessor.Controllers
             {
                 return Unauthorized(new { Message = "Invalid email or password." }); // Return 401 Unauthorized with a meaningful message
             }
-
+            
+            // te dhenat e userit
             var userData = _userService.GetUserByEmail(email);
 
             if (userData == null)
             {
                 return NotFound(new { Message = "User data not found." });
             }
-
+            
+            // te dhenat e studentit
             int? studentId = null;// per id 
             //Student student = null;// per data te Studentit
 

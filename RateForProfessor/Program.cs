@@ -163,6 +163,18 @@ builder.Services.AddSwaggerGen(c =>
         }
     };
     c.AddSecurityRequirement(securityRequirement);
+}); 
+
+var provider = builder.Services.BuildServiceProvider();
+var configuration = provider.GetRequiredService<IConfiguration>();
+
+builder.Services.AddCors(options =>
+{
+    var frontendURL = configuration.GetValue<string>("frontend_url");
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins(frontendURL).AllowAnyMethod().AllowAnyHeader();
+    });
 });
 
 builder.Services.AddAutoMapper(typeof(UserProfileMapping));
@@ -190,7 +202,6 @@ builder.Services.AddScoped<IRateUniversityService, RateUniversityService>();
 
 var app = builder.Build();
 
-
 app.UseCors();
 
 // Configure the HTTP request pipeline.
@@ -209,3 +220,48 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.Run();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
