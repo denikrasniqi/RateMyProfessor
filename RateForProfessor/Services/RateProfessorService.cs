@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RateForProfessor.Entities;
 using RateForProfessor.Models;
+using RateForProfessor.Repositories;
 using RateForProfessor.Repositories.Interfaces;
 using RateForProfessor.Services.Interfaces;
 
@@ -84,6 +85,20 @@ namespace RateForProfessor.Services
         {
             int overall = (communicationskills + responsiveness + gradingfairness) / 3;
             return overall;
+        }
+
+        public List<object> GetOverallRatingProfessors()
+        {
+            var professorRatings = _rateProfessorRepository.GetAllRateProfessors()
+                .GroupBy(r => r.ProfessorId)
+                .Select(g => new
+                {
+                    ProfessorId = g.Key,
+                    Overall = (int)g.Average(r => r.Overall)
+                })
+                .ToList();
+
+            return professorRatings.Cast<object>().ToList();
         }
     }
 }
