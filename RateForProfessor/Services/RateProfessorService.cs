@@ -11,11 +11,13 @@ namespace RateForProfessor.Services
     {
         private readonly IRateProfessorRepository _rateProfessorRepository;
         private readonly IMapper _mapper;
+        private readonly IProfessorRepository _professorRepository;
 
-        public RateProfessorService(IRateProfessorRepository rateProfessorRepository, IMapper mapper)
+        public RateProfessorService(IRateProfessorRepository rateProfessorRepository, IMapper mapper, IProfessorRepository professorRepository)
         {
             _rateProfessorRepository = rateProfessorRepository;
             _mapper = mapper;
+            _professorRepository = professorRepository;
         }
 
         public RateProfessor CreateRateProfessor(RateProfessor rateProfessor)
@@ -87,18 +89,32 @@ namespace RateForProfessor.Services
             return overall;
         }
 
-        public List<object> GetOverallRatingProfessors()
+        public List<ProfessorOverallRating> GetOverallRatingProfessors()
         {
             var professorRatings = _rateProfessorRepository.GetAllRateProfessors()
+                .Join(
+                    _professorRepository.GetAllProfessors(),
+                    rateProfessor => rateProfessor.ProfessorId,
+                    professor => professor.ProfessorId,
+                    (rateProfessor, professor) => new ProfessorOverallRating
+                    {
+                        ProfessorId = rateProfessor.ProfessorId,
+                        FirstName = professor.FirstName,
+                        LastName = professor.LastName,
+                        OverallRating = (int)rateProfessor.Overall
+                    }
+                )
                 .GroupBy(r => r.ProfessorId)
-                .Select(g => new
+                .Select(g => new ProfessorOverallRating
                 {
                     ProfessorId = g.Key,
-                    Overall = (int)g.Average(r => r.Overall)
+                    FirstName = g.First().FirstName,
+                    LastName = g.First().LastName,
+                    OverallRating = (int)g.Average(r => r.OverallRating)
                 })
                 .ToList();
 
-            return professorRatings.Cast<object>().ToList();
+            return professorRatings;
         }
     }
 }

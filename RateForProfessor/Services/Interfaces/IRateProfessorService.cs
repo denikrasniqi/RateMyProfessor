@@ -7,7 +7,9 @@ namespace RateForProfessor.Services.Interfaces
         public List<RateProfessor> GetAllRateProfessors();
 
         //List<RateProfessor> GetOverallRatingProfessors();
-        public List<object> GetOverallRatingProfessors();
+        //public List<object> GetOverallRatingProfessors();
+
+        public List<ProfessorOverallRating> GetOverallRatingProfessors();
 
         public RateProfessor GetRateProfessorById(int id);
 
