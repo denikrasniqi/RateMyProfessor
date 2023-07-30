@@ -101,7 +101,10 @@ namespace RateForProfessor.Services
                         ProfessorId = rateProfessor.ProfessorId,
                         FirstName = professor.FirstName,
                         LastName = professor.LastName,
-                        OverallRating = (int)rateProfessor.Overall
+                        OverallRating = (int)rateProfessor.Overall,
+                        CommunicationSkills = (int)rateProfessor.CommunicationSkills,
+                        Responsiveness = (int)rateProfessor.Responsiveness,
+                        GradingFairness = (int)rateProfessor.GradingFairness
                     }
                 )
                 .GroupBy(r => r.ProfessorId)
@@ -110,7 +113,10 @@ namespace RateForProfessor.Services
                     ProfessorId = g.Key,
                     FirstName = g.First().FirstName,
                     LastName = g.First().LastName,
-                    OverallRating = (int)g.Average(r => r.OverallRating)
+                    OverallRating = (int)g.Average(r => r.OverallRating),
+                    CommunicationSkills = (int)g.Average(r => r.CommunicationSkills),
+                    Responsiveness = (int)g.Average(r => r.Responsiveness),
+                    GradingFairness = (int)g.Average(r => r.GradingFairness)
                 })
                 .ToList();
 
