@@ -116,7 +116,8 @@ namespace RateForProfessor.Services
                     OverallRating = (int)g.Average(r => r.OverallRating),
                     CommunicationSkills = (int)g.Average(r => r.CommunicationSkills),
                     Responsiveness = (int)g.Average(r => r.Responsiveness),
-                    GradingFairness = (int)g.Average(r => r.GradingFairness)
+                    GradingFairness = (int)g.Average(r => r.GradingFairness),
+                    TotalRatings = g.Count()
                 })
                 .ToList();
 

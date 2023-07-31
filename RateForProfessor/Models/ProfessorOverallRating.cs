@@ -11,6 +11,7 @@
         public int Responsiveness { get; set; }
 
         public int GradingFairness { get; set; }
+        public int TotalRatings { get; set; }
     }
 }
 
