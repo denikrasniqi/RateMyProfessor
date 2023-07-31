@@ -52,6 +52,13 @@ namespace RateForProfessor.Services
             return department;
         }
 
+        public List<Department> GetDepartmentsByUniversity(int universityId)
+        {
+            var departmentEntity = _departmentRepository.GetDepartmentsByUniversity(universityId);
+            var departments = _mapper.Map<List<Department>>(departmentEntity);
+            return departments;
+        }
+
         public void UpdateDepartment(Department department)
         {
             var existingDepartmentEntity = _departmentRepository.GetDepartmentById(department.DepartmentId);

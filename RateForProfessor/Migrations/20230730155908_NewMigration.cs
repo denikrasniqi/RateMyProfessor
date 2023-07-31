@@ -138,6 +138,7 @@ namespace RateForProfessor.Migrations
                     StudentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
+                    UniversityId = table.Column<int>(type: "int", nullable: false),
                     DepartmentID = table.Column<int>(type: "int", nullable: false),
                     Grade = table.Column<int>(type: "int", nullable: false),
                     ProfilePhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -151,6 +152,11 @@ namespace RateForProfessor.Migrations
                         principalTable: "Departments",
                         principalColumn: "DepartmentId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Students_Universities_UniversityId",
+                        column: x => x.UniversityId,
+                        principalTable: "Universities",
+                        principalColumn: "UniversityId");
                     table.ForeignKey(
                         name: "FK_Students_Users_UserId",
                         column: x => x.UserId,
@@ -354,6 +360,11 @@ namespace RateForProfessor.Migrations
                 name: "IX_Students_DepartmentID",
                 table: "Students",
                 column: "DepartmentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_UniversityId",
+                table: "Students",
+                column: "UniversityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_UserId",
