@@ -18,5 +18,7 @@ namespace RateForProfessor.Services.Interfaces
         List<RateUniversity> GetRateUniversityByUniversiyId(int universityId);
 
         List<RateUniversity> GetRateUniversityByStudentId( int studentId);
+
+        public List<UniversityOverallRating> GetOverallRatingUniversities();
     }
 }

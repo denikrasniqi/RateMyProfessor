@@ -1,5 +1,6 @@
 ﻿using RateForProfessor.Context;
 using RateForProfessor.Entities;
+using RateForProfessor.Extensions;
 using RateForProfessor.Repositories.Interfaces;
 
 namespace RateForProfessor.Repositories
@@ -53,6 +54,12 @@ namespace RateForProfessor.Repositories
             _dbContext.Universities.Remove(universiteti);
             _dbContext.SaveChanges();
             Console.WriteLine("University: "+universiteti.Name+" Deleted Successful!");
+        }
+        public List<UniversityEntity> SearchUniversities(Search search)
+        {
+            var query = _dbContext.Universities.SearchUniversity(search.SearchTerm).AsQueryable();
+            var universities = query.ToList();
+            return universities;
         }
     }
 }
