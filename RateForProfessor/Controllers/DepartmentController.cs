@@ -49,7 +49,7 @@ namespace RateForProfessor.Controllers
             return Ok(createdDepartment);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPut("UpdateDepartment/{id}")]
         public IActionResult UpdateDepartment(int id, Department department)
         {
@@ -80,7 +80,7 @@ namespace RateForProfessor.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpDelete("DeleteDepartment/{id}")]
         public IActionResult DeleteDepartment(int id)
         {

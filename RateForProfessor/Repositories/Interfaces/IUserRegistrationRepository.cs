@@ -12,7 +12,7 @@ namespace RateForProfessor.Repositories.Interfaces
 
         StudentEntity CreateStudent(StudentEntity student, string photoPath);
 
-        public void UpdateStudent(StudentEntity student);
+        public void UpdateStudent(StudentEntity student, string photoPath);
 
         public void DeleteStudent(int id);
 

@@ -24,8 +24,10 @@ namespace RateForProfessor.Models
 
         //public ICollection<ContactNumber> ContactNumbers { get; set; }
 
-        //public ICollection<Department> Departments { get; set; }
+        //public ICollection<Department>? Departments { get; set; }
 
         //public ICollection<RateUniversity> RateUniversities { get; set; }
+
+        public string? ProfilePhotoPath { get; set; }
     }
 }

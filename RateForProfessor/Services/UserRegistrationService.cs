@@ -24,6 +24,7 @@ namespace RateForProfessor.Services
         {
             _userRegistrationRepository.DeleteStudent(id);
         }
+
         public List<Student> GetAllStudents()
         {
             var studentEntities = _userRegistrationRepository.GetAllStudents();
@@ -50,7 +51,8 @@ namespace RateForProfessor.Services
             var student = _mapper.Map<Student>(studentEntity);
             return student;
         }
-        public void UpdateStudent(Student student)
+
+        public void UpdateStudent(Student student, string photoPath)
         {
             var existingStudentEntity = _userRegistrationRepository.GetStudentById(student.StudentId);
 
@@ -58,9 +60,11 @@ namespace RateForProfessor.Services
             {
                 throw new Exception("Student not found");
             }
-            var updatedStudent = _mapper.Map<StudentEntity>(student);
 
-            _userRegistrationRepository.UpdateStudent(updatedStudent);
+            var updatedStudent = _mapper.Map<StudentEntity>(student);
+            updatedStudent.ProfilePhotoPath = photoPath;
+
+            _userRegistrationRepository.UpdateStudent(updatedStudent, photoPath);
         }
 
         public Student CreateStudent(Student student, string photoPath)
@@ -90,7 +94,7 @@ namespace RateForProfessor.Services
             }
 
             existingStudentEntity.ProfilePhotoPath = photoPath;
-            _userRegistrationRepository.UpdateStudent(existingStudentEntity);
+            _userRegistrationRepository.UpdateStudent(existingStudentEntity, photoPath);
         }
     }
 }

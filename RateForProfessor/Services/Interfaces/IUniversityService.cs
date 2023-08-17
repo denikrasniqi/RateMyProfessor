@@ -9,10 +9,12 @@ namespace RateForProfessor.Services.Interfaces
         public University GetUniversityById(int id);
         public University GetUniversityByName(string name);
 
-        public University CreateUniversitiy(University university);
+        public University CreateUniversitiy(University university, string photoPath);
 
-        public void UpdateUniversity (University university);
+        public void UpdateUniversity (University university, string photoPath);
 
         public void DeleteUniversity(int id);
+
+        public void UploadProfilePhoto(int studentId, string photoPath);
     }
 }

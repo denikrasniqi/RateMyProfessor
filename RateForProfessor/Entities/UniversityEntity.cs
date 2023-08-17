@@ -26,5 +26,7 @@ namespace RateForProfessor.Entities
         public ICollection<DepartmentEntity> Departments { get; set; }
 
         public ICollection<RateUniversityEntity> RateUniversities { get; set; }
+
+        public string? ProfilePhotoPath { get; set; }
     }
 }

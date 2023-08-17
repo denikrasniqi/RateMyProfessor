@@ -38,19 +38,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 
-//builder.Services.AddControllers()
-//        .AddNewtonsoftJson()
-//        .AddMvcOptions(options =>
-//        {
-//            options.ModelBinderProviders.Insert(0, new FormFileModelBinderProvider());
-//        });
 
-
-//builder.Services.AddControllers().AddNewtonsoftJson();
-//builder.Services.AddControllers(options =>
-//{
-//    options.InputFormatters.Insert(0, MyJPIF.GetJsonPatchInputFormatter());
-//});
 
 
 
@@ -61,8 +49,8 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 
     //Google Auth
-    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+    //options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    //options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
 }).AddJwtBearer(o =>
 {
     o.TokenValidationParameters = new TokenValidationParameters
@@ -77,12 +65,13 @@ builder.Services.AddAuthentication(options =>
     };
 
     //Google Auth
-}).AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
-{
-    options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-    options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
 })
+//.AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+//{
+//    options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+//    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+//    options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
+//})
 .AddCookie("Cookies", options =>
 {
     // Configure cookie authentication options
@@ -101,6 +90,9 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
+
+
+
 //builder.Services.AddCors(options =>
 //{
 //    options.AddDefaultPolicy(builder =>
@@ -119,17 +111,17 @@ builder.Services.AddCors(options =>
     var frontendURL = configuration.GetValue<string>("frontend_url");
     options.AddDefaultPolicy(builder =>
     {
-        builder.WithOrigins(frontendURL).AllowAnyOrigin().AllowAnyHeader();
+        builder.WithOrigins(frontendURL).AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
     }); 
 });
 
 builder.Services.AddControllers();
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("AdminOnly", policy => policy.RequireRole(Role.Admin.ToString()));
-    options.AddPolicy("StudentOnly", policy => policy.RequireRole(Role.Student.ToString()));
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy("AdminOnly", policy => policy.RequireRole(Role.Admin.ToString()));
+//    options.AddPolicy("StudentOnly", policy => policy.RequireRole(Role.Student.ToString()));
     
- });
+// });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -165,17 +157,6 @@ builder.Services.AddSwaggerGen(c =>
     c.AddSecurityRequirement(securityRequirement);
 }); 
 
-var provider = builder.Services.BuildServiceProvider();
-var configuration = provider.GetRequiredService<IConfiguration>();
-
-builder.Services.AddCors(options =>
-{
-    var frontendURL = configuration.GetValue<string>("frontend_url");
-    options.AddDefaultPolicy(builder =>
-    {
-        builder.WithOrigins(frontendURL).AllowAnyMethod().AllowAnyHeader();
-    });
-});
 
 builder.Services.AddAutoMapper(typeof(UserProfileMapping));
 builder.Services.AddScoped<IUserRegistrationRepository, UserRegistrationRepository>();
@@ -212,6 +193,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
 
 app.MapControllers();
 

@@ -4,6 +4,7 @@ namespace RateForProfessor.Entities
 {
     public class ProfessorEntity
     {
+        [Required]
         [Key]
         public int ProfessorId { get; set; }
 
@@ -31,6 +32,6 @@ namespace RateForProfessor.Entities
 
         public ICollection<DepartmentProfessorEntity> DepartmentProfessors { get; set; }
 
-
+        public string ProfilePhotoPath { get; set; }
     }
 }

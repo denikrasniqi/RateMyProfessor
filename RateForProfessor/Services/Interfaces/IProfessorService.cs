@@ -9,14 +9,14 @@ namespace RateForProfessor.Services.Interfaces
 
         public Professor GetProfessorById(int id);
 
-        public Professor CreateProfessor(Professor professor);
+        public Professor CreateProfessor(Professor professor, string photoPath);
 
         public void UpdateProfessor(Professor professor);
 
         public void DeleteProfessor(int id);
 
-
         public List<Professor> SearchProfessors(Search search);
 
+        public void UploadProfilePhoto(int professorId, string photoPath);
     }
 }
