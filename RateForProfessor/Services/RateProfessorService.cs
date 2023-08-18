@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RateForProfessor.Entities;
 using RateForProfessor.Models;
+using RateForProfessor.Repositories;
 using RateForProfessor.Repositories.Interfaces;
 using RateForProfessor.Services.Interfaces;
 
@@ -10,11 +11,13 @@ namespace RateForProfessor.Services
     {
         private readonly IRateProfessorRepository _rateProfessorRepository;
         private readonly IMapper _mapper;
+        private readonly IProfessorRepository _professorRepository;
 
-        public RateProfessorService(IRateProfessorRepository rateProfessorRepository, IMapper mapper)
+        public RateProfessorService(IRateProfessorRepository rateProfessorRepository, IMapper mapper, IProfessorRepository professorRepository)
         {
             _rateProfessorRepository = rateProfessorRepository;
             _mapper = mapper;
+            _professorRepository = professorRepository;
         }
 
         public RateProfessor CreateRateProfessor(RateProfessor rateProfessor)
@@ -84,6 +87,41 @@ namespace RateForProfessor.Services
         {
             int overall = (communicationskills + responsiveness + gradingfairness) / 3;
             return overall;
+        }
+
+        public List<ProfessorOverallRating> GetOverallRatingProfessors()
+        {
+            var professorRatings = _rateProfessorRepository.GetAllRateProfessors()
+                .Join(
+                    _professorRepository.GetAllProfessors(),
+                    rateProfessor => rateProfessor.ProfessorId,
+                    professor => professor.ProfessorId,
+                    (rateProfessor, professor) => new ProfessorOverallRating
+                    {
+                        ProfessorId = rateProfessor.ProfessorId,
+                        FirstName = professor.FirstName,
+                        LastName = professor.LastName,
+                        OverallRating = (int)rateProfessor.Overall,
+                        CommunicationSkills = (int)rateProfessor.CommunicationSkills,
+                        Responsiveness = (int)rateProfessor.Responsiveness,
+                        GradingFairness = (int)rateProfessor.GradingFairness
+                    }
+                )
+                .GroupBy(r => r.ProfessorId)
+                .Select(g => new ProfessorOverallRating
+                {
+                    ProfessorId = g.Key,
+                    FirstName = g.First().FirstName,
+                    LastName = g.First().LastName,
+                    OverallRating = (int)g.Average(r => r.OverallRating),
+                    CommunicationSkills = (int)g.Average(r => r.CommunicationSkills),
+                    Responsiveness = (int)g.Average(r => r.Responsiveness),
+                    GradingFairness = (int)g.Average(r => r.GradingFairness),
+                    TotalRatings = g.Count()
+                })
+                .ToList();
+
+            return professorRatings;
         }
     }
 }
