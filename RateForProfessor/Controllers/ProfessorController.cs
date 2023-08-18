@@ -30,7 +30,7 @@ namespace RateForProfessor.Controllers
             return _professorService.GetProfessorById(id);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("CreateProfessor")]
         public IActionResult CreateProfessor([FromForm] Professor professor, IFormFile file)
         {
