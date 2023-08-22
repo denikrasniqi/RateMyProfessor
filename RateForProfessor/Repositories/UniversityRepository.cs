@@ -1,6 +1,7 @@
-﻿using RateForProfessor.Context;
+using RateForProfessor.Context;
 using RateForProfessor.Entities;
 using RateForProfessor.Models;
+using RateForProfessor.Extensions;
 using RateForProfessor.Repositories.Interfaces;
 
 namespace RateForProfessor.Repositories
@@ -66,6 +67,12 @@ namespace RateForProfessor.Repositories
                 university.ProfilePhotoPath = photoPath;
                 _dbContext.SaveChanges();
             }
+
+        public List<UniversityEntity> SearchUniversities(Search search)
+        {
+            var query = _dbContext.Universities.SearchUniversity(search.SearchTerm).AsQueryable();
+            var universities = query.ToList();
+            return universities;
         }
     }
 }

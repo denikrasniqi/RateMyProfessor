@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RateForProfessor.Entities;
+using RateForProfessor.Extensions;
 using RateForProfessor.Models;
 using RateForProfessor.Repositories;
 using RateForProfessor.Repositories.Interfaces;
@@ -83,6 +84,12 @@ namespace RateForProfessor.Services
 
             existingUniversityEntity.ProfilePhotoPath = photoPath;
             _universityRepository.UpdateUniversity(existingUniversityEntity, photoPath);
+        }
+        public List<University> SearchUniversities(Search search)
+        {
+            var universityEntities = _universityRepository.SearchUniversities(search);
+            var universities = _mapper.Map<List<University>>(universityEntities);
+            return universities;
         }
     }
 }

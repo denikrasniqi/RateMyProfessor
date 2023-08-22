@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using RateForProfessor.Models;
+using RateForProfessor.Services;
 using RateForProfessor.Services.Interfaces;
 using RateForProfessor.Validators;
 
@@ -25,6 +26,12 @@ namespace RateForProfessor.Controllers
             return result;
         }
 
+        [HttpGet("GetOverallRatingForUniversities")]
+        public IActionResult OverallRatingUniversities()
+        {
+            var universityRatings = _rateUniversityService.GetOverallRatingUniversities();
+            return Ok(universityRatings);
+        }
         [HttpGet("GetRateUniversityById/{id}")]
         public RateUniversity GetRateUniversityById(int id)
         {

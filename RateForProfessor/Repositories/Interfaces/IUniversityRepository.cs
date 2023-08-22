@@ -1,4 +1,5 @@
-﻿using RateForProfessor.Entities;
+using RateForProfessor.Entities;
+using RateForProfessor.Extensions;
 
 namespace RateForProfessor.Repositories.Interfaces
 {
@@ -17,5 +18,7 @@ namespace RateForProfessor.Repositories.Interfaces
         public void DeleteUniversity(int id);
 
         public void UploadProfilePhoto(int universityId, string photoPath);
+      
+        public List<UniversityEntity> SearchUniversities(Search search);
     }
 }

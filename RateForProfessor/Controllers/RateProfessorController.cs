@@ -24,6 +24,12 @@ namespace RateForProfessor.Controllers
             var result = _rateProfessorService.GetAllRateProfessors();
             return result;
         }
+        [HttpGet("GetOverallRatingForProfessors")]
+        public IActionResult OverallRatingProfessors()
+        {
+            var professorRatings = _rateProfessorService.GetOverallRatingProfessors();
+            return Ok(professorRatings);
+        }
 
         [HttpGet("GetRateProfessorById/{id}")]
         public RateProfessor GetRateProfessorById(int id)

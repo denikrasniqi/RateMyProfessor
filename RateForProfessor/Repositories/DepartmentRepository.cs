@@ -29,6 +29,10 @@ namespace RateForProfessor.Repositories
             return _dbContext.Departments.Find(id);
         }
 
+        public List<DepartmentEntity> GetDepartmentsByUniversity(int universityId)
+        {
+            return _dbContext.Departments.Where(x => x.UniversityId == universityId).ToList();
+        }
         public void UpdateDepartment(DepartmentEntity department)
         {
             var olddepartment = _dbContext.Departments.Find(department.DepartmentId);

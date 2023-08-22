@@ -1,4 +1,5 @@
-﻿using RateForProfessor.Models;
+using RateForProfessor.Extensions;
+using RateForProfessor.Models;
 
 namespace RateForProfessor.Services.Interfaces
 {
@@ -7,6 +8,7 @@ namespace RateForProfessor.Services.Interfaces
         public List<University> GetAllUniversites();
 
         public University GetUniversityById(int id);
+      
         public University GetUniversityByName(string name);
 
         public University CreateUniversitiy(University university, string photoPath);
@@ -16,5 +18,8 @@ namespace RateForProfessor.Services.Interfaces
         public void DeleteUniversity(int id);
 
         public void UploadProfilePhoto(int studentId, string photoPath);
+
+        public List<University> SearchUniversities(Search search);
+
     }
 }
