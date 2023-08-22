@@ -30,6 +30,12 @@ namespace RateForProfessor.Controllers
             return _departmentService.GetDepartmentById(id);
         }
 
+        [HttpGet("GetDepartmentsByUniversity/{id}")]
+        public List<Department> GetDepartmentsByUniversity(int id)
+        {
+            return _departmentService.GetDepartmentsByUniversity(id);
+        }
+
         [Authorize(Roles = "Admin")]
         [HttpPost("CreateDepartment")]
         public IActionResult CreateDepartment(Department department)

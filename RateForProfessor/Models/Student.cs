@@ -13,13 +13,18 @@ namespace RateForProfessor.Models
         [ForeignKey("User")]
         public int UserId { get; set; }
 
+        [ForeignKey("University")]
+        public int UniversityId { get; set; }
+
         [ForeignKey("Department")]
         public int DepartmentID { get; set; }
 
         public int Grade { get; set; }
 
         public User User { get; set; }
-      
+
+        public University University { get; set; }
+
         public Department Department { get; set; }
 
         public RateUniversity RateUniversity { get; set; }

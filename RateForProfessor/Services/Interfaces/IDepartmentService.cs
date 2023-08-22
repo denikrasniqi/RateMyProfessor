@@ -1,4 +1,5 @@
-﻿using RateForProfessor.Models;
+﻿using RateForProfessor.Entities;
+using RateForProfessor.Models;
 
 namespace RateForProfessor.Services.Interfaces
 {
@@ -7,6 +8,8 @@ namespace RateForProfessor.Services.Interfaces
         public List<Department> GetAllDepartments();
 
         public Department GetDepartmentById(int id);
+
+        public List<Department> GetDepartmentsByUniversity(int universityId);
 
         public Department CreateDepartment(Department department);
 

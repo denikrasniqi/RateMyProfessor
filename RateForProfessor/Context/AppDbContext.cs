@@ -95,6 +95,12 @@ namespace RateForProfessor.Context
                .HasKey(pk => new { pk.StudentId });
 
             modelBuilder.Entity<StudentEntity>()
+                .HasOne(s => s.University)
+                .WithMany(s => s.Students)
+                .HasForeignKey(fk => fk.UniversityId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<StudentEntity>()
                 .HasOne(ae => ae.Department)
                 .WithMany(ae => ae.Students)
                 .HasForeignKey(fk => fk.DepartmentID);
