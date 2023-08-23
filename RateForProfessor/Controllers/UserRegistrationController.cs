@@ -33,7 +33,7 @@ namespace RateForProfessor.Controllers
             return _registrationService.GetStudentById(id);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("GetStudentByEmail/{email}")]
         public Student GetStudentByEmail(string email)
         {

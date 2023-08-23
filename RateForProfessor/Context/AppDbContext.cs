@@ -23,7 +23,8 @@ namespace RateForProfessor.Context
         public DbSet<StudentEntity> Students { get; set; }
         public DbSet<UniversityEntity> Universities { get; set; }
         public DbSet<UserEntity> Users { get; set; }
- 
+        public DbSet<NewsEntity> News { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -40,6 +41,7 @@ namespace RateForProfessor.Context
             modelBuilder.Entity<StudentEntity>().ToTable("Students");
             modelBuilder.Entity<UniversityEntity>().ToTable("Universities");
             modelBuilder.Entity<UserEntity>().ToTable("Users");
+            modelBuilder.Entity<NewsEntity>().ToTable("News");
 
             modelBuilder.Entity<AddressEntity>()
                .HasKey(pk => new { pk.AddressId });
