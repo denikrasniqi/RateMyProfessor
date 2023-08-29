@@ -2,6 +2,7 @@
 using RateForProfessor.Entities;
 using RateForProfessor.Extensions;
 using RateForProfessor.Models;
+using RateForProfessor.Repositories;
 using RateForProfessor.Repositories.Interfaces;
 using RateForProfessor.Services.Interfaces;
 
@@ -17,12 +18,13 @@ namespace RateForProfessor.Services
             _professorRepository = professorRepository;
             _mapper = mapper;
         }
-        public Professor CreateProfessor(Professor professor)
+
+        public Professor CreateProfessor(Professor professor, string photoPath)
         {
             try
             {
                 var professorEntity = _mapper.Map<ProfessorEntity>(professor);
-                var result = _professorRepository.CreateProfessor(professorEntity);
+                var result = _professorRepository.CreateProfessor(professorEntity, photoPath);
 
                 var professorCreated = _mapper.Map<Professor>(result);
                 return professorCreated;
@@ -71,6 +73,19 @@ namespace RateForProfessor.Services
             var professorEntities = _professorRepository.SearchProfessors(search);
             var professors = _mapper.Map<List<Professor>>(professorEntities);
             return professors;
+        }
+
+        public void UploadProfilePhoto(int professorId, string photoPath)
+        {
+            var existingProfessorEntity = _professorRepository.GetProfessorById(professorId);
+
+            if (existingProfessorEntity == null)
+            {
+                throw new Exception("Professor not found");
+            }
+
+            existingProfessorEntity.ProfilePhotoPath = photoPath;
+            _professorRepository.UpdateProfessor(existingProfessorEntity);
         }
     }
 }

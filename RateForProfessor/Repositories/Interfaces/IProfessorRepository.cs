@@ -10,14 +10,15 @@ namespace RateForProfessor.Repositories.Interfaces
 
         public ProfessorEntity GetProfessorById(int id);
 
-        public ProfessorEntity CreateProfessor(ProfessorEntity professor);
+        public ProfessorEntity CreateProfessor(ProfessorEntity professor, string photoPath);
 
         public void UpdateProfessor(ProfessorEntity professor);
 
         public void DeleteProfessor(int id);
 
-
         public List<ProfessorEntity> SearchProfessors(Search search);
+
+        public void UploadProfilePhoto(int professorId, string photoPath);
 
     }
 }

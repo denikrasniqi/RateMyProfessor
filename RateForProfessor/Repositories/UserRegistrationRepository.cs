@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RateForProfessor.Context;
 using RateForProfessor.Entities;
+using RateForProfessor.Extensions;
 using RateForProfessor.Repositories.Interfaces;
 
 namespace RateForProfessor.Repositories
@@ -54,9 +55,16 @@ namespace RateForProfessor.Repositories
 
         }
 
-        public void UpdateStudent(StudentEntity student)
+        /*        public void UpdateStudent(StudentEntity student)
+                {
+                    var oldstudent = _dbContext.Students.Find(student.StudentId);
+                    _dbContext.Entry(oldstudent).CurrentValues.SetValues(student);
+                    _dbContext.SaveChanges();
+                }*/
+        public void UpdateStudent(StudentEntity student, string photoPath)
         {
             var oldstudent = _dbContext.Students.Find(student.StudentId);
+            oldstudent.ProfilePhotoPath = photoPath;
             _dbContext.Entry(oldstudent).CurrentValues.SetValues(student);
             _dbContext.SaveChanges();
         }

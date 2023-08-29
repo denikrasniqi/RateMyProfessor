@@ -5,7 +5,7 @@ namespace RateForProfessor.Models
 {
     public class DepartmentProfessor
     {
-        [Key, Column(Order =1)] // 
+        [Key, Column(Order =1)]  
         [ForeignKey("Department")]
         public int DepartmentId { get; set; } 
 

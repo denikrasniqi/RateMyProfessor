@@ -6,6 +6,8 @@ using RateForProfessor.Validators;
 
 namespace RateForProfessor.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class CourseController : ControllerBase
     {
         private readonly ICourseService _courseService;
@@ -48,7 +50,7 @@ namespace RateForProfessor.Controllers
             return Ok(createdDepartment);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPut("UpdateCourse/{id}")]
         public IActionResult UpdateCourse(int id, Course course)
         {
@@ -79,7 +81,7 @@ namespace RateForProfessor.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpDelete("DeleteCourse/{id}")]
         public IActionResult DeleteCourse(int id)
         {

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using RateForProfessor.Extensions;
 using RateForProfessor.Models;
-using RateForProfessor.Services;
 using RateForProfessor.Services.Interfaces;
 using RateForProfessor.Validators;
 
@@ -33,7 +32,7 @@ namespace RateForProfessor.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("CreateProfessor")]
-        public IActionResult CreateProfessor(Professor professor)
+        public IActionResult CreateProfessor([FromForm] Professor professor, IFormFile file)
         {
             ProfessorValidator validator = new ProfessorValidator();
             var validationResult = validator.Validate(professor);
@@ -46,11 +45,12 @@ namespace RateForProfessor.Controllers
                 }
                 return BadRequest(ModelState);
             }
-            var createdProfessor = _professorService.CreateProfessor(professor);
+            string photoPath = FileUploadHelper.SaveProfilePhoto(file);
+            var createdProfessor = _professorService.CreateProfessor(professor, photoPath);
             return Ok(createdProfessor);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPut("UpdateProfessor/{id}")]
         public IActionResult UpdateProfessor(int id, Professor professor)
         {
@@ -80,7 +80,8 @@ namespace RateForProfessor.Controllers
                 return StatusCode(500, "An error occurred while updating the professor.");
             }
         }
-        [Authorize(Roles = "Admin")]
+
+        //[Authorize(Roles = "Admin")]
         [HttpDelete("DeleteProfessor/{id}")]
         public IActionResult DeleteProfessor(int id)
         {
@@ -100,13 +101,40 @@ namespace RateForProfessor.Controllers
             }
         }
 
-
         [HttpGet("SearchProfessor")]
         public List<Professor> SearchProfessors([FromQuery] Search search)
         {
             var result = _professorService.SearchProfessors(search);
             return result;
 
+        }
+
+        [HttpPost("UploadProfilePhoto/{professorId}")]
+        public IActionResult UploadProfilePhoto(int professorId, IFormFile file)
+        {
+            try
+            {
+                var professor = _professorService.GetProfessorById(professorId);
+                if (professor == null)
+                {
+                    return NotFound();
+                }
+
+                if (file != null)
+                {
+                    string photoPath = FileUploadHelper.SaveProfilePhoto(file);
+                    _professorService.UploadProfilePhoto(professorId, photoPath);
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("No file was uploaded.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while uploading the profile photo.");
+            }
         }
     }
 }

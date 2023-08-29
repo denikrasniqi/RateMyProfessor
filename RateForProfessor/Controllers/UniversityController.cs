@@ -42,7 +42,7 @@ namespace RateForProfessor.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("CreateUniversity")]
-        public IActionResult CreateUniversity(University university)
+        public IActionResult CreateUniversity([FromForm] University university, IFormFile file)
         {
             UniversityValidator validator = new UniversityValidator();
             var validationResult = validator.Validate(university);
@@ -55,13 +55,14 @@ namespace RateForProfessor.Controllers
                 }
                 return BadRequest(ModelState);
             }
-            var createdUniversity = _universityService.CreateUniversitiy(university);
+            string photoPath = FileUploadHelper.SaveProfilePhoto(file);
+            var createdUniversity = _universityService.CreateUniversitiy(university, photoPath);
             return Ok(createdUniversity);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPut("UpdateUniversity/{id}")]
-        public IActionResult UpdateUniversity(int id, University university)
+        public IActionResult UpdateUniversity(int id, [FromForm] University university, IFormFile file)
         {
             UniversityValidator validator = new UniversityValidator();
             var validationResult = validator.Validate(university);
@@ -74,20 +75,23 @@ namespace RateForProfessor.Controllers
                 }
                 return BadRequest(ModelState);
             }
-            var oldUniversity = _universityService.GetUniversityById(id);
+            //var oldUniversity = _universityService.GetUniversityById(id);
+            //string photoPath = FileUploadHelper.SaveProfilePhoto(file);
             try
             {
-                
+                var oldUniversity = _universityService.GetUniversityById(id);
+                string photoPath = FileUploadHelper.SaveProfilePhoto(file);
+
                 if (oldUniversity == null)
                 {
                     return NotFound();
                 }
-                _universityService.UpdateUniversity(university);
+                _universityService.UpdateUniversity(university, photoPath);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while updating the University: "+ oldUniversity.Name);
+                return StatusCode(500, "An error occurred while updating the University: "/*+ oldUniversity.Name*/);
             }
         }
 
@@ -117,6 +121,35 @@ namespace RateForProfessor.Controllers
             var result = _universityService.SearchUniversities(search);
             return result;
 
+        }
+
+
+        [HttpPost("UploadProfilePhoto/{universityId}")]
+        public IActionResult UploadProfilePhoto(int universityId, IFormFile file)
+        {
+            try
+            {
+                var university = _universityService.GetUniversityById(universityId);
+                if (university == null)
+                {
+                    return NotFound();
+                }
+
+                if (file != null)
+                {
+                    string photoPath = FileUploadHelper.SaveProfilePhoto(file);
+                    _universityService.UploadProfilePhoto(universityId, photoPath);
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("No file was uploaded.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while uploading the profile photo.");
+            }
         }
 
     }

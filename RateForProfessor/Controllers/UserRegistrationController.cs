@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RateForProfessor.Entities;
+using RateForProfessor.Extensions;
 using RateForProfessor.Models;
 using RateForProfessor.Services.Interfaces;
 using RateForProfessor.Validators;
@@ -18,7 +19,7 @@ namespace RateForProfessor.Controllers
             _registrationService = service;
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet]
         public List<Student> GetAllStudents()
         {
@@ -26,7 +27,7 @@ namespace RateForProfessor.Controllers
             return result;
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("GetStudentById/{id}")]
         public Student GetStudentById(int id)
         {
@@ -45,7 +46,7 @@ namespace RateForProfessor.Controllers
             return _registrationService.GetStudentByName(name);
         }
 
-       [HttpPost("CreateStudent")]
+        [HttpPost("CreateStudent")]
         public IActionResult CreateStudent([FromForm] Student student, IFormFile file)
         {
             StudentValidator validator = new StudentValidator();
@@ -61,7 +62,7 @@ namespace RateForProfessor.Controllers
             }
             try
             {
-                string photoPath = SaveProfilePhoto(file);
+                string photoPath = FileUploadHelper.SaveProfilePhoto(file);
                 var createdStudent = _registrationService.CreateStudent(student, photoPath);
                 return Ok(createdStudent);
             }
@@ -70,10 +71,9 @@ namespace RateForProfessor.Controllers
                 return StatusCode(500, "An error occurred while creating the student.");
             }
         }
-        
-        [Authorize(Roles = "Student")]
+
         [HttpPut("UpdateStudent/{id}")]
-        public IActionResult UpdateStudent(int id, Student student)
+        public IActionResult UpdateStudent(int id, [FromForm] Student student, IFormFile file)
         {
             StudentValidator validator = new StudentValidator();
             var validationResult = validator.Validate(student);
@@ -86,14 +86,20 @@ namespace RateForProfessor.Controllers
                 }
                 return BadRequest(ModelState);
             }
+
             try
             {
+                //string photoPath = FileUploadHelper.SaveProfilePhoto(file);
                 var oldStudent = _registrationService.GetStudentById(id);
+                string photoPath = FileUploadHelper.SaveProfilePhoto(file);
                 if (oldStudent == null)
                 {
                     return NotFound();
                 }
-                _registrationService.UpdateStudent(student);
+
+                // Thirr metoden perkatese te servisit per perditesim
+                _registrationService.UpdateStudent(student, photoPath);
+
                 return NoContent();
             }
             catch (Exception ex)
@@ -102,7 +108,7 @@ namespace RateForProfessor.Controllers
             }
         }
 
-        [Authorize(Roles ="Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpDelete("DeleteStudent/{id}")]
         public IActionResult DeleteStudent(int id)
         {
@@ -135,7 +141,7 @@ namespace RateForProfessor.Controllers
 
                 if (file != null)
                 {
-                    string photoPath = SaveProfilePhoto(file);
+                    string photoPath = FileUploadHelper.SaveProfilePhoto(file);
                     _registrationService.UploadProfilePhoto(studentId, photoPath);
                     return Ok();
                 }
@@ -147,33 +153,6 @@ namespace RateForProfessor.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, "An error occurred while uploading the profile photo.");
-            }
-        }
-
-        private string SaveProfilePhoto(IFormFile file)
-        {
-            try
-            {
-                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
-
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-
-                return "/uploads/" + uniqueFileName;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("An error occurred while saving the profile photo.", ex);
             }
         }
     }

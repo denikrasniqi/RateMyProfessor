@@ -17,12 +17,13 @@ namespace RateForProfessor.Services
             _universityRepository = universityRepository;
             _mapper = mapper;
         }
-        public University CreateUniversitiy(University university)
+
+        public University CreateUniversitiy(University university, string photoPath)
         {
             try
             {
                 var universityEntity = _mapper.Map<UniversityEntity>(university);
-                var result = _universityRepository.CreateUniversity(universityEntity);
+                var result = _universityRepository.CreateUniversity(universityEntity, photoPath);
                 var universityCreated = _mapper.Map<University>(result);
                 return universityCreated;
             }
@@ -59,7 +60,7 @@ namespace RateForProfessor.Services
             return university;
         }
 
-        public void UpdateUniversity(University university)
+        public void UpdateUniversity(University university, string photoPath)
         {
             var universityId = university.UniversityId;
             var existingUniversityEntity = _universityRepository.GetUniversityById(universityId);
@@ -68,7 +69,21 @@ namespace RateForProfessor.Services
                 throw new Exception("University not Found!");
             }
             var updateUniversity = _mapper.Map<UniversityEntity>(university);
-            _universityRepository.UpdateUniversity(updateUniversity);
+            updateUniversity.ProfilePhotoPath = photoPath;
+            _universityRepository.UpdateUniversity(updateUniversity, photoPath);
+        }
+
+        public void UploadProfilePhoto(int universityId, string photoPath)
+        {
+            var existingUniversityEntity = _universityRepository.GetUniversityById(universityId);
+
+            if (existingUniversityEntity == null)
+            {
+                throw new Exception("Student not found");
+            }
+
+            existingUniversityEntity.ProfilePhotoPath = photoPath;
+            _universityRepository.UpdateUniversity(existingUniversityEntity, photoPath);
         }
         public List<University> SearchUniversities(Search search)
         {

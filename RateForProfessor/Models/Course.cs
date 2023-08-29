@@ -25,8 +25,8 @@ namespace RateForProfessor.Models
 
         public string Description { get; set; }
 
-        //public Department Department { get; set; }
+        public Department? Department { get; set; }
 
-        //public ICollection<ProfessorCourse> ProfessorCourses { get; set; }
+        public ICollection<ProfessorCourse>? ProfessorCourses { get; set; }
     }
 }
