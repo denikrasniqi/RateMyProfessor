@@ -180,6 +180,8 @@ builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IRateUniversityRepository, RateUniversityRepository>();
 builder.Services.AddScoped<IRateUniversityService, RateUniversityService>();
+builder.Services.AddScoped<INewsRepository, NewsRepository>();
+builder.Services.AddScoped<INewsService, NewsService>();
 
 var app = builder.Build();
 
@@ -197,6 +199,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.MapControllers();
+
+app.UseStaticFiles();
 
 app.UseAuthentication();
 
