@@ -165,16 +165,6 @@ builder.Services.AddSwaggerGen(c =>
     c.AddSecurityRequirement(securityRequirement);
 }); 
 
-
-builder.Services.AddCors(options =>
-{
-    var frontendURL = configuration.GetValue<string>("frontend_url");
-    options.AddDefaultPolicy(builder =>
-    {
-        builder.WithOrigins(frontendURL).AllowAnyMethod().AllowAnyHeader();
-    });
-});
-
 builder.Services.AddAutoMapper(typeof(UserProfileMapping));
 builder.Services.AddScoped<IUserRegistrationRepository, UserRegistrationRepository>();
 builder.Services.AddScoped<IUserRegistrationService, UserRegistrationService>();

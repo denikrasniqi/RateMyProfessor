@@ -8,6 +8,8 @@ namespace RateForProfessor.Repositories.Interfaces
 
         public DepartmentEntity GetDepartmentById(int id);
 
+        public List<DepartmentEntity> GetDepartmentsByUniversity(int universityId);
+
         public DepartmentEntity CreateDepartment(DepartmentEntity department);
 
         public void UpdateDepartment(DepartmentEntity department);

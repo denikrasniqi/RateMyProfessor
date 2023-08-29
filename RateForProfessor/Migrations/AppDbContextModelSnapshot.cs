@@ -355,12 +355,17 @@ namespace RateForProfessor.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UniversityId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("StudentId");
 
                     b.HasIndex("DepartmentID");
+
+                    b.HasIndex("UniversityId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -579,6 +584,12 @@ namespace RateForProfessor.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("RateForProfessor.Entities.UniversityEntity", "University")
+                        .WithMany("Students")
+                        .HasForeignKey("UniversityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("RateForProfessor.Entities.UserEntity", "User")
                         .WithOne()
                         .HasForeignKey("RateForProfessor.Entities.StudentEntity", "UserId")
@@ -586,6 +597,8 @@ namespace RateForProfessor.Migrations
                         .IsRequired();
 
                     b.Navigation("Department");
+
+                    b.Navigation("University");
 
                     b.Navigation("User");
                 });
@@ -637,6 +650,8 @@ namespace RateForProfessor.Migrations
                     b.Navigation("Departments");
 
                     b.Navigation("RateUniversities");
+
+                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }
