@@ -18,8 +18,14 @@ namespace RateForProfessor.Repositories
 
         public async Task<UserEntity> AuthenticateUser(string email, string password)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
-            return user;
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user != null && BCrypt.Net.BCrypt.Verify(password, user.Password))
+            {
+                return user;
+            }
+
+            return null;
         }
     }
 }

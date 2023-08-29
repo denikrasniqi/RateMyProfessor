@@ -68,7 +68,12 @@ namespace RateForProfessor.Services
             try
             {
                 var studentEntity = _mapper.Map<StudentEntity>(student);
+
+                // Hash the student's password
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(studentEntity.User.Password);
+                studentEntity.User.Password = hashedPassword;
                 studentEntity.User.Role = Enums.Role.Student;
+
                 var result = _userRegistrationRepository.CreateStudent(studentEntity, photoPath);
 
                 var studentCreated = _mapper.Map<Student>(result);
@@ -79,6 +84,7 @@ namespace RateForProfessor.Services
                 throw new Exception(ex.Message);
             }
         }
+
 
         public void UploadProfilePhoto(int studentId, string photoPath)
         {
