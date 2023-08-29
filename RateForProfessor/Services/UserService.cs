@@ -21,11 +21,33 @@ namespace RateForProfessor.Services
             _mapper = mapper;
         }
 
+        //public User CreateUser(User user)
+        //{
+        //    try
+        //    {
+        //        var userEntity = _mapper.Map<UserEntity>(user);
+        //        userEntity.Role = Role.Admin;
+
+        //        var result = _userRepository.CreateUser(userEntity);
+
+        //        var userCreated = _mapper.Map<User>(user);
+        //        return userCreated;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
         public User CreateUser(User user)
         {
             try
             {
                 var userEntity = _mapper.Map<UserEntity>(user);
+
+                // Hash the password
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(userEntity.Password);
+                userEntity.Password = hashedPassword;
+
                 userEntity.Role = Role.Admin;
 
                 var result = _userRepository.CreateUser(userEntity);
@@ -38,6 +60,7 @@ namespace RateForProfessor.Services
                 throw new Exception(ex.Message);
             }
         }
+
 
         public void DeleteUser(int id)
         {

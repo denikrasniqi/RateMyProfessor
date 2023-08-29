@@ -45,7 +45,7 @@ namespace RateForProfessor.Controllers
         //}
 
         [HttpPost("login")]
-        public IActionResult Login([FromQuery] string email, [FromQuery] string password)
+        public async Task<IActionResult> Login([FromQuery] string email, [FromQuery] string password)
         {
             var loginData = (email, password);
             var validationResults = _loginValidator.Validate(loginData);
@@ -56,37 +56,41 @@ namespace RateForProfessor.Controllers
             }
 
             // Perform authentication
-            var token = _authService.AuthenticateUser(email, password).Result;
-
-            if (token == null)
-            {
-                return Unauthorized(new { Message = "Invalid email or password." }); // Return 401 Unauthorized with a meaningful message
-            }
-            
-            // te dhenat e userit
             var userData = _userService.GetUserByEmail(email);
 
             if (userData == null)
             {
-                return NotFound(new { Message = "User data not found." });
+                return Unauthorized(new { Message = "Invalid email or password." }); // Return 401 Unauthorized with a meaningful message
             }
-            
-            // te dhenat e studentit
-            int? studentId = null;// per id 
-            //Student student = null;// per data te Studentit
+
+            // Verify the provided password with the stored hashed password
+            if (!BCrypt.Net.BCrypt.Verify(password, userData.Password))
+            {
+                return Unauthorized(new { Message = "Invalid email or password." }); // Return 401 Unauthorized with a meaningful message
+            }
+
+            int? studentId = null;
 
             if (userData.Role == Enums.Role.Student)
             {
-                 var student = _userRegistrationService.GetStudentByEmail(userData.Email);
+                var student = _userRegistrationService.GetStudentByEmail(userData.Email);
 
                 if (student is not null)
                     studentId = student.StudentId;
             }
-            // Return the token and user data in the response
+
+            // Generate and return a token along with user data in the response
+            var token = await _authService.AuthenticateUser(email, password);
+
+            if (token == null)
+            {
+                return Unauthorized(new { Message = "Authentication failed." }); // Return 401 Unauthorized with a meaningful message
+            }
+
             return Ok(new { Token = token, UserData = userData, StudentId = studentId });
-            // Return the token in the response
-            //return Ok(new { Token = token });
         }
+
+
 
     }
 }
