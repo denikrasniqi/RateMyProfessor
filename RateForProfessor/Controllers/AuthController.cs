@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using RateForProfessor.Enums;
 using RateForProfessor.Models;
 using RateForProfessor.Services;
 using RateForProfessor.Services.Interfaces;
@@ -87,10 +88,25 @@ namespace RateForProfessor.Controllers
                 return Unauthorized(new { Message = "Authentication failed." }); // Return 401 Unauthorized with a meaningful message
             }
 
-            return Ok(new { Token = token, UserData = userData, StudentId = studentId });
+            //userData.Password = null;
+
+            //return Ok(new { Token = token, UserData = userData, StudentId = studentId });
+
+            return Ok(new
+            {
+                Token = token,
+                UserData = new
+                {
+                    userData.UserId,
+                    userData.Name,
+                    userData.Surname,
+                    userData.Email,
+                    userData.UserName,
+                    userData.Gender,
+                    userData.Role
+                },
+                StudentId = studentId
+            });
         }
-
-
-
     }
 }
