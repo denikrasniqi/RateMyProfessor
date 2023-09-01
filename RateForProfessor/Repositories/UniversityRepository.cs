@@ -41,11 +41,10 @@ namespace RateForProfessor.Repositories
             return university;
         }
 
-        public void UpdateUniversity(UniversityEntity university, string photoPath)
+        public void UpdateUniversity(UniversityEntity university)
         {
             var UniversityId = university.UniversityId;
             var oldUniversity = _dbContext.Universities.Find(UniversityId);
-            oldUniversity.ProfilePhotoPath = photoPath;
             _dbContext.Entry(oldUniversity).CurrentValues.SetValues(university);
             _dbContext.SaveChanges();
             Console.WriteLine("University: " + oldUniversity.Name + " Updated Successful!");
@@ -67,6 +66,8 @@ namespace RateForProfessor.Repositories
                 university.ProfilePhotoPath = photoPath;
                 _dbContext.SaveChanges();
             }
+
+        }
 
         public List<UniversityEntity> SearchUniversities(Search search)
         {

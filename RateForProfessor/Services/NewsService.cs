@@ -71,7 +71,7 @@ namespace RateForProfessor.Services
             }
         }
 
-        public void UpdateNews(News news, string photoPath)
+        public void UpdateNews(News news)
         {
             //var universityId = university.UniversityId;
             var existingNewsEntity = _newsRepository.GetNewsById(news.Id);
@@ -81,8 +81,7 @@ namespace RateForProfessor.Services
             }
             var updateNews = _mapper.Map<NewsEntity>(news);
 
-            updateNews.ProfilePhotoPath = photoPath;
-            _newsRepository.UpdateNews(updateNews, photoPath);
+            _newsRepository.UpdateNews(updateNews);
         }
 
         public void DeleteNews(int id)
@@ -101,7 +100,7 @@ namespace RateForProfessor.Services
             }
 
             existingNewsEntity.ProfilePhotoPath = photoPath;
-            _newsRepository.UpdateNews(existingNewsEntity, photoPath);
+            _newsRepository.UpdateNews(existingNewsEntity);
         }
     }
 }

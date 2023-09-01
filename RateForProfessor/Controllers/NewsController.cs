@@ -67,53 +67,53 @@ namespace RateForProfessor.Controllers
         [HttpPost("CreateNews")]
         public IActionResult CreateNews([FromForm] News news, IFormFile file)
         {
-            //string photoPath = FileUploadHelper.SaveProfilePhoto(file);
-            string photoPath = SaveProfilePhoto(file);
+            string photoPath = FileUploadHelper.SaveProfilePhoto(file);
+            //string photoPath = SaveProfilePhoto(file);
             var createdNews = _newsService.CreateNews(news, photoPath);
             return Ok(createdNews);
         }
 
 
-        private string SaveProfilePhoto(IFormFile file)
-        {
-            try
-            {
-                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+        //private string SaveProfilePhoto(IFormFile file)
+        //{
+        //    try
+        //    {
+        //        string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
 
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
+        //        if (!Directory.Exists(uploadsFolder))
+        //        {
+        //            Directory.CreateDirectory(uploadsFolder);
+        //        }
 
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+        //        string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+        //        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
+        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        //        {
+        //            file.CopyTo(fileStream);
+        //        }
 
-                return "/uploads/" + uniqueFileName;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("An error occurred while saving the profile photo.", ex);
-            }
-        }
+        //        return "/uploads/" + uniqueFileName;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("An error occurred while saving the profile photo.", ex);
+        //    }
+        //}
 
 
         [HttpPut("UpdateNews/{id}")]
-        public IActionResult UpdateNews(int id, [FromForm] News news, IFormFile file)
+        public IActionResult UpdateNews(int id, News news)
         {
                 var oldNews = _newsService.GetNewsById(id);
                 //string photoPath = FileUploadHelper.SaveProfilePhoto(file);
-                string photoPath = SaveProfilePhoto(file);
+                //string photoPath = SaveProfilePhoto(file);
 
                 if (oldNews == null)
                 {
                     return NotFound();
                 }
-                _newsService.UpdateNews(news, photoPath);
+                _newsService.UpdateNews(news);
                 return NoContent();
         }
 
@@ -133,6 +133,34 @@ namespace RateForProfessor.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, "An error occurred while deleting the student.");
+            }
+        }
+
+        [HttpPost("UploadProfilePhoto/{id}")]
+        public IActionResult UploadProfilePhoto(int id, IFormFile file)
+        {
+            try
+            {
+                var news = _newsService.GetNewsById(id);
+                if (news == null)
+                {
+                    return NotFound();
+                }
+
+                if (file != null)
+                {
+                    string photoPath = FileUploadHelper.SaveProfilePhoto(file);
+                    _newsService.UploadProfilePhoto(id, photoPath);
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("No file was uploaded.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while uploading the profile photo.");
             }
         }
 

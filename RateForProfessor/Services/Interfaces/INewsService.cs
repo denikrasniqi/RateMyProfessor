@@ -16,7 +16,7 @@ namespace RateForProfessor.Services.Interfaces
 
         public News CreateNews(News news, string photoPath);
 
-        public void UpdateNews(News news, string photoPath);
+        public void UpdateNews(News news);
 
         public void DeleteNews(int id);
 

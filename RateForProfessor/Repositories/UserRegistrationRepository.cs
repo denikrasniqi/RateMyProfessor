@@ -37,6 +37,7 @@ namespace RateForProfessor.Repositories
             //            .Student;
             //return student;
 
+            
             return _dbContext.Students.Include(s => s.User).FirstOrDefault(s => s.User.Email == email);
         }
 

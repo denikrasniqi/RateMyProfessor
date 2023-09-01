@@ -51,9 +51,7 @@ namespace RateForProfessor.Repositories
         public void UpdateProfessor(ProfessorEntity professor)
         {
             var oldprofessor = _dbContext.Profesors.Find(professor.ProfessorId);
-            //oldprofessor.ProfilePhotoPath = photoPath;
             _dbContext.Entry(oldprofessor).CurrentValues.SetValues(professor);
-            //oldprofessor.ProfilePhotoPath = photoPath;
             _dbContext.SaveChanges();
         }
 

@@ -23,13 +23,13 @@ namespace RateForProfessor.Models
 
         public User User { get; set; }
       
-        public Department? Department { get; set; }
+        //public Department? Department { get; set; }
 
-        public University? University { get; set; }
+        //public University? University { get; set; }
 
-        public RateUniversity? RateUniversity { get; set; }
+        //public RateUniversity? RateUniversity { get; set; }
 
-        public ICollection<RateProfessor>? RateProfessors { get; set; }
+        //public ICollection<RateProfessor>? RateProfessors { get; set; }
 
         public string? ProfilePhotoPath { get; set; }
     }

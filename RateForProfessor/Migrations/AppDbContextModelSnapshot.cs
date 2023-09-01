@@ -400,7 +400,6 @@ namespace RateForProfessor.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfilePhotoPath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StaffNumber")

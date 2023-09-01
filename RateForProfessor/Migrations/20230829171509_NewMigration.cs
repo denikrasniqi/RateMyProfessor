@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -8,6 +9,23 @@ namespace RateForProfessor.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "News",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PublicationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProfilePhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_News", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Universities",
                 columns: table => new
@@ -19,7 +37,8 @@ namespace RateForProfessor.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StaffNumber = table.Column<int>(type: "int", nullable: false),
                     StudentsNumber = table.Column<int>(type: "int", nullable: false),
-                    CoursesNumber = table.Column<int>(type: "int", nullable: false)
+                    CoursesNumber = table.Column<int>(type: "int", nullable: false),
+                    ProfilePhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -221,6 +240,7 @@ namespace RateForProfessor.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Education = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProfilePhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DepartmentProfessorEntityDepartmentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -415,6 +435,9 @@ namespace RateForProfessor.Migrations
 
             migrationBuilder.DropTable(
                 name: "ContactNumbers");
+
+            migrationBuilder.DropTable(
+                name: "News");
 
             migrationBuilder.DropTable(
                 name: "ProfessorCourses");
