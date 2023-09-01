@@ -13,7 +13,7 @@ namespace RateForProfessor.Services.Interfaces
 
         public University CreateUniversitiy(University university, string photoPath);
 
-        public void UpdateUniversity (University university, string photoPath);
+        public void UpdateUniversity (University university);
 
         public void DeleteUniversity(int id);
 

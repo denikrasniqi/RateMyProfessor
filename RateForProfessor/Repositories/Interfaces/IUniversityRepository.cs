@@ -13,7 +13,7 @@ namespace RateForProfessor.Repositories.Interfaces
 
         public UniversityEntity CreateUniversity(UniversityEntity university, string photoPath);
 
-        public void UpdateUniversity (UniversityEntity university, string photoPath);
+        public void UpdateUniversity (UniversityEntity university);
 
         public void DeleteUniversity(int id);
 

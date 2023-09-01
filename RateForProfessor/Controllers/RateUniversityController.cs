@@ -38,21 +38,21 @@ namespace RateForProfessor.Controllers
             return _rateUniversityService.GetRateUniversityById(id);
         }
 
-        [HttpGet("RateUniversity/University/UniversityId")]
-        public ActionResult<List<RateUniversity>> GetRateUniversityByUniversityId(int id)
+        [HttpGet("RateUniversity/University/{universityId}")]
+        public ActionResult<List<RateUniversity>> GetRateUniversityByUniversityId(int universityId)
         {
-            var rateUniversity = _rateUniversityService.GetRateUniversityByUniversiyId(id); 
+            var rateUniversity = _rateUniversityService.GetRateUniversityByUniversiyId(universityId); 
             return Ok(rateUniversity);
         }
 
-        [HttpGet("RateUniversity/Student/StudentId")]
-        public ActionResult<List<RateUniversity>> GetRateUniversityByStudentId(int studentid)
+        [HttpGet("RateUniversity/Student/{studentId}")]
+        public ActionResult<List<RateUniversity>> GetRateUniversityByStudentId(int studentId)
         {
-            var rateUniversity = _rateUniversityService.GetRateUniversityByStudentId(studentid);
+            var rateUniversity = _rateUniversityService.GetRateUniversityByStudentId(studentId);
             return Ok(rateUniversity);
         }
 
-        [Authorize(Roles = "Student")]
+        //[Authorize(Roles = "Student")]
         [HttpPost("CreateRateUniversity")]
         public IActionResult CreateRateUniversity(RateUniversity rateUniversity)
         {
@@ -71,7 +71,7 @@ namespace RateForProfessor.Controllers
             return Ok(createdRateUniversity);
         }
 
-        [Authorize(Roles = "Student")]
+        //[Authorize(Roles = "Student")]
         [HttpPut("UpdateRateUniversity/{id}")]
         public IActionResult UpdateRateUniversity(int id, RateUniversity rateUniversity)
         {

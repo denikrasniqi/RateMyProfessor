@@ -60,7 +60,7 @@ namespace RateForProfessor.Services
             return university;
         }
 
-        public void UpdateUniversity(University university, string photoPath)
+        public void UpdateUniversity(University university)
         {
             var universityId = university.UniversityId;
             var existingUniversityEntity = _universityRepository.GetUniversityById(universityId);
@@ -69,8 +69,7 @@ namespace RateForProfessor.Services
                 throw new Exception("University not Found!");
             }
             var updateUniversity = _mapper.Map<UniversityEntity>(university);
-            updateUniversity.ProfilePhotoPath = photoPath;
-            _universityRepository.UpdateUniversity(updateUniversity, photoPath);
+            _universityRepository.UpdateUniversity(updateUniversity);
         }
 
         public void UploadProfilePhoto(int universityId, string photoPath)
@@ -83,7 +82,7 @@ namespace RateForProfessor.Services
             }
 
             existingUniversityEntity.ProfilePhotoPath = photoPath;
-            _universityRepository.UpdateUniversity(existingUniversityEntity, photoPath);
+            _universityRepository.UpdateUniversity(existingUniversityEntity);
         }
         public List<University> SearchUniversities(Search search)
         {

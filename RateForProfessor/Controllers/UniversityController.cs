@@ -40,7 +40,7 @@ namespace RateForProfessor.Controllers
             return university;
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost("CreateUniversity")]
         public IActionResult CreateUniversity([FromForm] University university, IFormFile file)
         {
@@ -62,7 +62,7 @@ namespace RateForProfessor.Controllers
 
         //[Authorize(Roles = "Admin")]
         [HttpPut("UpdateUniversity/{id}")]
-        public IActionResult UpdateUniversity(int id, [FromForm] University university, IFormFile file)
+        public IActionResult UpdateUniversity(int id, University university)
         {
             UniversityValidator validator = new UniversityValidator();
             var validationResult = validator.Validate(university);
@@ -75,18 +75,15 @@ namespace RateForProfessor.Controllers
                 }
                 return BadRequest(ModelState);
             }
-            //var oldUniversity = _universityService.GetUniversityById(id);
-            //string photoPath = FileUploadHelper.SaveProfilePhoto(file);
             try
             {
                 var oldUniversity = _universityService.GetUniversityById(id);
-                string photoPath = FileUploadHelper.SaveProfilePhoto(file);
 
                 if (oldUniversity == null)
                 {
                     return NotFound();
                 }
-                _universityService.UpdateUniversity(university, photoPath);
+                _universityService.UpdateUniversity(university);
                 return NoContent();
             }
             catch (Exception ex)

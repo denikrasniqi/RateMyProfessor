@@ -17,7 +17,7 @@ namespace RateForProfessor.Repositories.Interfaces
 
         public NewsEntity CreateNews(NewsEntity news, string photoPath);
 
-        public void UpdateNews(NewsEntity news, string photoPath);
+        public void UpdateNews(NewsEntity news);
 
         public void DeleteNews(int id);
 

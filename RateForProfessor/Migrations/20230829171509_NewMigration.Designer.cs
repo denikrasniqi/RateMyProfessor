@@ -12,8 +12,8 @@ using RateForProfessor.Context;
 namespace RateForProfessor.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230726132019_AddedAttribute")]
-    partial class AddedAttribute
+    [Migration("20230829171509_NewMigration")]
+    partial class NewMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -170,6 +170,38 @@ namespace RateForProfessor.Migrations
                     b.HasIndex("ProfessorId");
 
                     b.ToTable("DepartmentProfessors", (string)null);
+                });
+
+            modelBuilder.Entity("RateForProfessor.Entities.NewsEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfilePhotoPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PublicationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("News", (string)null);
                 });
 
             modelBuilder.Entity("RateForProfessor.Entities.ProfessorCourseEntity", b =>
@@ -329,12 +361,17 @@ namespace RateForProfessor.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UniversityId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("StudentId");
 
                     b.HasIndex("DepartmentID");
+
+                    b.HasIndex("UniversityId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -362,6 +399,9 @@ namespace RateForProfessor.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfilePhotoPath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StaffNumber")
@@ -553,6 +593,12 @@ namespace RateForProfessor.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("RateForProfessor.Entities.UniversityEntity", "University")
+                        .WithMany("Students")
+                        .HasForeignKey("UniversityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("RateForProfessor.Entities.UserEntity", "User")
                         .WithOne()
                         .HasForeignKey("RateForProfessor.Entities.StudentEntity", "UserId")
@@ -560,6 +606,8 @@ namespace RateForProfessor.Migrations
                         .IsRequired();
 
                     b.Navigation("Department");
+
+                    b.Navigation("University");
 
                     b.Navigation("User");
                 });
@@ -611,6 +659,8 @@ namespace RateForProfessor.Migrations
                     b.Navigation("Departments");
 
                     b.Navigation("RateUniversities");
+
+                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }

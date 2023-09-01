@@ -51,39 +51,48 @@ namespace RateForProfessor.Controllers
             return Ok(rateProfessors);
         }
 
-        [Authorize(Roles = "Student")]
+        //[Authorize(Roles = "Student")]
 
+        //[HttpPost("CreateRateProfessor")]
+        //public IActionResult CreateRateProfessor(int professorid, int studentid, int communicationskills, int responsiveness,
+        //    int gradingfairness, string feedback)
+        //{
+        //    var overallresult = _rateProfessorService.CalculateOverall(communicationskills, responsiveness, gradingfairness);
+        //    var rateprofessor = new RateProfessor()
+        //    {
+        //        ProfessorId = professorid,
+        //        StudentId = studentid,
+        //        Feedback = feedback,
+        //        CommunicationSkills = communicationskills,
+        //        Responsiveness = responsiveness,
+        //        GradingFairness = gradingfairness,
+        //        Overall = overallresult,
+        //    };
+        //    //RateProfessorValidator validator = new RateProfessorValidator();
+        //    //var validationResult = validator.Validate(rateprofessor);
+
+        //    //if (!validationResult.IsValid)
+        //    //{
+        //    //    foreach (var error in validationResult.Errors)
+        //    //    {
+        //    //        ModelState.AddModelError("", error.ErrorMessage);
+        //    //    }
+        //    //    return BadRequest(ModelState);
+        //    //}
+        //    var createdRateProfessor = _rateProfessorService.CreateRateProfessor(rateprofessor);
+        //    return Ok(createdRateProfessor);
+        //}
         [HttpPost("CreateRateProfessor")]
-        public IActionResult CreateRateProfessor(int professorid, int studentid, int communicationskills, int responsiveness,
-            int gradingfairness, string feedback)
+        public IActionResult CreateRateProfessor(RateProfessor rateProfessor)
         {
-            var overallresult = _rateProfessorService.CalculateOverall(communicationskills, responsiveness, gradingfairness);
-            var rateprofessor = new RateProfessor()
-            {
-                ProfessorId = professorid,
-                StudentId = studentid,
-                Feedback = feedback,
-                CommunicationSkills = communicationskills,
-                Responsiveness = responsiveness,
-                GradingFairness = gradingfairness,
-                Overall = overallresult,
-            };
-            RateProfessorValidator validator = new RateProfessorValidator();
-            var validationResult = validator.Validate(rateprofessor);
 
-            if (!validationResult.IsValid)
-            {
-                foreach (var error in validationResult.Errors)
-                {
-                    ModelState.AddModelError("", error.ErrorMessage);
-                }
-                return BadRequest(ModelState);
-            }
-            var createdRateProfessor = _rateProfessorService.CreateRateProfessor(rateprofessor);
+            var createdRateProfessor = _rateProfessorService.CreateRateProfessor(rateProfessor);
             return Ok(createdRateProfessor);
         }
 
-        [Authorize(Roles = "Student")]
+
+
+        //[Authorize(Roles = "Student")]
         [HttpPut("UpdateRateProfessor/{id}")]
         public IActionResult UpdateRateProfessor(int id, RateProfessor rateProfessor)
         {
@@ -114,7 +123,7 @@ namespace RateForProfessor.Controllers
             }
         }
 
-        [Authorize(Roles = "Student")]
+        //[Authorize(Roles = "Student")]
         [HttpDelete("DeleteRateProfessor/{id}")]
         public IActionResult DeleteRateProfessor(int id)
         {

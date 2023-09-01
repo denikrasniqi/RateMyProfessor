@@ -54,11 +54,10 @@ namespace RateForProfessor.Repositories
             return news;
         }
 
-        public void UpdateNews(NewsEntity news, string photoPath)
+        public void UpdateNews(NewsEntity news)
         {
             var id = news.Id;
             var oldNews = _dbContext.News.Find(id);
-            oldNews.ProfilePhotoPath = photoPath;
             _dbContext.Entry(oldNews).CurrentValues.SetValues(news);
             _dbContext.SaveChanges();
             Console.WriteLine("News: " + oldNews.Title + " Updated Successful!");

@@ -26,9 +26,9 @@ namespace RateForProfessor.Models
         [Required]
         public string Role { get; set; }
 
-        public ICollection<RateProfessor>? RateProfessors { get; set; }
+        //public ICollection<RateProfessor>? RateProfessors { get; set; }
 
-        public ICollection<ProfessorCourse>? ProfessorCourses { get; set; }
+        //public ICollection<ProfessorCourse>? ProfessorCourses { get; set; }
 
         public string? ProfilePhotoPath { get; set; }
     }
